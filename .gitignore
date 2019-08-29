@@ -29,9 +29,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### LaTeX ###
-*.aux
-*.log
-*.synctex.gz
-
