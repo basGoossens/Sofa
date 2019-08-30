@@ -1,11 +1,18 @@
 package team2.sofa.sofa.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.dao.AddressDao;
+import team2.sofa.sofa.model.dao.ClientDao;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -14,6 +21,11 @@ import java.util.*;
 public class DbInitializer {
     private List<String> rawCustomerList;
     private Stack<String> ssnStack;
+
+    @Autowired
+    ClientDao clientDao;
+    @Autowired
+    AddressDao addressDao;
 
     public DbInitializer(){
         super();
@@ -25,7 +37,8 @@ public class DbInitializer {
         Scanner fileReader;
         List<String> u = new ArrayList<>();
         try {
-            File customerList = new File("Resources/Particulier.csv");
+            Resource resource = new ClassPathResource("Particulier.csv");
+            File customerList = resource.getFile();
             fileReader = new Scanner(customerList);
             fileReader.nextLine();
             while (fileReader.hasNextLine()){
@@ -33,29 +46,33 @@ public class DbInitializer {
             }
         }catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return u;
     }
 
-    private void makeClient(){
-        Client client = new Client();
-        for (int i = 0; i < rawCustomerList.size(); i++) {
+    public void makeClient(){
+        for (int i = 0; i < 100; i++) {
+            Client client = new Client();
             String[] raw = rawCustomerList.get(i).split(",");
             setName(client, raw);
             client.setAddress(makeAddress(raw));
             client.setEmail(raw[5]);
+            client.setTelephoneNr(raw[6]);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
             client.setBirthday(LocalDate.parse(raw[7], formatter));
             client.setGender(raw[8]);
             client.setUsername(raw[9]);
             client.setPassword(raw[10]);
             client.setSSN(ssnStack.pop());
+            clientDao.save(client);
         }
 
     }
 
-    private void setName(Client user, String[] split){
-        user.setFirstName(split[0]);
+    private void setName(Client client, String[] split){
+        client.setFirstName(split[0]);
         if (split[1].startsWith("\"")){
             String opgeschoond = split[1].replace("\"", "");
             String[] splits = opgeschoond.split(" ");
@@ -66,10 +83,10 @@ public class DbInitializer {
                     prefix += " ";
                 }
             }
-            user.setPrefix(prefix);
-            user.setLastName(splits[splits.length-1]);
+            client.setPrefix(prefix);
+            client.setLastName(splits[splits.length-1]);
         } else {
-            user.setLastName(split[1]);
+            client.setLastName(split[1]);
         }
     }
     private Address makeAddress(String[] split){
@@ -87,6 +104,7 @@ public class DbInitializer {
         a.setHouseNumber(Integer.parseInt(splits[splits.length-1]));
         a.setZipCode(split[3]);
         a.setCity(split[4].replace("\"", ""));
+        addressDao.save(a);
         return a;
     }
 

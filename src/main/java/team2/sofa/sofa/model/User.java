@@ -1,13 +1,20 @@
 package team2.sofa.sofa.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 public abstract class User {
 
     //Username,Password
+    @Id
+    @GeneratedValue
+    private int id;
     private String firstName;
     private String prefix;
     private String lastName;
+    @ManyToOne
     private Address address;
     private String SSN;
     private String email;
@@ -15,8 +22,9 @@ public abstract class User {
     private LocalDate birthday;
     private String gender;
 
-    public User(String firstName, String prefix, String lastName, Address address, String SSN, String email,
+    public User(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email,
                 String telephoneNr, LocalDate birthday, String gender) {
+        this.id = id;
         this.firstName = firstName;
         this.prefix = prefix;
         this.lastName = lastName;
@@ -26,6 +34,11 @@ public abstract class User {
         this.telephoneNr = telephoneNr;
         this.birthday = birthday;
         this.gender = gender;
+    }
+    public int getId() {return id;}
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirstName() {
