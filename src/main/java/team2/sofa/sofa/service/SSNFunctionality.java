@@ -1,13 +1,15 @@
 package team2.sofa.sofa.service;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
-public class SSNChecker {
+public class SSNFunctionality {
     private static final int LOW = 10000000;
     private static final int HIGH = 100000000;
     private String bsn;
 
-    public SSNChecker(){
+    public SSNFunctionality(){
         do {bsn = bsnGenerator();
         } while (!BSNcheck(bsn));
     }
@@ -28,6 +30,13 @@ public class SSNChecker {
         Random r = new Random();
         int result = r.nextInt(HIGH-LOW) + LOW;
         return String.format("%09d", result);
+    }
+    public static Set<String> bsnSet(int count){
+        Set<String> ssnSet = new HashSet<>();
+        for (int i = 0; i < count ; i++) {
+            ssnSet.add(bsnGenerator());
+        }
+        return ssnSet;
     }
 
     public String getBsn(){
