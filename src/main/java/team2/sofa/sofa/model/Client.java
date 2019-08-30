@@ -1,16 +1,28 @@
 package team2.sofa.sofa.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Client extends User {
 
-//    Username,Password
+    @Id
+    @GeneratedValue
     private int id;
     private String username;
     private String password;
+    @ManyToMany
     private List<Account> accounts;
+
+    public Client(){
+        this("", "", "", null, "", "", "",
+                null, "", 0, "", "");
+    }
 
     public Client(String firstName, String prefix, String lastName, Address address, String SSN, String email,
                   String telephoneNr, LocalDate birthday, String gender, int Id, String username, String password){

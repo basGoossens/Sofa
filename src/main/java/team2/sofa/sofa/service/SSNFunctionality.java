@@ -1,9 +1,10 @@
 package team2.sofa.sofa.service;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import org.springframework.stereotype.Service;
 
+import java.util.*;
+
+@Service
 public class SSNFunctionality {
     private static final int LOW = 10000000;
     private static final int HIGH = 100000000;
@@ -31,12 +32,12 @@ public class SSNFunctionality {
         int result = r.nextInt(HIGH-LOW) + LOW;
         return String.format("%09d", result);
     }
-    public static Set<String> bsnSet(int count){
-        Set<String> ssnSet = new HashSet<>();
+    public static Stack<String> bsnSet(int count){
+        Stack<String> ssnStack = new Stack<>();
         for (int i = 0; i < count ; i++) {
-            ssnSet.add(bsnGenerator());
+            ssnStack.push(bsnGenerator());
         }
-        return ssnSet;
+        return ssnStack;
     }
 
     public String getBsn(){
