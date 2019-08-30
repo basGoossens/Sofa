@@ -1,13 +1,16 @@
 package team2.sofa.sofa.service;
 
-import java.util.Random;
+import org.springframework.stereotype.Service;
 
-public class SSNChecker {
+import java.util.*;
+
+@Service
+public class SSNFunctionality {
     private static final int LOW = 10000000;
     private static final int HIGH = 100000000;
     private String bsn;
 
-    public SSNChecker(){
+    public SSNFunctionality(){
         do {bsn = bsnGenerator();
         } while (!BSNcheck(bsn));
     }
@@ -28,6 +31,13 @@ public class SSNChecker {
         Random r = new Random();
         int result = r.nextInt(HIGH-LOW) + LOW;
         return String.format("%09d", result);
+    }
+    public static Stack<String> bsnSet(int count){
+        Stack<String> ssnStack = new Stack<>();
+        for (int i = 0; i < count ; i++) {
+            ssnStack.push(bsnGenerator());
+        }
+        return ssnStack;
     }
 
     public String getBsn(){
