@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
 </head>
 <body>
+<!--home knop!-->
+<div> <a href="index.html"> <input type="submit" value ="Home"> </a> </div>
+
+
+<h1>Rekening <span th:text="${account.IBAN}"/></h1>
+
+<!-- hier wordt een lijst met alle transacties ingeladen !-->
+<h2>transacties</h2>
+<div th:unless="${#lists.isEmpty(allTransactions)}">
+    <table>
+        <tr>
+            <td>naam</td>
+            <td>bedrag</td>
+        </tr>
+        <tr th:each="account : ${allTransactions}">
+        <td>Kapitalist BV<span th:text="${transaction.IBANdebet.name}"/></a></td>
+        <td>500<span th:text="${transaction.amount}"/></td></a>
+    </tr>
+    </table>
+</div>
+<br>
+
+
+<!--betaalformulier! Nog te maken-->
+<div>
+    <form action="#" th:action="@{TransferHandler}" etc...>
+        <input type="submit" value="Hier komt het betaalformulier" > </form>
+</div>
+
+<!--terug-knop!-->
+<div>
+    <a href="client_view.html"> <input type="submit" value="Terug naar overzicht"> </a>
+</div>
+
+
+
+<!--knop voor uitloggen!-->
+<div>
+    <a href="templates/login.html"> <input type="submit" value="Uitloggen"> </a>
+    <!-- popup-functie voor bevestiging nog bouwen !-->
+</div>
 
 </body>
 </html>
