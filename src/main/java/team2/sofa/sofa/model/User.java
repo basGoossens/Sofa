@@ -36,10 +36,6 @@ public abstract class User {
         this.gender = gender;
     }
 
-    public abstract String getUserName();
-
-    public abstract String getPassword();
-
     public int getId() {return id;}
 
     public void setId(int id) {

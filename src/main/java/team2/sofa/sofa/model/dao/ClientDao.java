@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ClientDao extends CrudRepository <Client, Integer> {
 
-    public Client findByName(String name);
+    public Client findByUsername(String username);
 }

@@ -12,6 +12,8 @@ import team2.sofa.sofa.model.User;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.service.PasswordValidator;
 
+import java.util.List;
+
 @Controller
 public class LoginController {
 
@@ -20,17 +22,17 @@ public class LoginController {
 
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
-        User user = new Client();
-        model.addAttribute("member", user);
+        Client client = new Client();
+        model.addAttribute("member", client);
         return "login";
     }
 
     @PostMapping(value = "loginHandler")
-    public String loginHandler(@ModelAttribute User user, Model model) {
+    public String loginHandler(@ModelAttribute Client client, Model model) {
         PasswordValidator passwordValidator = new PasswordValidator();
-        boolean loginOk = passwordValidator.validateClientPassword(user);
+        boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk)  {
-            Global.setCurrentUser(clientDao.findByName(user.getUserName()));
+            Client currentClient = clientDao.findByUsername(client.getUserName());
             return "client_view";
         }
         else return "login_fail";

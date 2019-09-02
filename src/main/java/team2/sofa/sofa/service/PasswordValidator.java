@@ -2,6 +2,7 @@ package team2.sofa.sofa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.User;
 import team2.sofa.sofa.model.dao.ClientDao;
 
@@ -17,10 +18,10 @@ import java.util.List;
         super();
     }
 
-    public boolean validateClientPassword(User user) {
+    public boolean validateClientPassword(Client client) {
         boolean loginOk;
-        User dbUser = clientDao.findByName(user.getUserName());
-        loginOk = user.getPassword().equals(dbUser.getPassword());
+        Client clients = clientDao.findByUsername(client.getUserName());
+        loginOk = client.getPassword().equals(clients.getPassword());
         return loginOk;
     }
 }
