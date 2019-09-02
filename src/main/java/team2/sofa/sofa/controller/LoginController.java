@@ -35,5 +35,4 @@ public class LoginController {
         }
         else return "login_fail";
     }
-
 }
