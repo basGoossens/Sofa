@@ -8,23 +8,27 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (generator = "ACC_SEQ")
     private int id;
     private String IBAN;
     private double balance;
     @ManyToMany
     private List<Client> owners;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 
-    public Account(String iban, double balance){
+    public Account(String iban, double balance, List<Transaction> transactions){
         this();
         this.IBAN = iban;
         this.balance = balance;
+        this.transactions = transactions;
     }
 
     public Account(){
         super();
         this.id = 0;
         this.owners = new ArrayList<>();
+        this.transactions = new ArrayList<>();
     }
 
     public int getId() {
@@ -61,5 +65,17 @@ public class Account {
 
     public void addClient(Client client){
         this.owners.add(client);
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public void addTransaction(Transaction transaction){
+        this.transactions.add(transaction);
     }
 }
