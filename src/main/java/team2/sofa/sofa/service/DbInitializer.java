@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.dao.AddressDao;
@@ -21,6 +22,7 @@ import java.util.*;
 public class DbInitializer {
     private List<String> rawCustomerList;
     private Stack<String> ssnStack;
+    private int[] numberAccounts;
 
     @Autowired
     ClientDao clientDao;
@@ -29,11 +31,12 @@ public class DbInitializer {
 
     public DbInitializer(){
         super();
-        rawCustomerList = makeList();
+        rawCustomerList = makeClientList();
         ssnStack = SSNFunctionality.bsnSet(rawCustomerList.size());
+        numberAccounts = new int[]{0,1,2,3};
     }
 
-    private List<String> makeList(){
+    private List<String> makeClientList(){
         Scanner fileReader;
         List<String> u = new ArrayList<>();
         try {
@@ -89,6 +92,7 @@ public class DbInitializer {
             client.setLastName(split[1]);
         }
     }
+
     private Address makeAddress(String[] split){
         Address a = new Address();
         String street = "";
@@ -106,6 +110,17 @@ public class DbInitializer {
         a.setCity(split[4].replace("\"", ""));
         addressDao.save(a);
         return a;
+    }
+
+    private void connectAccount(Client c){
+        Random r = new Random();
+        int result = r.nextInt(3);
+        List<Account> accounts = new ArrayList<>();
+        for (int i = 0; i < result ; i++) {
+            Account a = new Account();
+            a.setIBAN();
+
+        }
     }
 
 }
