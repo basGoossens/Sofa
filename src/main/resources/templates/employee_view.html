@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Employee View</title>
 </head>
 <body>
+
+<!--home knop!-->
+<div> <a href="index.html"> <input type="submit" value ="Home"> </a> </div>
+
+
+<h1>Hallo, <span th:text="${user.name}"/></h1>
+
+<!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
+<h2>De tien rijkste stinkerds</h2>
+<table>
+    <tr>IBAN</tr>
+    <tr>Naam</tr>
+    <tr>Saldo</tr>
+</table>
+
+
+<!--lijst met actiefste rekeningen (alleen hoofd mkb)!-->
+<h2>De tien actiefste stinkerds</h2>
+<table>
+    <tr>IBAN</tr>
+    <tr>Naam</tr>
+    <tr>Saldo</tr>
+</table>
+
+<!--gemiddelde per sector (alleen hoofd mkb)!-->
+<h2>Gemiddelde per sector</h2>
+<table>
+    <tr>Sector</tr>
+    <tr>Gemiddeld saldo</tr>
+</table>
+
+
+<!--knop voor uitloggen!-->
+<div>
+    <a href="templates/login.html"> <input type="submit" value="Uitloggen"> </a>
+    <!-- popup-functie voor bevestiging nog bouwen !-->
+</div>
+
+<!--terug-knop!-->
+<div>
+    <a href="client_view.html"> <input type="submit" value="Terug naar overzicht"> </a>
+</div>
 
 </body>
 </html>
