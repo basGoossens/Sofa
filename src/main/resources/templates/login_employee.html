@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
 <body>
+<h2>Sofa login pagina voor werknemers</h2>
 
+<form action="#" th:action="@{loginHandler}" th:object="${Employee}" method="post">
+    <table>
+        <tr>
+            <td>Naam werknemer:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="text" th:field="*{password}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Login"></td>
+        </tr>
+    </table>
+</form>
+
+Ik ben een <a href="/login.html">klant</a>.
+Ga <a href="/">terug</a> naar het begin...
 </body>
 </html>
