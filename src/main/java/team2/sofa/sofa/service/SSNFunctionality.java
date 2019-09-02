@@ -32,7 +32,7 @@ public class SSNFunctionality {
         int result = r.nextInt(HIGH-LOW) + LOW;
         return String.format("%09d", result);
     }
-    public static Stack<String> bsnSet(int count){
+    public static Stack<String> bsnStack(int count){
         Stack<String> ssnStack = new Stack<>();
         for (int i = 0; i < count ; i++) {
             ssnStack.push(bsnGenerator());

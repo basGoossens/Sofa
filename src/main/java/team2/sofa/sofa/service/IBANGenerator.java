@@ -1,21 +1,32 @@
 package team2.sofa.sofa.service;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 public class IBANGenerator {
 
     private final String BANKCODE = "SOFA";
     private final String COUNTRYCODE = "NL";
+    private static final int LOW = 10000000;
+    private static final int HIGH = 100000000;
     private final int ASCIITOBANKCODE = 55;
     private String safetyNumber;
     private String bankAccountNumber;
+    private String IBAN;
 
-    public IBANGenerator (String bankAccountNumber) {
+    public IBANGenerator () {
 
-        this.bankAccountNumber = bankAccountNumber;
+        this.bankAccountNumber = bankAccountNumberGenerator();
         this.safetyNumber = SafetyNumber(this.bankAccountNumber);
-
+        this.IBAN = COUNTRYCODE + safetyNumber + BANKCODE + bankAccountNumber;
     }
+
+    private String bankAccountNumberGenerator(){
+        Random r = new Random();
+        int result = r.nextInt(HIGH-LOW) + LOW;
+        return String.format("%10d", result);
+    }
+
 
     private String SafetyNumber (String bankAccountNumber) {
         String bankNumber1 = Integer.toString(((int)BANKCODE.charAt(0)) - ASCIITOBANKCODE);
@@ -34,13 +45,16 @@ public class IBANGenerator {
         return paddedSafetyNumber;
     }
 
-
     public String getBankAccountNumber() {
         return bankAccountNumber;
     }
 
     public void setBankAccountNumber(String bankAccountNumber) {
         bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getIBAN() {
+        return IBAN;
     }
 
     @Override

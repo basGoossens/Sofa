@@ -13,7 +13,6 @@ import team2.sofa.sofa.model.dao.ClientDao;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -32,7 +31,7 @@ public class DbInitializer {
     public DbInitializer(){
         super();
         rawCustomerList = makeClientList();
-        ssnStack = SSNFunctionality.bsnSet(rawCustomerList.size());
+        ssnStack = SSNFunctionality.bsnStack(rawCustomerList.size());
         numberAccounts = new int[]{0,1,2,3};
     }
 
@@ -114,11 +113,13 @@ public class DbInitializer {
 
     private void connectAccount(Client c){
         Random r = new Random();
-        int result = r.nextInt(3);
-        List<Account> accounts = new ArrayList<>();
+        int result = r.nextInt(2);
         for (int i = 0; i < result ; i++) {
             Account a = new Account();
-            a.setIBAN();
+            a.setIBAN(new IBANGenerator().getIBAN());
+            c.addAccount(a);
+            a.addClient(c);
+            clientDao.save(c);
 
         }
     }
