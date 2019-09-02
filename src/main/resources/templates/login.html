@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+</head>
 <body>
 <h2>Sofa login pagina</h2>
 
-<form action="#" th:action="@{loginHandler}" th:object="${member}" method="post">
+<form action="#" th:action="@{loginHandler}" th:object="${Client}" method="post">
     <table>
         <tr>
             <td>Naam:</td>
@@ -22,6 +23,7 @@
     </table>
 </form>
 
+Ik ben een <a href="/login_employee.html">medewerker</a>...
 Ga <a href="/">terug</a> naar het begin...
 </body>
 </html>

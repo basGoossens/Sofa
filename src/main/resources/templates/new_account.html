@@ -1,10 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<h2>Account aanmaken</h2>
+<form name="new_client" id="new_client" action="#" th:action="@{}" th:object="${User}" method="post">
+    <table>
+        <tr>
+            <td>Voornaam:</td>
+            <td><input type="text" th:field="*{firstName}"/></td>
+        </tr>
+        <tr>
+            <td>Tussenvoegsel:</td>
+            <td><input type="text" th:field="*{prefix}"/></td>
+        </tr>
+        <tr>
+            <td>Achternaam:</td>
+            <td><input type="text" th:field="*{lastName}"/></td>
+        </tr>
+        <tr>
+            <td>Straatnaam:</td>
+            <td><input type="text" th:field="*{Adress.street}"/></td>
+        </tr>
+        <tr>
+            <td>Huisnummer:</td>
+            <td><input type="text" th:field="*{Adress.houseNumber}"/></td>
+        </tr>
+        <tr>
+            <td>zipCode:</td>
+            <td><input type="text" th:field="*{Adress.zipCode}"/></td>
+        </tr>
+        <tr>
+            <td>city:</td>
+            <td><input type="text" th:field="*{Adress.city}"/></td>
+        </tr>
+        <tr>
+            <td>Burger service nummer:</td>
+            <td><input type="text" th:field="*{SSN}"/></td>
+        </tr>
+        <tr>
+            <td>Emailadres:</td>
+            <td><input type="text" th:field="*{email}"/></td>
+        </tr>
+        <tr>
+            <td>Telefoonnummer:</td>
+            <td><input type="text" th:field="*{telephoneNr}"/></td>
+        </tr>
+        <tr>
+            <td>Verjaardag</td>
+            <td><input type="text" th:field="*{birthday}"/></td>
+        </tr>
+        <tr>
+            <td>Geslacht:</td>
+            <td><input type="text" th:field="*{gender}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Login"></td>
+        </tr>
+    </table>
+</form>
 
+Ga <a href="/">terug</a> naar het begin...
 </body>
 </html>
