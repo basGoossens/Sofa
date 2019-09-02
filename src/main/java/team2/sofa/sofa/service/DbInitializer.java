@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.AddressDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 
@@ -21,17 +22,21 @@ import java.util.*;
 public class DbInitializer {
     private List<String> rawCustomerList;
     private Stack<String> ssnStack;
+    private Stack<String> ibanStack;
     private int[] numberAccounts;
 
     @Autowired
     ClientDao clientDao;
     @Autowired
     AddressDao addressDao;
+    @Autowired
+    AccountDao accountDao;
 
     public DbInitializer(){
         super();
         rawCustomerList = makeClientList();
         ssnStack = SSNFunctionality.bsnStack(rawCustomerList.size());
+        this.ibanStack = new IBANGenerator().ibanStack(rawCustomerList.size());
         numberAccounts = new int[]{0,1,2,3};
     }
 
@@ -54,7 +59,7 @@ public class DbInitializer {
         return u;
     }
 
-    public void makeClient(){
+    public void makeClient() {
         for (int i = 0; i < 100; i++) {
             Client client = new Client();
             String[] raw = rawCustomerList.get(i).split(",");
@@ -70,8 +75,8 @@ public class DbInitializer {
             client.setSSN(ssnStack.pop());
             clientDao.save(client);
         }
-
     }
+
 
     private void setName(Client client, String[] split){
         client.setFirstName(split[0]);
@@ -111,16 +116,27 @@ public class DbInitializer {
         return a;
     }
 
-    private void connectAccount(Client c){
+    public void fillAccounts(){
+        Iterable<Client> client = clientDao.findAll();
+        for (Client c: client
+             ) {connectAccounts(c);
+
+        }
+    }
+
+
+
+
+    private void connectAccounts(Client c){
         Random r = new Random();
-        int result = r.nextInt(2);
+        int result = r.nextInt(3);
         for (int i = 0; i < result ; i++) {
             Account a = new Account();
             a.setIBAN(new IBANGenerator().getIBAN());
             c.addAccount(a);
             a.addClient(c);
             clientDao.save(c);
-
+            accountDao.save(a);
         }
     }
 

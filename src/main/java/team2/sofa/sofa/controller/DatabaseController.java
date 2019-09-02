@@ -15,6 +15,7 @@ public class DatabaseController {
     @GetMapping(value = "initdb")
     public String indexInitdbHandler(Model model) {
         dbInitializer.makeClient();
+        dbInitializer.fillAccounts();
         return "index";
     }
 }

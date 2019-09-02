@@ -2,6 +2,7 @@ package team2.sofa.sofa.service;
 
 import java.math.BigInteger;
 import java.util.Random;
+import java.util.Stack;
 
 public class IBANGenerator {
 
@@ -15,18 +16,22 @@ public class IBANGenerator {
     private String IBAN;
 
     public IBANGenerator () {
+        IBAN = ibanGenerator();
+    }
 
+    public String ibanGenerator(){
         this.bankAccountNumber = bankAccountNumberGenerator();
         this.safetyNumber = SafetyNumber(this.bankAccountNumber);
-        this.IBAN = COUNTRYCODE + safetyNumber + BANKCODE + bankAccountNumber;
+        String iban = COUNTRYCODE + safetyNumber + BANKCODE + bankAccountNumber;
+        return iban;
     }
 
     private String bankAccountNumberGenerator(){
         Random r = new Random();
         int result = r.nextInt(HIGH-LOW) + LOW;
-        return String.format("%10d", result);
+        String b = String.format("%010d", result);
+        return b;
     }
-
 
     private String SafetyNumber (String bankAccountNumber) {
         String bankNumber1 = Integer.toString(((int)BANKCODE.charAt(0)) - ASCIITOBANKCODE);
@@ -55,6 +60,13 @@ public class IBANGenerator {
 
     public String getIBAN() {
         return IBAN;
+    }
+    public Stack<String> ibanStack(int count) {
+        Stack<String> ibanStack = new Stack<>();
+        for (int i = 0; i < count; i++) {
+            ibanStack.push(ibanGenerator());
+        }
+        return ibanStack;
     }
 
     @Override
