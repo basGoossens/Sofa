@@ -9,7 +9,7 @@ public abstract class User {
 
     //Username,Password
     @Id
-    @GeneratedValue
+    @GeneratedValue (generator = "USER_SEQ")
     private int id;
     private String firstName;
     private String prefix;
@@ -35,6 +35,11 @@ public abstract class User {
         this.birthday = birthday;
         this.gender = gender;
     }
+
+    public abstract String getUserName();
+
+    public abstract String getPassword();
+
     public int getId() {return id;}
 
     public void setId(int id) {

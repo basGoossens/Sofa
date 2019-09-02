@@ -28,11 +28,11 @@ public class Client extends User {
         this.accounts = new ArrayList<>();
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUserName(String username) {
         this.username = username;
     }
 
@@ -55,4 +55,5 @@ public class Client extends User {
     public void addAccount(Account account){
         accounts.add(account);
     }
+
 }

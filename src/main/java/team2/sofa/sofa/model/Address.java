@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Address {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (generator = "ADR_SEQ")
     private int id;
     private String street;
     private int houseNumber;

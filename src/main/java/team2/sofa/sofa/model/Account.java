@@ -8,7 +8,7 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (generator = "ACC_SEQ")
     private int id;
     private String IBAN;
     private double balance;
