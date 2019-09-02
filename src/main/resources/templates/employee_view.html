@@ -13,27 +13,56 @@
 <h1>Hallo, <span th:text="${user.name}"/></h1>
 
 <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
-<h2>De tien rijkste stinkerds</h2>
-<table>
-    <tr>IBAN</tr>
-    <tr>Naam</tr>
-    <tr>Saldo</tr>
-</table>
+<div th:unless="${#lists.isEmpty(tenHighestBalance)}">
+    <h2>De tien rijkste stinkerds</h2>
+    <div><table>
+
+        <tr>
+            <td>IBAN</td>
+            <td>Naam</td>
+            <td>Saldo</td>
+        </tr>
+        <tr th:each="account : ${tenHighestBalance}">
+            <td><span th:text="${account.IBAN}"/></td>
+            <td><span th:text="${account.name}"/></td>
+            <td><span th:text="${account.balance}"/></td>
+        </tr>
+    </table>
+    </div>
 
 
-<!--lijst met actiefste rekeningen (alleen hoofd mkb)!-->
-<h2>De tien actiefste stinkerds</h2>
-<table>
-    <tr>IBAN</tr>
-    <tr>Naam</tr>
-    <tr>Saldo</tr>
-</table>
+    <!--lijst met actiefste rekeningen (alleen hoofd mkb)!-->
+    <div th:unless="${#lists.isEmpty(tenMostActive)}">
+        <h2>De tien rijkste stinkerds</h2>
+        <div><table>
+
+            <tr>
+                <td>IBAN</td>
+                <td>Naam</td>
+                <td>Saldo</td>
+            </tr>
+            <tr th:each="account : ${tenMostActive}">
+                <td><span th:text="${account.IBAN}"/></td>
+                <td><span th:text="${account.name}"/></td>
+                <td><span th:text="${account.balance}"/></td>
+            </tr>
+        </table>
+        </div>
 
 <!--gemiddelde per sector (alleen hoofd mkb)!-->
+        <div th:unless="${#lists.isEmpty(tenMostActive)}">
 <h2>Gemiddelde per sector</h2>
 <table>
-    <tr>Sector</tr>
-    <tr>Gemiddeld saldo</tr>
+    <tr>
+    <td>Sector</td>
+    <td>Gemiddeld saldo</td>
+    </tr>
+
+    <tr th:each="sector : ${averageBalancePerSector}">
+        <td><span th:text="${sector.NAME}"></span></td>
+        <td><span th:text="${sector.averageBalance}"></span></td>
+
+    </tr>
 </table>
 
 
