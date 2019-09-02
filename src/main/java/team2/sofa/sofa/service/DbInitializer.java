@@ -4,15 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.AddressDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -21,19 +22,25 @@ import java.util.*;
 public class DbInitializer {
     private List<String> rawCustomerList;
     private Stack<String> ssnStack;
+    private Stack<String> ibanStack;
+    private int[] numberAccounts;
 
     @Autowired
     ClientDao clientDao;
     @Autowired
     AddressDao addressDao;
+    @Autowired
+    AccountDao accountDao;
 
     public DbInitializer(){
         super();
-        rawCustomerList = makeList();
-        ssnStack = SSNFunctionality.bsnSet(rawCustomerList.size());
+        rawCustomerList = makeClientList();
+        ssnStack = SSNFunctionality.bsnStack(rawCustomerList.size());
+        this.ibanStack = new IBANGenerator().ibanStack(rawCustomerList.size());
+        numberAccounts = new int[]{0,1,2,3};
     }
 
-    private List<String> makeList(){
+    private List<String> makeClientList(){
         Scanner fileReader;
         List<String> u = new ArrayList<>();
         try {
@@ -52,7 +59,7 @@ public class DbInitializer {
         return u;
     }
 
-    public void makeClient(){
+    public void makeClient() {
         for (int i = 0; i < 100; i++) {
             Client client = new Client();
             String[] raw = rawCustomerList.get(i).split(",");
@@ -68,8 +75,8 @@ public class DbInitializer {
             client.setSSN(ssnStack.pop());
             clientDao.save(client);
         }
-
     }
+
 
     private void setName(Client client, String[] split){
         client.setFirstName(split[0]);
@@ -89,6 +96,7 @@ public class DbInitializer {
             client.setLastName(split[1]);
         }
     }
+
     private Address makeAddress(String[] split){
         Address a = new Address();
         String street = "";
@@ -106,6 +114,30 @@ public class DbInitializer {
         a.setCity(split[4].replace("\"", ""));
         addressDao.save(a);
         return a;
+    }
+
+    public void fillAccounts(){
+        Iterable<Client> client = clientDao.findAll();
+        for (Client c: client
+             ) {connectAccounts(c);
+
+        }
+    }
+
+
+
+
+    private void connectAccounts(Client c){
+        Random r = new Random();
+        int result = r.nextInt(3);
+        for (int i = 0; i < result ; i++) {
+            Account a = new Account();
+            a.setIBAN(new IBANGenerator().getIBAN());
+            c.addAccount(a);
+            a.addClient(c);
+            clientDao.save(c);
+            accountDao.save(a);
+        }
     }
 
 }

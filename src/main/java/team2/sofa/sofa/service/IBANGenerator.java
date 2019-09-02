@@ -1,20 +1,36 @@
 package team2.sofa.sofa.service;
 
 import java.math.BigInteger;
+import java.util.Random;
+import java.util.Stack;
 
 public class IBANGenerator {
 
     private final String BANKCODE = "SOFA";
     private final String COUNTRYCODE = "NL";
+    private static final int LOW = 10000000;
+    private static final int HIGH = 100000000;
     private final int ASCIITOBANKCODE = 55;
     private String safetyNumber;
     private String bankAccountNumber;
+    private String IBAN;
 
-    public IBANGenerator (String bankAccountNumber) {
+    public IBANGenerator () {
+        IBAN = ibanGenerator();
+    }
 
-        this.bankAccountNumber = bankAccountNumber;
+    public String ibanGenerator(){
+        this.bankAccountNumber = bankAccountNumberGenerator();
         this.safetyNumber = SafetyNumber(this.bankAccountNumber);
+        String iban = COUNTRYCODE + safetyNumber + BANKCODE + bankAccountNumber;
+        return iban;
+    }
 
+    private String bankAccountNumberGenerator(){
+        Random r = new Random();
+        int result = r.nextInt(HIGH-LOW) + LOW;
+        String b = String.format("%010d", result);
+        return b;
     }
 
     private String SafetyNumber (String bankAccountNumber) {
@@ -34,13 +50,23 @@ public class IBANGenerator {
         return paddedSafetyNumber;
     }
 
-
     public String getBankAccountNumber() {
         return bankAccountNumber;
     }
 
     public void setBankAccountNumber(String bankAccountNumber) {
         bankAccountNumber = bankAccountNumber;
+    }
+
+    public String getIBAN() {
+        return IBAN;
+    }
+    public Stack<String> ibanStack(int count) {
+        Stack<String> ibanStack = new Stack<>();
+        for (int i = 0; i < count; i++) {
+            ibanStack.push(ibanGenerator());
+        }
+        return ibanStack;
     }
 
     @Override
