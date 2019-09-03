@@ -24,7 +24,7 @@ public class PasswordValidator {
 
     public boolean validateClientPassword(Client client) {
         boolean loginOk;
-        Client clients = clientDao.findByUsername(client.getUsername());
+        Client clients = clientDao.findClientByUsername(client.getUsername());
         loginOk = client.getPassword().equals(clients.getPassword());
         return loginOk;
     }

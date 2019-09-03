@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Address;
-import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.AddressDao;
 import team2.sofa.sofa.model.dao.ClientDao;
+import team2.sofa.sofa.model.dao.EmployeeDao;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +25,9 @@ public class DbInitializer {
     AddressDao addressDao;
     @Autowired
     AccountDao accountDao;
+    @Autowired
+    EmployeeDao employeeDao;
+
     private List<String> rawDataList;
     private Stack<String> ssnStack;
     private Stack<String> ibanStack;
@@ -70,25 +72,41 @@ public class DbInitializer {
 
     public void makeClient() {
         for (int i = 0; i < 50; i++) {
-            Client client = new Client();
+            User client = new Client();
             String[] raw = rawDataList.get(i).split(",");
             setName(client, raw);
             client.setAddress(makeAddress(raw));
             client.setEmail(raw[5]);
             client.setTelephoneNr(raw[6]);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-            client.setBirthday(LocalDate.parse(raw[7], formatter));
+            client.setBirthday(raw[7]);
             client.setGender(raw[8]);
             client.setUsername(raw[9]);
             client.setPassword(raw[10]);
             client.setSSN(ssnStack.pop());
-            clientDao.save(client);
+            clientDao.save((Client)client);
         }
+    }
+    public void makeEmployee(int index, EmployeeRole role){
+        Employee employee = new Employee();
+        String[] raw = rawDataList.get(index).split(",");
+        setName(employee, raw);
+        employee.setAddress(makeAddress(raw));
+        employee.setRole(role);
+        employee.setEmail(raw[5]);
+        employee.setTelephoneNr(raw[6]);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+        employee.setBirthday(raw[7]);
+        employee.setGender(raw[8]);
+        employee.setUsername(raw[9]);
+        employee.setPassword(raw[10]);
+        employee.setSSN(ssnStack.pop());
+        employeeDao.save(employee);
     }
 
 
-    private void setName(Client client, String[] split) {
-        client.setFirstName(split[0]);
+    private void setName(User user, String[] split) {
+        user.setFirstName(split[0]);
         if (split[1].startsWith("\"")) {
             String opgeschoond = split[1].replace("\"", "");
             String[] splits = opgeschoond.split(" ");
@@ -99,10 +117,10 @@ public class DbInitializer {
                     prefix += " ";
                 }
             }
-            client.setPrefix(prefix);
-            client.setLastName(splits[splits.length - 1]);
+            user.setPrefix(prefix);
+            user.setLastName(splits[splits.length - 1]);
         } else {
-            client.setLastName(split[1]);
+            user.setLastName(split[1]);
         }
     }
 

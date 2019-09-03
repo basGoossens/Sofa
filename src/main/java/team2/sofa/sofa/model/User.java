@@ -19,7 +19,7 @@ public abstract class User {
     private String SSN;
     private String email;
     private String telephoneNr;
-    private LocalDate birthday;
+    private String birthday;
     private String gender;
 
     public User() {
@@ -27,7 +27,7 @@ public abstract class User {
     }
 
     public User(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email,
-                String telephoneNr, LocalDate birthday, String gender) {
+                String telephoneNr, String birthday, String gender) {
         this.id = id;
         this.firstName = firstName;
         this.prefix = prefix;
@@ -104,11 +104,11 @@ public abstract class User {
         this.telephoneNr = telephoneNr;
     }
 
-    public LocalDate getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -119,4 +119,9 @@ public abstract class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public abstract void setUsername(String s);
+
+    public abstract void setPassword(String s);
+
 }
