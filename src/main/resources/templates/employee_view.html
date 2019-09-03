@@ -7,34 +7,37 @@
 <body>
 
 <!--home knop!-->
-<div> <a href="index.html"> <input type="submit" value ="Home"> </a> </div>
+<div><a href="index.html"> <input type="submit" value="Home"> </a></div>
 
 
-<h1>Hallo, <span th:text="${user.name}"/></h1>
+<h1>Hallo, <span th:text="${employee.firstName}"/></h1>
 
 <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
 <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
     <h2>De tien rijkste stinkerds</h2>
-    <div><table>
+    <div>
+        <table>
 
-        <tr>
-            <td>IBAN</td>
-            <td>Naam</td>
-            <td>Saldo</td>
-        </tr>
-        <tr th:each="account : ${tenHighestBalance}">
-            <td><span th:text="${account.IBAN}"/></td>
-            <td><span th:text="${account.name}"/></td>
-            <td><span th:text="${account.balance}"/></td>
-        </tr>
-    </table>
+            <tr>
+                <td>IBAN</td>
+                <td>Naam</td>
+                <td>Saldo</td>
+            </tr>
+            <tr th:each="account : ${tenHighestBalance}">
+                <td><span th:text="${account.IBAN}"/></td>
+                <td><span th:text="${account.name}"/></td>
+                <td><span th:text="${account.balance}"/></td>
+            </tr>
+        </table>
     </div>
+</div>
 
 
-    <!--lijst met actiefste rekeningen (alleen hoofd mkb)!-->
-    <div th:unless="${#lists.isEmpty(tenMostActive)}">
-        <h2>De tien rijkste stinkerds</h2>
-        <div><table>
+<!--lijst met actiefste rekeningen (alleen hoofd mkb)!-->
+<div th:unless="${#lists.isEmpty(tenMostActive)}">
+    <h2>De tien rijkste stinkerds</h2>
+    <div>
+        <table>
 
             <tr>
                 <td>IBAN</td>
@@ -47,35 +50,36 @@
                 <td><span th:text="${account.balance}"/></td>
             </tr>
         </table>
-        </div>
+    </div>
+</div>
 
 <!--gemiddelde per sector (alleen hoofd mkb)!-->
-        <div th:unless="${#lists.isEmpty(tenMostActive)}">
-<h2>Gemiddelde per sector</h2>
-<table>
-    <tr>
-    <td>Sector</td>
-    <td>Gemiddeld saldo</td>
-    </tr>
+<div th:unless="${#lists.isEmpty(tenMostActive)}">
+    <h2>Gemiddelde per sector</h2>
+    <table>
+        <tr>
+            <td>Sector</td>
+            <td>Gemiddeld saldo</td>
+        </tr>
 
-    <tr th:each="sector : ${averageBalancePerSector}">
-        <td><span th:text="${sector.NAME}"></span></td>
-        <td><span th:text="${sector.averageBalance}"></span></td>
+        <tr th:each="sector : ${averageBalancePerSector}">
+            <td><span th:text="${sector.NAME}"></span></td>
+            <td><span th:text="${sector.averageBalance}"></span></td>
 
-    </tr>
-</table>
+        </tr>
+    </table>
 
 
-<!--knop voor uitloggen!-->
-<div>
-    <a href="templates/login.html"> <input type="submit" value="Uitloggen"> </a>
-    <!-- popup-functie voor bevestiging nog bouwen !-->
+    <!--knop voor uitloggen!-->
+    <div>
+        <a href="templates/login.html"> <input type="submit" value="Uitloggen"> </a>
+        <!-- popup-functie voor bevestiging nog bouwen !-->
+    </div>
+
+    <!--terug-knop!-->
+    <div>
+        <a href="client_view"> <input type="submit" value="Terug naar overzicht"> </a>
+    </div>
 </div>
-
-<!--terug-knop!-->
-<div>
-    <a href="client_view.html"> <input type="submit" value="Terug naar overzicht"> </a>
-</div>
-
 </body>
 </html>
