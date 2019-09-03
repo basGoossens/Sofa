@@ -6,10 +6,10 @@
 </head>
 <body>
 <!--home knop!-->
-<div><a href="index.html"> <input type="submit" value ="Home"> </a> </div>
+<div><a href="index"><input type="submit" value ="Home"></a></div>
 
 <h2>Account aanmaken</h2>
-<form name="new_client" id="new_client" action="#" th:action="@{}" th:object="${User}" method="post">
+<form name="new_client" id="new_client" action="#" th:action="@{newAccountHandler}" th:object="${client}" method="post">
     <table>
         <tr>
             <td>Voornaam:</td>
@@ -25,19 +25,19 @@
         </tr>
         <tr>
             <td>Straatnaam:</td>
-            <td><input type="text" th:field="*{Adress.street}"/></td>
+            <td><input type="text" th:field="*{Address.street}"/></td>
         </tr>
         <tr>
             <td>Huisnummer:</td>
-            <td><input type="text" th:field="*{Adress.houseNumber}"/></td>
+            <td><input type="text" th:field="*{Address.houseNumber}"/></td>
         </tr>
         <tr>
             <td>zipCode:</td>
-            <td><input type="text" th:field="*{Adress.zipCode}"/></td>
+            <td><input type="text" th:field="*{Address.zipCode}"/></td>
         </tr>
         <tr>
             <td>city:</td>
-            <td><input type="text" th:field="*{Adress.city}"/></td>
+            <td><input type="text" th:field="*{Address.city}"/></td>
         </tr>
         <tr>
             <td>Burger service nummer:</td>
@@ -60,11 +60,11 @@
             <td><input type="text" th:field="*{gender}"/></td>
         </tr>
         <tr>
-            <td><input type="submit" value="Login"></td>
+            <td><input type="submit" value="verzenden"></td>
         </tr>
     </table>
 </form>
 
-Ga <a href="/">terug</a> naar het begin...
+Ga <a href="index">terug</a> naar het begin...
 </body>
 </html>
