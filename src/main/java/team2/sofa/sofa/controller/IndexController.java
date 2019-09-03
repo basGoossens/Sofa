@@ -13,10 +13,22 @@ public class IndexController {
     @Autowired
     ClientDao clientDao;
 
+    @GetMapping(value = "")
+    public String startHandler() {
+        return "index";
+    }
+
+    @GetMapping(value = "index")
+    public String homeHandler() {
+        return "index";
+    }
+
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
         Client client = new Client();
-        model.addAttribute("member", client);
+        model.addAttribute("client", client);
         return "login";
+
     }
 }
+

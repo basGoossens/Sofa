@@ -16,6 +16,7 @@ public class DatabaseController {
     public String indexInitdbHandler(Model model) {
         dbInitializer.makeClient();
         dbInitializer.fillAccounts();
+        dbInitializer.createAndOrAccounts();
         return "index";
     }
 }

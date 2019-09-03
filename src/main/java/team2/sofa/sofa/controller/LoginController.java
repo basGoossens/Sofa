@@ -1,7 +1,6 @@
 package team2.sofa.sofa.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,23 +12,20 @@ import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 import team2.sofa.sofa.service.PasswordValidator;
 
-
 @Controller
 public class LoginController {
 
     @Autowired
     ClientDao clientDao;
-
     @Autowired
     EmployeeDao employeeDao;
 
 
-
-    @GetMapping(value = "login_employee.html")
+    @GetMapping(value = "login_employee")
     public String goTologinEmployeeHandler(Model model) {
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
-        return "login_employee.html";
+        return "login_employee";
 
     }
 
@@ -37,20 +33,19 @@ public class LoginController {
     public String loginClientHandler(@ModelAttribute Client client, Model model) {
         PasswordValidator passwordValidator = new PasswordValidator();
         boolean loginOk = passwordValidator.validateClientPassword(client);
-        if (loginOk)  {
-            /*Client currentClient = clientDao.findByUsername(client.getUserName());*/
+        if (loginOk) {
+            Client currentClient = clientDao.findByUsername(client.getUsername());
             return "client_view";
-        }
-        else return "login";
+        } else return "login";
     }
+
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute Employee employee, Model model) {
         PasswordValidator passwordValidator = new PasswordValidator();
         boolean loginOk = passwordValidator.validateEmployeePassword(employee);
         if (loginOk) {
-            Employee currentEmployee = employeeDao.findByUsername(employee.getUserName());
+            Employee currentEmployee = employeeDao.findByUsername(employee.getUsername());
             return "employee_view";
         } else return "login";
     }
-
 }

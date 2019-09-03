@@ -4,5 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import team2.sofa.sofa.model.Employee;
 
 public interface EmployeeDao extends CrudRepository<Employee, Integer> {
+
     public Employee findByUsername(String username);
 }

@@ -2,7 +2,6 @@ package team2.sofa.sofa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,27 +11,30 @@ public class Client extends User {
 
     private String username;
     private String password;
-    @ManyToMany (mappedBy = "owners")
+    @ManyToMany(mappedBy = "owners")
     private List<Account> accounts;
 
-    public Client(){
-        this(0, "", "", "", null, "", "", "",
-                null, "", 0, "", "");
+    public Client() {
+        this(0, "", "", "", null, "", "", "", null, "");
     }
 
-    public Client(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email,
-                  String telephoneNr, LocalDate birthday, String gender, int Id, String username, String password){
+    public Client(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email, String telephoneNr, LocalDate birthday, String gender) {
         super(id, firstName, prefix, lastName, address, SSN, email, telephoneNr, birthday, gender);
-        this.username = username;
-        this.password = password;
         this.accounts = new ArrayList<>();
     }
 
-    public String getUserName() {
+    public Client(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email, String telephoneNr, LocalDate birthday, String gender, String username, String password, List<Account> accounts) {
+        super(id, firstName, prefix, lastName, address, SSN, email, telephoneNr, birthday, gender);
+        this.username = username;
+        this.password = password;
+        this.accounts = accounts;
+    }
+
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -52,8 +54,7 @@ public class Client extends User {
         this.accounts = accounts;
     }
 
-    public void addAccount(Account account){
-        accounts.add(account);
+    public void addAccount(Account account) {
+        this.accounts.add(account);
     }
-
 }
