@@ -10,7 +10,7 @@
 <div> <a href="index.html"> <input type="submit" value ="Home"> </a> </div>
 
 
-<h1>Hallo, <span th:text="${user.name}"/></h1>
+<h1>Hallo, <span th:text="${employee.firstName}"/></h1>
 
 <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
 <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
