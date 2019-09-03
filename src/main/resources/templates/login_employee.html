@@ -5,15 +5,15 @@
     <title>Title</title>
 <body>
 <!--home knop!-->
-<div><a href="index.html"> <input type="submit" value ="Home"> </a> </div>
+<div><a href="index"> <input type="submit" value="Home"> </a></div>
 
 <h2>Sofa login pagina voor werknemers</h2>
 
-<form action="#" th:action="@{loginHandler}" th:object="${Employee}" method="post">
+<form action="#" th:action="@{loginEmployeeHandler}" th:object="${employee}" method="post">
     <table>
         <tr>
             <td>Naam werknemer:</td>
-            <td><input type="text" th:field="*{name}"/></td>
+            <td><input type="text" th:field="*{username}"/></td>
         </tr>
         <tr>
             <td>Password:</td>
@@ -25,7 +25,8 @@
     </table>
 </form>
 
-Ik ben een <a href="/login.html">klant</a>.
-Ga <a href="/">terug</a> naar het begin...
+<p>Ik ben een <a href="login">klant</a>.</p>
+<p>Ga <a href="index">terug</a> naar het begin...</p>
+
 </body>
 </html>

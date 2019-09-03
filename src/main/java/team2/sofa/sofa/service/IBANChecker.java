@@ -4,21 +4,22 @@ import java.math.BigInteger;
 
 public class IBANChecker {
 
-    public boolean checkControlNumberIBAN (String IBAN) {
+    public boolean checkControlNumberIBAN(String IBAN) {
         boolean check;
         int securityNumber = Integer.parseInt(Integer.toString(IBAN.charAt(2)) + Integer.toString(IBAN.charAt(3)));
 
         if (securityNumber < 2 || securityNumber > 98) {
             return check = false;
         } else {
-            String longNumberString =  bankCodeToString(IBAN) + bankAccountToString(IBAN) + countryCodeToString(IBAN)
+            String longNumberString = bankCodeToString(IBAN) + bankAccountToString(IBAN) + countryCodeToString(IBAN)
                     + securityNumber;
             BigInteger longNumber = new BigInteger(longNumberString);
             BigInteger divider = new BigInteger("97");
             BigInteger value = longNumber.mod(divider);
             int valueInt = value.intValue();
             if (valueInt == 1) {
-                return check = true;}
+                return check = true;
+            }
         }
         return check = false;
     }

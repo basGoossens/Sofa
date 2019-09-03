@@ -3,35 +3,49 @@ package team2.sofa.sofa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import team2.sofa.sofa.model.Client;
-import team2.sofa.sofa.model.Global;
-import team2.sofa.sofa.model.User;
+import team2.sofa.sofa.model.Employee;
 import team2.sofa.sofa.model.dao.ClientDao;
+import team2.sofa.sofa.model.dao.EmployeeDao;
 import team2.sofa.sofa.service.PasswordValidator;
-
-import java.util.List;
 
 @Controller
 public class LoginController {
 
     @Autowired
     ClientDao clientDao;
+    @Autowired
+    EmployeeDao employeeDao;
 
-    @RequestMapping("login")
-    public String loginHandler(Model model, Client client) {
-        return "login";
+
+    @GetMapping(value = "login_employee")
+    public String goTologinEmployeeHandler(Model model) {
+        Employee employee = new Employee();
+        model.addAttribute("employee", employee);
+        return "login_employee";
+
     }
 
-    @PostMapping(value = "loginHandler")
-    public String loginHandler(@ModelAttribute Client client, Model model) {
-    Client formClient = new Client();
+    @PostMapping(value = "loginClientHandler")
+    public String loginClientHandler(@ModelAttribute Client client, Model model) {
         PasswordValidator passwordValidator = new PasswordValidator();
         boolean loginOk = passwordValidator.validateClientPassword(client);
-        if (loginOk)  {
+        if (loginOk) {
             Client currentClient = clientDao.findByUsername(client.getUsername());
             return "client_view";
-        }
-        else return "login_fail";
+        } else return "login";
+    }
+
+    @PostMapping(value = "loginEmployeeHandler")
+    public String loginEmployeeHandler(@ModelAttribute Employee employee, Model model) {
+        PasswordValidator passwordValidator = new PasswordValidator();
+        boolean loginOk = passwordValidator.validateEmployeePassword(employee);
+        if (loginOk) {
+            Employee currentEmployee = employeeDao.findByUsername(employee.getUsername());
+            return "employee_view";
+        } else return "login";
     }
 }
