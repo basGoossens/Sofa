@@ -25,7 +25,7 @@ public class IndexController {
 
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
-        Client client = new Client(0, "pietje", "", "puk", null, "", "", "", "", "", "hoi", "doei", null);
+        Client client = new Client();
         model.addAttribute("client", client);
         return "login";
 
