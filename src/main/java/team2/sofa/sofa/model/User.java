@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Inheritance (strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class User {
 
     //Username,Password
     @Id
-    @GeneratedValue (generator = "USER_SEQ")
+    @GeneratedValue(generator = "USER_SEQ")
     private int id;
     private String firstName;
     private String prefix;
@@ -19,11 +19,15 @@ public abstract class User {
     private String SSN;
     private String email;
     private String telephoneNr;
-    private LocalDate birthday;
+    private String birthday;
     private String gender;
 
+    public User() {
+        super();
+    }
+
     public User(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email,
-                String telephoneNr, LocalDate birthday, String gender) {
+                String telephoneNr, String birthday, String gender) {
         this.id = id;
         this.firstName = firstName;
         this.prefix = prefix;
@@ -36,7 +40,9 @@ public abstract class User {
         this.gender = gender;
     }
 
-    public int getId() {return id;}
+    public int getId() {
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -98,11 +104,11 @@ public abstract class User {
         this.telephoneNr = telephoneNr;
     }
 
-    public LocalDate getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -113,4 +119,9 @@ public abstract class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public abstract void setUsername(String s);
+
+    public abstract void setPassword(String s);
+
 }

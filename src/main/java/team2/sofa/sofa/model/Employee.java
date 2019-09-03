@@ -15,25 +15,24 @@ public class Employee extends User {
     private EmployeeRole role;
 
 
-
-    public Employee(){
-        this(0,"","", "", null, "", "",
-                "",null, "" ,"" , "");
+    public Employee() {
+        this(0, "", "", "", null, "", "",
+                "", null, "", "", "");
     }
 
     public Employee(int id, String firstName, String prefix, String lastName, Address address,
-                    String SSN, String email, String telephoneNr, LocalDate birthday, String gender,
+                    String SSN, String email, String telephoneNr, String birthday, String gender,
                     String username, String password) {
         super(id, firstName, prefix, lastName, address, SSN, email, telephoneNr, birthday, gender);
         this.username = username;
         this.password = password;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
