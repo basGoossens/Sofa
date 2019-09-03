@@ -1,8 +1,11 @@
 package team2.sofa.sofa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
@@ -20,9 +23,10 @@ import java.util.*;
 
 @Service
 public class DbInitializer {
-    private List<String> rawCustomerList;
+    private List<String> rawDataList;
     private Stack<String> ssnStack;
     private Stack<String> ibanStack;
+    private Stack<String> companyList;
     private int[] numberAccounts;
 
     @Autowired
@@ -34,17 +38,26 @@ public class DbInitializer {
 
     public DbInitializer(){
         super();
-        rawCustomerList = makeClientList();
-        ssnStack = SSNFunctionality.bsnStack(rawCustomerList.size());
-        this.ibanStack = new IBANGenerator().ibanStack(rawCustomerList.size());
+        rawDataList = makeDataList();
+        ssnStack = SSNFunctionality.bsnStack(rawDataList.size());
+        this.ibanStack = new IBANGenerator().ibanStack(rawDataList.size());
         numberAccounts = new int[]{0,1,2,3};
     }
 
-    private List<String> makeClientList(){
+    private List<String> makeCompanyList(){
+        Stack<String> comp = new Stack<>();
+        for (int i = 0; i < rawDataList.size(); i++) {
+            String[] raw = rawDataList.get(i).split(",");
+            comp.push(raw[11]);
+        }
+        return comp;
+    }
+
+    private List<String> makeDataList(){
         Scanner fileReader;
         List<String> u = new ArrayList<>();
         try {
-            Resource resource = new ClassPathResource("Particulier.csv");
+            Resource resource = new ClassPathResource("Data.csv");
             File customerList = resource.getFile();
             fileReader = new Scanner(customerList);
             fileReader.nextLine();
@@ -60,9 +73,9 @@ public class DbInitializer {
     }
 
     public void makeClient() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 50; i++) {
             Client client = new Client();
-            String[] raw = rawCustomerList.get(i).split(",");
+            String[] raw = rawDataList.get(i).split(",");
             setName(client, raw);
             client.setAddress(makeAddress(raw));
             client.setEmail(raw[5]);
@@ -70,7 +83,7 @@ public class DbInitializer {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
             client.setBirthday(LocalDate.parse(raw[7], formatter));
             client.setGender(raw[8]);
-            client.setUserName(raw[9]);
+            client.setUsername(raw[9]);
             client.setPassword(raw[10]);
             client.setSSN(ssnStack.pop());
             clientDao.save(client);
@@ -116,28 +129,39 @@ public class DbInitializer {
         return a;
     }
 
-    public void fillAccounts(){
+    public void fillAccounts() {
         Iterable<Client> client = clientDao.findAll();
-        for (Client c: client
-             ) {connectAccounts(c);
+        for (Client c : client
+        ) {
+            Random r = new Random();
+            int result = r.nextInt(3);
+            for (int i = 0; i < result; i++) {
+                Account a = new Account();
+                a.setIBAN(ibanStack.pop());
+                a.setBalance((int)(r.nextDouble()*10000)/100.0);
+                connectAccount(c, a);
+            }
+        }
+    }
+    public void createAndOrAccounts(){
+        List<Client> client2 = clientDao.findClientsByAccountsIsGreaterThan(1);
+        for (int i = 0; i < client2.size() ; i++) {
+            List<Account> list = client2.get(i).getAccounts();
+            Account a = list.get(1);
+            Random r = new Random();
+            int fakeid = r.nextInt(50);
+            Optional<Client> c = clientDao.findById(fakeid);
+            Client client = c.get();
+            connectAccount(client,a);
 
         }
     }
 
-
-
-
-    private void connectAccounts(Client c){
-        Random r = new Random();
-        int result = r.nextInt(3);
-        for (int i = 0; i < result ; i++) {
-            Account a = new Account();
-            a.setIBAN(new IBANGenerator().getIBAN());
-            c.addAccount(a);
-            a.addClient(c);
-            clientDao.save(c);
-            accountDao.save(a);
+    private void connectAccount(Client client, Account account){
+            client.addAccount(account);
+            account.addClient(client);
+            clientDao.save(client);
+            accountDao.save(account);
         }
-    }
-
 }
+

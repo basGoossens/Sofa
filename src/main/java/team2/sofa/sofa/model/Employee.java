@@ -15,10 +15,9 @@ public class Employee extends User {
     private EmployeeRole role;
 
 
-
-    public Employee(){
-        this(0,"","", "", null, "", "",
-                "",null, "" ,"" , "");
+    public Employee() {
+        this(0, "", "", "", null, "", "",
+                "", null, "", "", "");
     }
 
     public Employee(int id, String firstName, String prefix, String lastName, Address address,
@@ -29,11 +28,11 @@ public class Employee extends User {
         this.password = password;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

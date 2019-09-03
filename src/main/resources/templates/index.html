@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Sofa Home</title>
@@ -7,12 +7,12 @@
 <body>
 
 <!--home knop!-->
-<div><a href="index.html"> <input type="submit" value ="Home"> </a> </div>
+<div><a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 <h1>Welkom bij Sofa</h1>
 <h2>Klik <a href="initdb">hier</a> om de database te vullen.</h2>
 <p>Zoals u kunt zien is Sofa nog niet gereed.</p>
-<img src="images/ucbank.jpg" height="853" width="1280" alt="bank under-construction"/>
+<img th:src="@{images/ucbank.jpg}" height="450" alt="bank" />
 <p>Nog even geduld, het wordt werkelijk fantastisch</p>
 
 

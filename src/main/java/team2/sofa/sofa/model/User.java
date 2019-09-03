@@ -22,6 +22,10 @@ public abstract class User {
     private LocalDate birthday;
     private String gender;
 
+    public User() {
+        super();
+    }
+
     public User(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email,
                 String telephoneNr, LocalDate birthday, String gender) {
         this.id = id;
