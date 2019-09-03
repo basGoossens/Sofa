@@ -2,7 +2,6 @@ package team2.sofa.sofa.service;
 
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Client;
-import team2.sofa.sofa.model.Global;
 import team2.sofa.sofa.model.User;
 import team2.sofa.sofa.service.BalanceChecker;
 
@@ -10,12 +9,9 @@ import java.util.List;
 
 public class FundTransfer {
 
-    //Haal current account uit Global
-    public Account transferfromAccount = Global.getCurrentAccount();
-
-    public FundTransfer(Account toAccount, Client toClient, double bedrag) {
+    public FundTransfer(Account fromAccount, Account toAccount, Client toClient, double bedrag) {
         BalanceChecker checker = new BalanceChecker();
-        boolean balanceOk = checker.BalanceCheck(bedrag);
+        boolean balanceOk = checker.BalanceCheck(fromAccount, bedrag);
         boolean toAccountOk = accountChecker(toAccount, toClient);
 
         if (!toAccountOk) { //report error en breek transactie af indien check niet OK
@@ -24,7 +20,7 @@ public class FundTransfer {
         }
 
         if (balanceOk) { //report error en breek transactie af indien check niet OK
-            transferfromAccount.setBalance(transferfromAccount.getBalance() - bedrag);
+            fromAccount.setBalance(fromAccount.getBalance() - bedrag);
             toAccount.setBalance(toAccount.getBalance() + bedrag);
         }
         else reportError();

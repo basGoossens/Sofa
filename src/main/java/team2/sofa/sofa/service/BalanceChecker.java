@@ -5,9 +5,7 @@ import team2.sofa.sofa.model.Global;
 
 public class BalanceChecker {
 
-    public boolean BalanceCheck(double bedrag){
-        //Haal current account uit Global
-        Account account = Global.getCurrentAccount();
+    public boolean BalanceCheck(Account account, double bedrag){
         return (account.getBalance() >= bedrag);
     }
 }
