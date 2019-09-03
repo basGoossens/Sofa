@@ -19,6 +19,8 @@ public class LoginController {
     ClientDao clientDao;
     @Autowired
     EmployeeDao employeeDao;
+    @Autowired
+    PasswordValidator passwordValidator;
 
 
     @GetMapping(value = "login_employee")
@@ -31,10 +33,10 @@ public class LoginController {
 
     @PostMapping(value = "loginClientHandler")
     public String loginClientHandler(@ModelAttribute Client client, Model model) {
-        PasswordValidator passwordValidator = new PasswordValidator();
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
-            Client currentClient = clientDao.findByUsername(client.getUsername());
+            Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
+            model.addAttribute("client", loggedInClient);
             return "client_view";
         } else return "login";
     }
