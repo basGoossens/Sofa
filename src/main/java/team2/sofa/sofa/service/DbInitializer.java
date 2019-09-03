@@ -77,7 +77,7 @@ public class DbInitializer {
             client.setEmail(raw[5]);
             client.setTelephoneNr(raw[6]);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-            client.setBirthday(LocalDate.parse(raw[7], formatter));
+            client.setBirthday(raw[7]);
             client.setGender(raw[8]);
             client.setUsername(raw[9]);
             client.setPassword(raw[10]);
