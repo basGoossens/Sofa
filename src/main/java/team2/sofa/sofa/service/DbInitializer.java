@@ -70,7 +70,7 @@ public class DbInitializer {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
             client.setBirthday(LocalDate.parse(raw[7], formatter));
             client.setGender(raw[8]);
-            client.setUserName(raw[9]);
+            client.setUsername(raw[9]);
             client.setPassword(raw[10]);
             client.setSSN(ssnStack.pop());
             clientDao.save(client);

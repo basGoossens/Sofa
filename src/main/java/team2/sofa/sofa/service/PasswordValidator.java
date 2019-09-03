@@ -20,7 +20,7 @@ import java.util.List;
 
     public boolean validateClientPassword(Client client) {
         boolean loginOk;
-        Client clients = clientDao.findByUsername(client.getUserName());
+        Client clients = clientDao.findByUsername(client.getUsername());
         loginOk = client.getPassword().equals(clients.getPassword());
         return loginOk;
     }

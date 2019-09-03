@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 public class Client extends User {
-
     private String username;
     private String password;
     @ManyToMany (mappedBy = "owners")
@@ -28,11 +27,11 @@ public class Client extends User {
         this.accounts = new ArrayList<>();
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUserName(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

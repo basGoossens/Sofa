@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
 <!--home knop!-->
-<div><a href="index.html"> <input type="submit" value ="Home"> </a> </div>
+<div><a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 <h2>Sofa login pagina</h2>
 
-<form action="#" th:action="@{loginHandler}" th:object="${Client}" method="post">
+<form action="#" th:action="@{loginHandler}" th:object="${client}" method="post">
     <table>
         <tr>
             <td>Naam:</td>
@@ -27,6 +27,6 @@
 </form>
 
 Ik ben een <a href="/login_employee.html">medewerker</a>...
-Ga <a href="/">terug</a> naar het begin...
+
 </body>
 </html>
