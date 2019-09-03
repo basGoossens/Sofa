@@ -5,6 +5,6 @@ import team2.sofa.sofa.model.Client;
 
 public interface ClientDao extends CrudRepository<Client, Integer> {
 
-    Client findByUsername(String username);
+    Client findClientByUsername(String username);
 
 }
