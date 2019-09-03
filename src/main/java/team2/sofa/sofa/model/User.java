@@ -119,4 +119,9 @@ public abstract class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public abstract void setUsername(String s);
+
+    public abstract void setPassword(String s);
+
 }

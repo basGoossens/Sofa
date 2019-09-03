@@ -38,7 +38,7 @@ public class NewClientController {
     public String loginHandler(@ModelAttribute Client client, Model model) {
         addressDao.save(client.getAddress());
         clientDao.save(client);
-        Client savedClient = clientDao.findByUsername(client.getUsername());
+        Client savedClient = clientDao.findClientByUsername(client.getUsername());
         IBANGenerator newIBAN = new IBANGenerator();
         Account newAccount = new Account();
         newAccount.setIBAN(newIBAN.getIBAN());
