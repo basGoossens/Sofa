@@ -43,11 +43,11 @@ public class LoginController {
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute Employee employee, Model model) {
-        PasswordValidator passwordValidator = new PasswordValidator();
         boolean loginOk = passwordValidator.validateEmployeePassword(employee);
         if (loginOk) {
-            Employee currentEmployee = employeeDao.findByUsername(employee.getUsername());
+            Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
+            model.addAttribute("employee", currentEmployee);
             return "employee_view";
-        } else return "login";
+        } else return "login_employee";
     }
 }

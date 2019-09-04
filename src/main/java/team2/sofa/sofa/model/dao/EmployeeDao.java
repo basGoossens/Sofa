@@ -5,5 +5,6 @@ import team2.sofa.sofa.model.Employee;
 
 public interface EmployeeDao extends CrudRepository<Employee, Integer> {
 
-    Employee findByUsername(String username);
+    Employee findEmployeeByUsername(String username);
 }
+
