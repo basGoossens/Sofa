@@ -36,11 +36,11 @@ public class EmployeeViewController {
 
 
 //werkt nog niet
-//    @GetMapping(value = "TenMostActiveHandler")
-//    public String TenMostActiveHandler(@RequestParam(name = "id") int id, Client client, Model model) {
-//        Client chosenClient = clientDao.findClientById(id);
-//        model.addAttribute("client", chosenClient);
-//        return "client_view";
-//    }
+    @GetMapping(value = "TenMostActiveHandler")
+    public String TenMostActiveHandler(@RequestParam(name = "id") int id, Client client, Model model) {
+        Client chosenClient = clientDao.findClientById(id);
+        model.addAttribute("client", chosenClient);
+        return "client_view";
+    }
 
 }
