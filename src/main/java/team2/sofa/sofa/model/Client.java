@@ -58,7 +58,7 @@ public class Client extends User {
         this.accounts.add(account);
     }
 
-    //methode om het totaal aantal transacties van alle rekeningen van een klant te berekenen
+    /** Methode om het totaal aantal transacties van alle rekeningen van een klant te berekenen */
     public int getTotalNumberOfTransactions(){
         Client client = this;
         int totalNumberOfTransactions = 0;
