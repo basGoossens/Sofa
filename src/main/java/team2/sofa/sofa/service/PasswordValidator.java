@@ -34,7 +34,7 @@ public class PasswordValidator {
 
     public boolean validateEmployeePassword(Employee employee) {
         boolean loginOk;
-        Employee employee1 = employeeDao.findByUsername(employee.getUsername());
+        Employee employee1 = employeeDao.findEmployeeByUsername(employee.getUsername());
         loginOk = employee.getPassword().equals(employee1.getPassword());
         return loginOk;
     }

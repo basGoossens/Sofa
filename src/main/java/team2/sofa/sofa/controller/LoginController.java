@@ -55,10 +55,10 @@ public class LoginController {
         if (employee.getPassword().isEmpty()){
             return "login_employee";
         }
-        PasswordValidator passwordValidator = new PasswordValidator();
         boolean loginOk = passwordValidator.validateEmployeePassword(employee);
         if (loginOk) {
-            Employee currentEmployee = employeeDao.findByUsername(employee.getUsername());
+            Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
+            model.addAttribute("employee", currentEmployee);
             return "employee_view";
         } else return "login_employee";
     }
