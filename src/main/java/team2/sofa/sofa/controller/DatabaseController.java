@@ -19,11 +19,13 @@ public class DatabaseController {
 
     @GetMapping(value = "initdb")
     public String indexInitdbHandler(Model model) {
-        dbInitializer.makeClient(50);
+        dbInitializer.makeClient(20);
         dbInitializer.fillAccounts();
-        dbInitializer.makeEmployee(98, EmployeeRole.HOOFD_PARTICULIEREN);
-        dbInitializer.makeEmployee(97, EmployeeRole.HOOFD_MKB);
-        dbInitializer.makeEmployee(96, EmployeeRole.ACCOUNTMANAGER);
+        dbInitializer.makeEmployee(EmployeeRole.HOOFD_PARTICULIEREN);
+        dbInitializer.makeEmployee(EmployeeRole.HOOFD_MKB);
+        dbInitializer.makeEmployee(EmployeeRole.ACCOUNTMANAGER);
+        dbInitializer.makeBusiness(5);
+        dbInitializer.makeBusinessAccount(5);
         return "index";
     }
 }
