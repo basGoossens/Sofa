@@ -95,7 +95,7 @@ public class DbInitializer {
             client.setGender(rawData.get(i)[8]);
             client.setUsername(rawData.get(i)[9]);
             client.setPassword(rawData.get(i)[10]);
-            client.setSSN(ssnStack.pop());
+            client.setSsn(ssnStack.pop());
             clientDao.save(client);
         }
     }
@@ -117,7 +117,7 @@ public class DbInitializer {
         employee.setGender(rawData.get(index)[8]);
         employee.setUsername(rawData.get(index)[9]);
         employee.setPassword(rawData.get(index)[10]);
-        employee.setSSN(ssnStack.pop());
+        employee.setSsn(ssnStack.pop());
         employeeDao.save(employee);
     }
 

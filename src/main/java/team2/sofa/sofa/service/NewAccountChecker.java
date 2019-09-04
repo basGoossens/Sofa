@@ -17,19 +17,21 @@ public class NewAccountChecker {
     @Autowired
     AddressDao addressDao;
 
-    public boolean usernameExistsChecker(String newUsername) {
-       if(clientDao.findClientByUsername(newUsername).getUsername().equals(newUsername)) {
-           return false;}
+    public NewAccountChecker() {super();}
+
+    public void usernameExistsChecker(Client newClient) {
+       if(clientDao.findClientByUsername(newClient.getUsername()).getUsername().equals(newClient.getUsername())) {
+           clientDao.save(clientDao.findClientByUsername(newClient.getUsername()));}
        else {
-           return true;
+           clientDao.save(newClient);
        }
     }
 
-    public boolean SSNNameExistsChecker(String newSsn) {
-        if(clientDao.findClientBySsn(newSsn).getSsn().equals(newSsn)) {
-            return false;
+    public Client SSNNameExistsChecker(Client newClient) {
+        if(clientDao.findClientBySsn(newClient.getSsn()).getSsn().equals(newClient.getSsn())) {
+            return clientDao.findClientBySsn(newClient.getSsn());
         } else {
-            return true;
+            return newClient;
         }
     }
 
