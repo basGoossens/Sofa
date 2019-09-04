@@ -12,6 +12,7 @@
 ​
 <h1>Hallo <span th:text="${employee.firstName}"/></h1>
 ​
+​<form action="#" th:action="@{/EmployeeViewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
 <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
 <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
     <h2>De tien rijkste stinkerds</h2>
@@ -22,15 +23,17 @@
             <td>Naam</td>
             <td>Saldo</td>
         </tr>
+
         <tr th:each="Account : ${tenHighestBalance}">
-            <td><span th:text="${Account.IBAN}"/></td>
+            <td>
+                <a th:href="@{EmployeeViewHandler(id=${Account.id})}"><span th:text="${Account.IBAN}"/></a></td>
             <td><span th:text="${Account.owners.get(0).getLastName()}"/></td>
             <td><span th:text="${Account.balance}"/></td>
         </tr>
     </table>
 </div>
 ​
-​
+
 <!--lijst met actiefste rekeningen - functionaliteit met th:if werkt nog niet en is uitgecomment-->
 <div th:unless="${#lists.isEmpty(tenMostActive)}"> <!--, th:if="${employee.getRole() == 'HOOFD_MKB'}"!-->
     <h2>De tien meest actieve klanten</h2>
@@ -39,12 +42,13 @@
         <tr>
             <td>KlantId</td>
             <td>Naam</td>
-            <td>Saldo</td>
+            <td>Transacties</td>
         </tr>
         <tr th:each="Client : ${tenMostActive}">
             <td><span th:text="${Client.key.getId()}"/></td>
-            <td><span th:text="${Client.value}"/></td>
             <td><span th:text="${Client.key.getLastName()}"/></td>
+            <td><span th:text="${Client.value}"/></td>
+
 
         </tr>
     </table>
@@ -77,6 +81,6 @@
 <div>
     <a href="login_employee"> <input type="submit" value="Terug naar overzicht"> </a>
 </div>
-​
+    ​</form>
 </body>
 </html>
