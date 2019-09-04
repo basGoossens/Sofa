@@ -5,4 +5,6 @@ import team2.sofa.sofa.model.Account;
 
 public interface AccountDao extends CrudRepository<Account, Integer> {
 
+    Account findAccountById(int id);
+
 }
