@@ -20,31 +20,46 @@ public class NewAccountChecker {
     public NewAccountChecker() {super();}
 
     public void usernameExistsChecker(Client newClient) {
-       if(clientDao.findClientByUsername(newClient.getUsername()).getUsername().equals(newClient.getUsername())) {
-           clientDao.save(clientDao.findClientByUsername(newClient.getUsername()));}
-       else {
+       if(clientDao.findClientByUsername(newClient.getUsername()) != null) {
+           if (clientDao.findClientByUsername(newClient.getUsername()).getUsername().equals(newClient.getUsername())) {
+               clientDao.save(clientDao.findClientByUsername(newClient.getUsername()));
+           } else {
+               clientDao.save(newClient);
+           }
+       }  else {
            clientDao.save(newClient);
-       }
+           }
     }
 
     public Client SSNNameExistsChecker(Client newClient) {
-        if(clientDao.findClientBySsn(newClient.getSsn()).getSsn().equals(newClient.getSsn())) {
-            return clientDao.findClientBySsn(newClient.getSsn());
+        if(clientDao.findClientBySsn(newClient.getSsn()) != null){
+            if (clientDao.findClientBySsn(newClient.getSsn()).getSsn().equals(newClient.getSsn())){
+                return clientDao.findClientBySsn(newClient.getSsn());
+            };
         } else {
             return newClient;
         }
+        return newClient;
     }
 
 
-    public void AddressExistsChecker(Address checkAddress) {
-
-        if(addressDao.findAddressByZipCode(checkAddress.getZipCode()).getZipCode().equals(checkAddress.getZipCode()) &&
-                addressDao.findAddressByHouseNumber(checkAddress.getHouseNumber()).getHouseNumber() == (checkAddress.getHouseNumber())) {
+    public void AddressExistsChecker(Client client) {
+        String Zip = client.getAddress().getZipCode();
+        int number = client.getAddress().getHouseNumber();
+        boolean zipcheck = false;
+        boolean numbercheck = false;
+        if (addressDao.findAddressByZipCode(Zip) != null){
+            zipcheck = addressDao.findAddressByZipCode(Zip).getZipCode().equals(Zip);
+        }
+        if (addressDao.findAddressByHouseNumber(number) != null){
+            numbercheck = addressDao.findAddressByHouseNumber(number).getHouseNumber() == number;
+        }
+        if(zipcheck && numbercheck){
             Address newAddress;
-            newAddress = AddressExists(checkAddress);
+            newAddress = AddressExists(client.getAddress());
             addressDao.save(newAddress);
         } else {
-            addressDao.save(checkAddress);
+            addressDao.save(client.getAddress());
         }
     }
 

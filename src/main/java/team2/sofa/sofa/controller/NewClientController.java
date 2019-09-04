@@ -1,7 +1,7 @@
 package team2.sofa.sofa.controller;
 
 
-import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,8 +42,7 @@ public class NewClientController {
 
     @PostMapping(value = "newAccountHandler")
     public String loginHandler(@ModelAttribute Client client, Model model) {
-        Address tempAddress = client.getAddress();
-        newAccountChecker.AddressExistsChecker(tempAddress);
+        newAccountChecker.AddressExistsChecker(client);
         client = newAccountChecker.SSNNameExistsChecker(client);
         newAccountChecker.usernameExistsChecker(client);
 

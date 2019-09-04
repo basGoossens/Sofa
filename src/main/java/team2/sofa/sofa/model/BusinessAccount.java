@@ -9,7 +9,7 @@ public class BusinessAccount extends Account{
 
     @OneToMany
     private List<PDQ> coupledPdqMachines;
-    @OneToOne
+    @ManyToOne
     private Business business;
 
     public BusinessAccount() {

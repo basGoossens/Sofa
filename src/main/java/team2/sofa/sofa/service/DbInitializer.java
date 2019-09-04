@@ -188,7 +188,7 @@ public class DbInitializer {
         }
         a.setStreet(street);
         a.setHouseNumber(Integer.parseInt(splits[splits.length - 1]));
-        a.setZipCode(split[3]);
+        a.setZipCode(split[3].replace("\"", ""));
         a.setCity(split[4].replace("\"", ""));
         addressDao.save(a);
         return a;
