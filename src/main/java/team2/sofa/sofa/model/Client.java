@@ -63,7 +63,7 @@ public class Client extends User {
         Client client = this;
         int totalNumberOfTransactions = 0;
         for (Account a: client.getAccounts()
-             ) {totalNumberOfTransactions += a.getTransactions().size();
+        ) {totalNumberOfTransactions += a.getTransactions().size();
         }
         return totalNumberOfTransactions;
     }
