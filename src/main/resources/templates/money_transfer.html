@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Geld overmaken</title>
+</head>
+<body>
+<!--home knop!-->
+<div><a href="index"><input type="submit" value ="Home"></a></div>
+<h2>Geld overmaken naar </h2>
+<form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${account}" method="post">
+    <table>
+        <tr>
+            <td>Voornaam rekeninghouder:</td>
+            <td><input type="text" th:field="*{firstName}"/></td>
+        </tr>
+        <tr>
+            <td>Achternaam rekeninghouder:</td>
+            <td><input type="text" th:field="*{lastName}"/></td>
+        </tr>
+        <tr>
+            <td>IBAN rekeninghouder:</td>
+            <td><input type="text" th:field="*{iban}"/></td>
+        </tr>
+        <tr>
+            <td>Bedrag:</td>
+            <td><input type="text" th:field="*{amount}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Overmaken"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

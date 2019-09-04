@@ -25,13 +25,16 @@ public class PasswordValidator {
     public boolean validateClientPassword(Client client) {
         boolean loginOk;
         Client clients = clientDao.findClientByUsername(client.getUsername());
-        loginOk = client.getPassword().equals(clients.getPassword());
-        return loginOk;
+        if (!(clients == null)){
+            loginOk = client.getPassword().equals(clients.getPassword());
+            return loginOk;
+        }
+        return false;
     }
 
     public boolean validateEmployeePassword(Employee employee) {
         boolean loginOk;
-        Employee employee1 = employeeDao.findByUsername(employee.getUsername());
+        Employee employee1 = employeeDao.findEmployeeByUsername(employee.getUsername());
         loginOk = employee.getPassword().equals(employee1.getPassword());
         return loginOk;
     }
