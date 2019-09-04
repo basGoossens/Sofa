@@ -10,4 +10,6 @@ public interface AccountDao extends CrudRepository<Account, Integer> {
 
     public List<Account> findTop10ByOrderByBalanceDesc();
 
+    Account findAccountById(int id);
+
 }
