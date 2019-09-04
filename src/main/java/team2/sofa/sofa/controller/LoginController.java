@@ -33,6 +33,12 @@ public class LoginController {
 
     @PostMapping(value = "loginClientHandler")
     public String loginClientHandler(@ModelAttribute Client client, Model model) {
+        if (client.getUsername().isEmpty()){
+            return "login";
+        }
+        if (client.getPassword().isEmpty()){
+            return "login";
+        }
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
             Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
@@ -43,11 +49,17 @@ public class LoginController {
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute Employee employee, Model model) {
+        if (employee.getUsername().isEmpty()){
+            return "login_employee";
+        }
+        if (employee.getPassword().isEmpty()){
+            return "login_employee";
+        }
         PasswordValidator passwordValidator = new PasswordValidator();
         boolean loginOk = passwordValidator.validateEmployeePassword(employee);
         if (loginOk) {
             Employee currentEmployee = employeeDao.findByUsername(employee.getUsername());
             return "employee_view";
-        } else return "login";
+        } else return "login_employee";
     }
 }

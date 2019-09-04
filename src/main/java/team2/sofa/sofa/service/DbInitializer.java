@@ -5,10 +5,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import team2.sofa.sofa.model.*;
-import team2.sofa.sofa.model.dao.AccountDao;
-import team2.sofa.sofa.model.dao.AddressDao;
-import team2.sofa.sofa.model.dao.ClientDao;
-import team2.sofa.sofa.model.dao.EmployeeDao;
+import team2.sofa.sofa.model.dao.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,8 +23,10 @@ public class DbInitializer {
     AccountDao accountDao;
     @Autowired
     EmployeeDao employeeDao;
+    @Autowired
+    BusinessDao businessDao;
 
-    private List<String[]> rawData;
+    private Stack<String[]> rawData;
     private Stack<String> ssnStack;
     private Stack<String> ibanStack;
     private Stack<String> companyList;
@@ -38,7 +37,31 @@ public class DbInitializer {
         rawData = makeDataList();
         ssnStack = SSNFunctionality.bsnStack(rawData.size());
         this.ibanStack = new IBANGenerator().ibanStack(rawData.size());
+        this.companyList = makeCompanyList();
         numberAccounts = new int[]{0, 1, 2, 3};
+    }
+    public void makeBusiness(int count){
+        for (int i = 0; i < count ; i++) {
+            Business b = new Business();
+            b.setBusinessName(companyList.pop());
+            b.setSector(BusinessSector.AGRARISCH);
+            Client c = clientDao.findClientById(5);
+            b.setOwner(c);
+            businessDao.save(b);
+        }
+
+    }
+    public void makeBusinessAccount(int count){
+        for (int i = 0; i < count ; i++) {
+            BusinessAccount ba = new BusinessAccount();
+            Random r = new Random();
+            ba.setIBAN(ibanStack.pop());
+            ba.setBalance((int) (r.nextDouble() * 10000) / 100.0);
+            Business b = businessDao.findById(i+1).get();
+            ba.setBusiness(b);
+            Client c = clientDao.findClientById(i+4);
+            connectAccount(c, ba);
+        }
     }
 
     /**
@@ -46,10 +69,10 @@ public class DbInitializer {
      * @return
      * lijst bedrijfsnamen om in het model Business te gebruiken
      */
-    private List<String> makeCompanyList() {
+    private Stack<String> makeCompanyList() {
         Stack<String> comp = new Stack<>();
         for (int i = 0; i < rawData.size(); i++) {
-            comp.push(rawData.get(i)[11]);
+            comp.push(rawData.pop()[11]);
         }
         return comp;
     }
@@ -59,9 +82,9 @@ public class DbInitializer {
      * @return
      * Lijst van iedere line in CSV bestand als ruwe String inclusief comma's.
      */
-    private List<String[]> makeDataList() {
+    private Stack<String[]> makeDataList() {
         Scanner fileReader;
-        List<String[]> u = new ArrayList<>();
+        Stack<String[]> u = new Stack<>();
         try {
             Resource resource = new ClassPathResource("DataKlein.csv");
             File customerList = resource.getFile();
@@ -69,7 +92,7 @@ public class DbInitializer {
             fileReader.nextLine();
             while (fileReader.hasNextLine()) {
                 String[] split = fileReader.nextLine().split(",");
-                u.add(split);
+                u.push(split);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -86,38 +109,39 @@ public class DbInitializer {
     public void makeClient(int count) {
         for (int i = 0; i < count; i++) {
             Client client = new Client();
-            setName(client, rawData.get(i));
-            client.setAddress(makeAddress(rawData.get(i)));
-            client.setEmail(rawData.get(i)[5]);
-            client.setTelephoneNr(rawData.get(i)[6]);
+            String[] x = rawData.pop();
+            setName(client, x);
+            client.setAddress(makeAddress(x));
+            client.setEmail(x[5]);
+            client.setTelephoneNr(x[6]);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-            client.setBirthday(rawData.get(i)[7]);
-            client.setGender(rawData.get(i)[8]);
-            client.setUsername(rawData.get(i)[9]);
-            client.setPassword(rawData.get(i)[10]);
-            client.setSSN(ssnStack.pop());
+            client.setBirthday(x[7]);
+            client.setGender(x[8]);
+            client.setUsername(x[9]);
+            client.setPassword(x[10]);
+            client.setSsn(ssnStack.pop());
             clientDao.save(client);
         }
     }
 
     /**
      * maakt Employees en slaat deze op in DB
-     * @param index welk index nummer te gebruiken in rawData List
      * @param role de rol van de te maken Employee zoals vermeld in Enum EmployeeRole
      */
-    public void makeEmployee(int index, EmployeeRole role){
+    public void makeEmployee( EmployeeRole role){
         Employee employee = new Employee();
-        setName(employee, rawData.get(index));
-        employee.setAddress(makeAddress(rawData.get(index)));
+        String[] emp = rawData.pop();
+        setName(employee, emp);
+        employee.setAddress(makeAddress(emp));
         employee.setRole(role);
-        employee.setEmail(rawData.get(index)[5]);
-        employee.setTelephoneNr(rawData.get(index)[6]);
+        employee.setEmail(emp[5]);
+        employee.setTelephoneNr(emp[6]);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-        employee.setBirthday(rawData.get(index)[7]);
-        employee.setGender(rawData.get(index)[8]);
-        employee.setUsername(rawData.get(index)[9]);
-        employee.setPassword(rawData.get(index)[10]);
-        employee.setSSN(ssnStack.pop());
+        employee.setBirthday(emp[7]);
+        employee.setGender(emp[8]);
+        employee.setUsername(emp[9]);
+        employee.setPassword(emp[10]);
+        employee.setSsn(ssnStack.pop());
         employeeDao.save(employee);
     }
 
@@ -127,7 +151,7 @@ public class DbInitializer {
      * @param split de String Array met data uit CSV bestand.
      */
     private void setName(User user, String[] split) {
-        user.setFirstName(split[0]);
+        user.setFirstName(split[0].replace("\"", ""));
         if (split[1].startsWith("\"")) {
             String opgeschoond = split[1].replace("\"", "");
             String[] splits = opgeschoond.split(" ");

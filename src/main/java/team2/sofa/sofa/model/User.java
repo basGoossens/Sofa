@@ -16,7 +16,7 @@ public abstract class User {
     private String lastName;
     @ManyToOne
     private Address address;
-    private String SSN;
+    private String ssn;
     private String email;
     private String telephoneNr;
     private String birthday;
@@ -33,7 +33,7 @@ public abstract class User {
         this.prefix = prefix;
         this.lastName = lastName;
         this.address = address;
-        this.SSN = SSN;
+        this.ssn = ssn;
         this.email = email;
         this.telephoneNr = telephoneNr;
         this.birthday = birthday;
@@ -80,13 +80,11 @@ public abstract class User {
         this.address = address;
     }
 
-    public String getSSN() {
-        return SSN;
+    public String getSsn() {
+        return ssn;
     }
 
-    public void setSSN(String SSN) {
-        this.SSN = SSN;
-    }
+    public void setSsn(String ssn) { this.ssn= ssn; }
 
     public String getEmail() {
         return email;
