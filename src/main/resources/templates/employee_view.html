@@ -33,18 +33,19 @@
 ​
 <!--lijst met actiefste rekeningen (alleen hoofd mkb)!-->
 <div th:unless="${#lists.isEmpty(tenMostActive)}">
-    <h2>De tien rijkste stinkerds</h2>
+    <h2>De tien meest actieve klanten</h2>
     <table>
         ​
         <tr>
-            <td>IBAN</td>
+            <td>KlantId</td>
             <td>Naam</td>
             <td>Saldo</td>
         </tr>
-        <tr th:each="account : ${tenMostActive}">
-            <td><span th:text="${Account.IBAN}"/></td>
-            <td><span th:text="${Account.owners.get(0).getLastName()}"/></td>
-            <td><span th:text="${Account.balance}"/></td>
+        <tr th:each="Client : ${tenMostActive}">
+            <td><span th:text="${Client.key.getId()}"/></td>
+            <td><span th:text="${Client.value}"/></td>
+            <td><span th:text="${Client.key.getLastName()}"/></td>
+
         </tr>
     </table>
 </div>
