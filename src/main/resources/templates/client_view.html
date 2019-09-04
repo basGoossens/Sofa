@@ -7,29 +7,35 @@
 <body>
 
 <!--home knop!-->
-<div><a href="index.html"> <input type="submit" value ="Home"> </a> </div>
+<div><a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 <h1>Hallo, <span th:text="${client.firstName}"/></h1>
 
-    <div th:unless="${#lists.isEmpty(allAccounts)}">
-        <h2>Overzicht rekeningen</h2>
-        <table>
-            <tr>
-            <td>rekeningnummer</td>
-            <td>saldo</td>
-            </tr>
-            <tr th:each="account : ${allAccounts}">
-                <td><a href="dashboard.html">testaccount<span th:text="${account.IBAN}"/></a></td>
-                <td><a href="dashboard.html">test2900<span th:text="${account.balance}"/></a></td>
-            </tr>
-        </table>
-    </div>
+<form action="#" th:action="@{/selectAccount}" th:object="${client}" method="post" onsubmit="return validateForm();">
+
+    <h2>Overzicht rekeningen</h2>
+    <table>
+        <tr>
+            <th>rekeningnummer</th>
+            <th>saldo</th>
+        </tr>
+        <tr th:each="account : *{accounts}">
+            <td>
+                <a th:href="@{account(id=3)}"><span th:text="${account.IBAN}"/></a>
+            </td>
+
+            <td><a th:href="dashboard.html"><span th:text="${account.balance}"/></a></td>
+        </tr>
+    </table>
+
+
 
     <!-- knop voor uitloggen !-->
-<div>
-   <a href="login"> <input type="submit" value="Uitloggen"> </a>
-    <!-- popup-functie voor bevestiging nog bouwen !-->
-</div>
+    <div>
+        <a href="templates/login.html"> <input type="submit" value="Uitloggen"> </a>
+        <!-- popup-functie voor bevestiging nog bouwen !-->
+    </div>
+</form>
 
 
 </body>
