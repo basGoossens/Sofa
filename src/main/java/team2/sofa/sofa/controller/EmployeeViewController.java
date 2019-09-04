@@ -16,19 +16,10 @@ import java.util.Map;
 @Controller
 public class EmployeeViewController {
 
-    @Autowired
-    TopTenHighestBalanceFinder topTenHighestBalanceFinder;
-
-    @Autowired
-    TopTenMostActiveClientFinder topTenMostActiveClientFinder;
-
 
     @GetMapping(value = "employee_view")
     public String EmployeeViewHandler(Model model) {
-        List<Account> topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
-        Map<Client, Integer> topTenMostActive = topTenMostActiveClientFinder.getTopTenMostActiveClients();
-        model.addAttribute("tenHighestBalance", topTenHighest);
-        model.addAttribute("tenMostActive", topTenMostActive);
+
         return "employee_view";
     }
 

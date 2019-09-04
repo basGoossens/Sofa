@@ -12,7 +12,6 @@
 ​
 <h1>Hallo <span th:text="${employee.firstName}"/></h1>
 ​
-<form>
 <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
 <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
     <h2>De tien rijkste stinkerds</h2>
@@ -32,8 +31,8 @@
 </div>
 ​
 ​
-<!--lijst met actiefste rekeningen (alleen hoofd mkb)!-->
-<div th:unless="${#lists.isEmpty(tenMostActive)}">
+<!--lijst met actiefste rekeningen - functionaliteit met th:if werkt nog niet en is uitgecomment-->
+<div th:unless="${#lists.isEmpty(tenMostActive)}"> <!--, th:if="${employee.getRole() == 'HOOFD_MKB'}"!-->
     <h2>De tien meest actieve klanten</h2>
     <table>
         ​
@@ -51,8 +50,8 @@
     </table>
 </div>
 ​
-<!--gemiddelde per sector (alleen hoofd mkb)!-->
-<div th:unless="${#lists.isEmpty(averageBalancePerSector)}">
+<!--gemiddelde per sector functionaliteit met th:if werkt nog niet en is uitgecomment-->
+<div th:unless="${#lists.isEmpty(averageBalancePerSector)}"> <!--th:if="${employee.getRole() == 'HOOFD_MKB'!-->
     <h2>Gemiddelde per sector</h2>
     <table>
         <tr>
@@ -67,7 +66,6 @@
         </tr>
     </table>
 </div>
-</form>
 ​
 <!--knop voor uitloggen!-->
 <div>
