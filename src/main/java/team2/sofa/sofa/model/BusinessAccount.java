@@ -9,15 +9,19 @@ public class BusinessAccount extends Account{
 
     @OneToMany
     private List<PDQ> coupledPdqMachines;
+    @OneToOne
+    private Business business;
 
     public BusinessAccount() {
         super();
         this.coupledPdqMachines = new ArrayList<>();
+        this.business = null;
     }
 
-    public BusinessAccount(List<PDQ> coupledPdqMachines) {
+    public BusinessAccount(List<PDQ> coupledPdqMachines, Business business) {
         this();
         this.coupledPdqMachines = coupledPdqMachines;
+        this.business = business;
     }
 
     public List<PDQ> getCoupledPdqMachines() {
@@ -30,5 +34,13 @@ public class BusinessAccount extends Account{
 
     public void addPdqMachine(PDQ pdqMachine){
         this.coupledPdqMachines.add(pdqMachine);
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 }

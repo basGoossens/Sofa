@@ -7,4 +7,6 @@ public interface ClientDao extends CrudRepository<Client, Integer> {
 
     Client findClientByUsername(String username);
 
+    Client findClientById(int id);
+
 }

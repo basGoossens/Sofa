@@ -13,15 +13,18 @@ public class Business {
     private BusinessSector sector;
     //We chose at this time not to include a list of associated accounts here, as not current User-stories require it.
     //Connections run via account <-> client
+    @OneToOne
+    private Client owner;
 
-    public Business() {
-        this.id = 0;
+    public Business(){
+        this(0,"", BusinessSector.LEEG, null);
     }
 
-    public Business(String businessName, BusinessSector sector) {
-        this();
+    public Business(int id, String businessName, BusinessSector sector, Client owner) {
+        this.id = id;
         this.businessName = businessName;
         this.sector = sector;
+        this.owner = owner;
     }
 
     public int getId() {
@@ -46,5 +49,13 @@ public class Business {
 
     public void setSector(BusinessSector sector) {
         this.sector = sector;
+    }
+
+    public Client getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Client owner) {
+        this.owner = owner;
     }
 }
