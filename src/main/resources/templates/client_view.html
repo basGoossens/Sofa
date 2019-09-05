@@ -19,13 +19,13 @@
             <th>rekeningnummer</th>
             <th>saldo</th>
         </tr>
-        <tr th:each="account : *{accounts}">
+        <tr th:each="PrivateAccount : *{accounts}">
             <td>
-                <a th:href="@{clientViewHandler(id=${account.id})}"><span th:text="${account.IBAN}"/></a>
+                <a th:href="@{clientViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a>
 
             </td>
 
-            <td><a><span th:text="${account.balance}"/></a></td>
+            <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
         </tr>
     </table>
 

@@ -20,7 +20,7 @@ public class DatabaseController {
     @GetMapping(value = "initdb")
     public String indexInitdbHandler(Model model) {
         dbInitializer.makeClient(20);
-        dbInitializer.fillAccounts();
+        dbInitializer.fillPrivateAccounts();
         dbInitializer.makeEmployee(EmployeeRole.HOOFD_PARTICULIEREN);
         dbInitializer.makeEmployee(EmployeeRole.HOOFD_MKB);
         dbInitializer.makeEmployee(EmployeeRole.ACCOUNTMANAGER);

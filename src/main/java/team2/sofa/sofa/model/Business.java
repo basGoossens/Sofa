@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 public class Business {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "BUS_SEQ")
     private int id;
     private String businessName;
     @Enumerated(EnumType.STRING)

@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class User {
 
-    //Username,Password
     @Id
     @GeneratedValue(generator = "USER_SEQ")
     private int id;

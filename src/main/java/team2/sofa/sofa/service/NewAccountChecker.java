@@ -90,7 +90,7 @@ public class NewAccountChecker {
         Client savedClient = clientDao.findClientByUsername(client.getUsername());
         IBANGenerator newIBAN = new IBANGenerator();
         Account newAccount = new PrivateAccount();
-        newAccount.setIBAN(newIBAN.getIBAN());
+        newAccount.setIban(newIBAN.getIBAN());
         newAccount.addClient(savedClient);
         savedClient.addAccount(newAccount);
         clientDao.save(savedClient);

@@ -12,4 +12,6 @@ public interface AccountDao extends CrudRepository<Account, Integer> {
 
     Account findAccountById(int id);
 
+    Account findAccountByIban(String iban);
+
 }
