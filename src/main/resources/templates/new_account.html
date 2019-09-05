@@ -11,6 +11,10 @@
 <h2>Account aanmaken</h2>
 <form name="new_client" id="new_client" action="#" th:action="@{newAccountHandler}" th:object="${client}" method="post">
     <table>
+        <tr><td><input type="text" th:field=""/>
+
+        </td>
+        </tr>
         <tr>
             <td>Voornaam:</td>
             <td><input type="text" th:field="*{firstName}"/></td>
