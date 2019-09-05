@@ -5,8 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
@@ -25,8 +24,17 @@ public class EmployeeViewController {
     ClientDao clientDao;
 
 
-    @GetMapping(value = "EmployeeViewHandler")
-    public String EmployeeViewHandler(@RequestParam(name = "id") int id, Account account, Model model) {
+    @GetMapping(value = "PrivateEmployeeViewHandler")
+    public String PrivateEmployeeViewHandler(@RequestParam(name = "id") int id, PrivateAccount account, Model model) {
+        System.out.println("HEY!" + id);
+        System.out.println("HEY" + account);
+        Account chosenAccount = accountDao.findAccountById(id);
+        model.addAttribute("account", chosenAccount);
+        return "dashboard_employee";
+    }
+
+    @GetMapping(value = "BusinessEmployeeViewHandler")
+    public String BusinessEmployeeViewHandler(@RequestParam(name = "id") int id, BusinessAccount account, Model model) {
         System.out.println("HEY!" + id);
         System.out.println("HEY" + account);
         Account chosenAccount = accountDao.findAccountById(id);

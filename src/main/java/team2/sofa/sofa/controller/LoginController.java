@@ -6,10 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Client;
-import team2.sofa.sofa.model.Employee;
-import team2.sofa.sofa.model.EmployeeRole;
+import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 import team2.sofa.sofa.service.PasswordValidator;
@@ -72,15 +69,17 @@ public class LoginController {
             Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
             model.addAttribute("employee", currentEmployee);
 
-            List<Account> topTenHighest;
+
 
             if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
+                List<PrivateAccount> topTenHighest;
                 topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
                 model.addAttribute("tenHighestBalance", topTenHighest);
                 return "employee_view_particulieren";
 
             } else {
                 Map<Client, Integer> topTenMostActive = new LinkedHashMap<>();
+                List<BusinessAccount> topTenHighest;
                 topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
                 topTenMostActive = topTenMostActiveClientFinder.getTopTenMostActiveClients();
                 model.addAttribute("tenMostActive", topTenMostActive);

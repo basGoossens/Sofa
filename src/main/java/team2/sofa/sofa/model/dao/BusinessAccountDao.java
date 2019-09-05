@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface BusinessAccountDao extends CrudRepository <BusinessAccount, Integer> {
 
-        List<Account> findTop10ByBusinessIsNotNullOrderByBalanceDesc();
+        List<BusinessAccount> findTop10ByBusinessIsNotNullOrderByBalanceDesc();
 }

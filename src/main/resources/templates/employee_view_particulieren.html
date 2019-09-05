@@ -24,11 +24,11 @@
             <td>Saldo</td>
         </tr>
 
-        <tr th:each="Account : ${tenHighestBalance}">
+        <tr th:each="PrivateAccount : ${tenHighestBalance}">
             <td>
-                <a th:href="@{EmployeeViewHandler(id=${Account.id})}"><span th:text="${Account.IBAN}"/></a></td>
-            <td><span th:text="${Account.owners.get(0).getLastName()}"/></td>
-            <td><span th:text="${Account.balance}"/></td>
+                <a th:href="@{PrivateEmployeeViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a></td>
+            <td><span th:text="${PrivateAccount.owners.get(0).getLastName()}"/></td>
+            <td><span th:text="${PrivateAccount.balance}"/></td>
         </tr>
     </table>
 </div>

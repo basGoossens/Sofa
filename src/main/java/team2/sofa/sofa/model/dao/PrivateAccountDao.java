@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface PrivateAccountDao extends CrudRepository<PrivateAccount, Integer> {
 
-    public List<Account> findTop10ByOrderByBalanceDesc();
+    public List<PrivateAccount> findTop10ByOrderByBalanceDesc();
 }
