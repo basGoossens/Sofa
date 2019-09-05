@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee View</title>
+</head>
+<body>
+​
+<!--home knop!-->
+<div> <a href="index"> <input type="submit" value ="Home"> </a> </div>
+​
+​
+<h1>Hallo <span th:text="${employee.firstName}"/></h1>
+​
+​<form action="#" th:action="@{/EmployeeViewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
+
+    <!--de tien rekeningen met het hoogste saldo!-->
+    <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
+        <h2>De tien rijkste stinkerds</h2>
+        <table>
+            ​
+            <tr>
+                <td>IBAN</td>
+                <td>Naam</td>
+                <td>Saldo</td>
+            </tr>
+
+            <tr th:each="Account : ${tenHighestBalance}">
+                <td>
+                    <a th:href="@{EmployeeViewHandler(id=${Account.id})}"><span th:text="${Account.IBAN}"/></a></td>
+                <td><span th:text="${Account.owners.get(0).getLastName()}"/></td>
+                <td><span th:text="${Account.balance}"/></td>
+            </tr>
+        </table>
+    </div>
+    ​
+
+    <!--lijst met actiefste rekeningen!-->
+    <div th:unless="${#lists.isEmpty(tenMostActive)}">
+        <h2>De tien meest actieve klanten</h2>
+        <table>
+            ​
+            <tr>
+                <td>KlantId</td>
+                <td>Naam</td>
+                <td>Transacties</td>
+            </tr>
+            <tr th:each="Client : ${tenMostActive}">
+                <td><span th:text="${Client.key.getId()}"/></td>
+                <td><a th:href="@{TenMostActiveHandler(id=${Client.key.getId()})}"><span th:text="${Client.key.getLastName()}"/></a> </td>
+                <td><span th:text="${Client.value}"/></td>
+
+
+            </tr>
+        </table>
+    </div>
+    ​
+    <!--gemiddelde per sector functionaliteit!-->
+    <div th:unless="${#lists.isEmpty(averageBalancePerSector)}">
+        <h2>Gemiddelde per sector</h2>
+        <table>
+            <tr>
+                <td>Sector</td>
+                <td>Gemiddeld saldo</td>
+            </tr>
+            ​
+            <tr th:each="sector : ${averageBalancePerSector}">
+                <td><span th:text="${sector.NAME}"></span></td>
+                <td><span th:text="${sector.averageBalance}"></span></td>
+                ​
+            </tr>
+        </table>
+    </div>
+    ​
+    <!--knop voor uitloggen!-->
+    <div>
+        <a href="login_employee"> <input type="submit" value="Uitloggen"> </a>
+        <!-- popup-functie voor bevestiging nog bouwen !-->
+    </div>
+    ​
+    <!--terug-knop!-->
+    <div>
+        <a href="login_employee"> <input type="submit" value="Terug naar overzicht"> </a>
+    </div>
+    ​</form>
+</body>
+</html>

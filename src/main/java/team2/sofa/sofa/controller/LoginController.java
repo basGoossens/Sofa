@@ -16,7 +16,6 @@ import team2.sofa.sofa.service.PasswordValidator;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
 import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,17 +76,22 @@ public class LoginController {
 
             if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
                 topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
+                model.addAttribute("tenHighestBalance", topTenHighest);
+                return "employee_view_particulieren";
+
             } else {
                 Map<Client, Integer> topTenMostActive = new LinkedHashMap<>();
                 topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
                 topTenMostActive = topTenMostActiveClientFinder.getTopTenMostActiveClients();
                 model.addAttribute("tenMostActive", topTenMostActive);
+                model.addAttribute("tenHighestBalance", topTenHighest);
+                return "employee_view_mkb";
             }
 
-            model.addAttribute("tenHighestBalance", topTenHighest);
 
 
-            return "employee_view";
+
+
         } else return "login_employee";
     }
 }
