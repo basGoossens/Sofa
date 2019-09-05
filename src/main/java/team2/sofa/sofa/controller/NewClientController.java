@@ -34,6 +34,6 @@ public class NewClientController {
             model.addAttribute("error", error);
             return "new_account";
         }
-        return newAccountChecker.processApplication(client);
+        return newAccountChecker.processApplication(client, model);
     }
 }

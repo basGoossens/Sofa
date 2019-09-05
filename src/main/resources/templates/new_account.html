@@ -9,16 +9,19 @@
 <div><a href="index"><input type="submit" value="Home"></a></div>
 
 <h2>Account aanmaken</h2>
+
 <form name="new_client" id="new_client" action="#" th:action="@{newAccountHandler}" th:object="${client}" method="post">
     <table>
-        <tr><td><input type="text" th:field=""/>
+        <div th:unless="${#lists.isEmpty(errorList)}">
+            <span th:each="error : ${errorList}">
+                <span th:text="${error}" style="color: red"/>
+            </span>
+        </div>
 
-        </td>
-        </tr>
         <tr>
             <td>Voornaam:</td>
             <td><input type="text" th:field="*{firstName}"/></td>
-            <td th:errors="*{firstName}"></td>
+            <td th:errors="*{firstName}" style="color: red"></td>
         </tr>
         <tr>
             <td>Tussenvoegsel:</td>
@@ -27,7 +30,7 @@
         <tr>
             <td>Achternaam:</td>
             <td><input type="text" th:field="*{lastName}"/></td>
-            <td th:errors="*{lastName}"></td>
+            <td th:errors="*{lastName}" style="color: red"></td>
         </tr>
         <tr>
             <td>Straatnaam:</td>
@@ -48,7 +51,7 @@
         <tr>
             <td>Burger service nummer:</td>
             <td><input type="text" th:field="*{ssn}"/></td>
-            <td th:errors="*{ssn}"></td>
+            <td th:errors="*{ssn}" style="color: red"></td>
         </tr>
         <tr>
             <td>Emailadres:</td>
@@ -61,7 +64,7 @@
         <tr>
             <td>Geboortedatum:</td>
             <td><input type="text" th:field="*{birthday}"/></td>
-            <td th:errors="*{birthday}"></td>
+            <td th:errors="*{birthday}" style="color: red"></td>
         </tr>
         <tr>
             <td>Geslacht:</td>
@@ -69,17 +72,17 @@
                 <input type="radio" name="gender" value="female" th:field="*{gender}"> Female
                 <input type="radio" name="gender" value="other" th:field="*{gender}"> Other
             </td>
-            <td th:errors="*{gender}"></td>
+            <td th:errors="*{gender}" style="color: red"></td>
         </tr>
         <tr>
             <td>Gebruikersnaam:</td>
             <td><input type="text" th:field="*{username}"/></td>
-            <td th:errors="*{username}"></td>
+            <td th:errors="*{username}" style="color: red"></td>
         </tr>
         <tr>
             <td>Wachtwoord</td>
             <td><input type="password" th:field="*{password}"/></td>
-            <td th:errors="*{password}"></td>
+            <td th:errors="*{password}" style="color: red"></td>
         </tr>
         <tr>
             <td><input type="submit" value="verzenden"></td>

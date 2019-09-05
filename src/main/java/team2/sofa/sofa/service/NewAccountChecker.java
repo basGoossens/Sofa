@@ -3,12 +3,16 @@ package team2.sofa.sofa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.AddressDao;
 import team2.sofa.sofa.model.dao.ClientDao;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class NewAccountChecker {
@@ -32,51 +36,46 @@ public class NewAccountChecker {
      * @param client op basis van ingevulde velden in formulier nieuwe klant is client object gemaakt
      * @return een String die in de NewClientController wordt gebruikt als verwijzer naar de juiste handler/vervolgscherm
      */
-    public String processApplication(Client client) {
-        String type = checkData(client);
-        switch (type) {
-            case "username":
-                System.out.println("kies andere username");
-                return "new_account";
-            case "ssn":
-                System.out.println("BSN al in gebruik, log gewoon in");
-                return "login";
-            case "ssnBad":
-                System.out.println("ongeldig BSN");
-                return "new_account";
-            case "address":
-                System.out.println("tweede client op zelfde adres");
-                Address a = AddressExists(client.getAddress());
-                client.setAddress(a);
-                makeNewAccount(client);
-                return "login";
-            case "ok":
-                System.out.println("geheel nieuwe klant");
-                makeNewAccount(client);
-                return "login";
+    public String processApplication(Client client, Model model) {
+        List <String> errorList = checkData(client);
+        if (AddressExistsChecker(client)) {
+            Address a = AddressExists(client.getAddress());
+            client.setAddress(a); }
+        if (errorList.isEmpty()) {
+            makeNewAccount(client);
+            return "login";
+        } else {
+            model.addAttribute("errorList", errorList);
+            for (int i = 0; i < errorList.size() ; i++) {
+                System.out.println(errorList.get(i));
+            }
+            return "new_account";
         }
-        return "new_account";
     }
 
     /**
      * checkt inhoudelijk de data die is meegegeven in formulier
      *
-     * @param newclient
+     * @param newClient
      * @return String die wordt gebruikt in processApplication om
      * case switch statement af te handelen en correcte vervolgstap te bepalen
      */
-    private String checkData(Client newclient) {
-        String ssn = newclient.getSsn();
-        if (usernameExistsChecker(newclient)) {
-            return "username";
-        } else if (SSNNameExistsChecker(newclient)) {
-            return "ssn";
-        } else if (!SSNFunctionality.ssnCheck(ssn)) {
-            return "ssnBad";
-        } else if (AddressExistsChecker(newclient)) {
-            return "address";
+    private List <String> checkData(Client newClient) {
+        String ssn = newClient.getSsn();
+        List <String> errorList = new ArrayList<>();
+
+        if (usernameExistsChecker(newClient)) {
+            errorList.add("Gebruikersnaam bestaat al.");
+        } if (SSNNameExistsChecker(newClient)) {
+            errorList.add("Gebruiker met dit BSN bestaat al.");
+        } if (ssn.length() != 9) { errorList.add("BSN heeft geen 9 cijfers."); }
+           else if (!SSNFunctionality.ssnCheck(ssn)) {
+                errorList.add("Geen geldig BSN ingevoerd.");
+        } if (AddressExistsChecker(newClient)) {
+            Address a = AddressExists(newClient.getAddress());
+            newClient.setAddress(a);
         }
-        return "ok";
+        return errorList;
     }
 
     /**
