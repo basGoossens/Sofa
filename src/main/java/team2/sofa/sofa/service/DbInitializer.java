@@ -8,10 +8,11 @@ import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Stack;
 
 @Service
 public class DbInitializer {
@@ -30,7 +31,6 @@ public class DbInitializer {
     private Stack<String> ssnStack;
     private Stack<String> ibanStack;
     private Stack<String> companyList;
-    private int[] numberAccounts;
 
     public DbInitializer() {
         super();
@@ -38,49 +38,60 @@ public class DbInitializer {
         ssnStack = SSNFunctionality.bsnStack(rawData.size());
         this.ibanStack = new IBANGenerator().ibanStack(rawData.size());
         this.companyList = makeCompanyList();
-        numberAccounts = new int[]{0, 1, 2, 3};
     }
-    public void makeBusiness(int count){
-        for (int i = 0; i < count ; i++) {
+
+    /**
+     * Genereert business objects om op te slaan in de DB
+     *
+     * @param count aantal te creëren businesses
+     */
+    public void makeBusiness(int count) {
+        for (int i = 0; i < count; i++) {
             Business b = new Business();
             b.setBusinessName(companyList.pop());
-            b.setSector(BusinessSector.AGRARISCH);
-            Client c = clientDao.findClientById(5);
+            BusinessSector[] businessSectors = (BusinessSector.values());
+            b.setSector(businessSectors[i]);
+            Client c = clientDao.findClientById(i + 1);
             b.setOwner(c);
             businessDao.save(b);
         }
-
     }
-    public void makeBusinessAccount(int count){
-        for (int i = 0; i < count ; i++) {
+
+    /**
+     * maakt businessaccounts aan en koppelt deze aan clients
+     *
+     * @param count aantal accounts
+     */
+    public void makeBusinessAccount(int count) {
+        for (int i = 0; i < count; i++) {
             BusinessAccount ba = new BusinessAccount();
             Random r = new Random();
             ba.setIBAN(ibanStack.pop());
             ba.setBalance((int) (r.nextDouble() * 10000) / 100.0);
-            Business b = businessDao.findById(i+1).get();
+            Business b = businessDao.findById(i + 1).get();
             ba.setBusiness(b);
-            Client c = clientDao.findClientById(i+4);
+            Client c = clientDao.findClientById(i + 4);
             connectAccount(c, ba);
         }
     }
 
     /**
      * Helper methode genereert bedijfsnamen uit data.csv bestand.
-     * @return
-     * lijst bedrijfsnamen om in het model Business te gebruiken
+     *
+     * @return lijst bedrijfsnamen om in het model Business te gebruiken
      */
     private Stack<String> makeCompanyList() {
         Stack<String> comp = new Stack<>();
         for (int i = 0; i < rawData.size(); i++) {
-            comp.push(rawData.pop()[11]);
+            comp.push(rawData.pop()[11].replace("\"", ""));
         }
         return comp;
     }
 
     /**
      * helper methode om data in CSV bestand in te laden en in lijst te plaatsen
-     * @return
-     * Lijst van iedere line in CSV bestand als ruwe String inclusief comma's.
+     *
+     * @return Lijst van iedere line in CSV bestand als ruwe String inclusief comma's.
      */
     private Stack<String[]> makeDataList() {
         Scanner fileReader;
@@ -94,8 +105,6 @@ public class DbInitializer {
                 String[] split = fileReader.nextLine().split(",");
                 u.push(split);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,6 +113,7 @@ public class DbInitializer {
 
     /**
      * maakt clients en slaat deze op in DB
+     *
      * @param count aantal te genereren clients
      */
     public void makeClient(int count) {
@@ -126,9 +136,10 @@ public class DbInitializer {
 
     /**
      * maakt Employees en slaat deze op in DB
+     *
      * @param role de rol van de te maken Employee zoals vermeld in Enum EmployeeRole
      */
-    public void makeEmployee( EmployeeRole role){
+    public void makeEmployee(EmployeeRole role) {
         Employee employee = new Employee();
         String[] emp = rawData.pop();
         setName(employee, emp);
@@ -147,7 +158,8 @@ public class DbInitializer {
 
     /**
      * helper methode voor het het splitsen en setten van firstname, prefix en lastname van de User (client, danwel employee)
-     * @param user Kan Client, danwel Employee zijn.
+     *
+     * @param user  Kan Client, danwel Employee zijn.
      * @param split de String Array met data uit CSV bestand.
      */
     private void setName(User user, String[] split) {
@@ -155,14 +167,14 @@ public class DbInitializer {
         if (split[1].startsWith("\"")) {
             String opgeschoond = split[1].replace("\"", "");
             String[] splits = opgeschoond.split(" ");
-            String prefix = "";
+            StringBuilder prefix = new StringBuilder();
             for (int i = 0; i < splits.length - 1; i++) {
-                prefix += splits[i];
+                prefix.append(splits[i]);
                 if (i < splits.length - 2) {
-                    prefix += " ";
+                    prefix.append(" ");
                 }
             }
-            user.setPrefix(prefix);
+            user.setPrefix(prefix.toString());
             user.setLastName(splits[splits.length - 1]);
         } else {
             user.setLastName(split[1]);
@@ -172,26 +184,27 @@ public class DbInitializer {
     /**
      * helper methode om een Address te maken die gekoppeld is aan de User.
      * En deze vast weg te schrijven in DB zodat er een juiste koppeling ontstaat tussen de tabel address en user
+     *
      * @param split de String Array met data uit CSV bestand.
      * @return een Address om te gebruiken in de concrete klasses van User
      */
     private Address makeAddress(String[] split) {
-        Address a = new Address();
-        String street = "";
+        Address address = new Address();
+        StringBuilder street = new StringBuilder();
         String st = split[2].replace("\"", "");
-        String splits[] = st.split(" ");
+        String[] splits = st.split(" ");
         for (int i = 0; i < splits.length - 1; i++) {
-            street += splits[i];
+            street.append(splits[i]);
             if (i < splits.length - 2) {
-                street += " ";
+                street.append(" ");
             }
         }
-        a.setStreet(street);
-        a.setHouseNumber(Integer.parseInt(splits[splits.length - 1]));
-        a.setZipCode(split[3].replace("\"", ""));
-        a.setCity(split[4].replace("\"", ""));
-        addressDao.save(a);
-        return a;
+        address.setStreet(street.toString());
+        address.setHouseNumber(Integer.parseInt(splits[splits.length - 1]));
+        address.setZipCode(split[3].replace("\"", ""));
+        address.setCity(split[4].replace("\"", ""));
+        addressDao.save(address);
+        return address;
     }
 
     /**
@@ -217,8 +230,9 @@ public class DbInitializer {
     /**
      * helper methode voor fillAccounts om op juiste wijze de Accounts en Owners te koppelen.
      * en in de DB weg te schrijven.
-     * @param client
-     * @param account
+     *
+     * @param client  nieuwe klant
+     * @param account nieuwe account
      */
     private void connectAccount(Client client, Account account) {
         client.addAccount(account);

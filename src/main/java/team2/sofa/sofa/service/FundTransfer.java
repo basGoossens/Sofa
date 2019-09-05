@@ -1,5 +1,6 @@
 package team2.sofa.sofa.service;
 
+import org.springframework.stereotype.Service;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.User;
@@ -7,6 +8,7 @@ import team2.sofa.sofa.service.BalanceChecker;
 
 import java.util.List;
 
+@Service
 public class FundTransfer {
 
     public FundTransfer(Account fromAccount, Account toAccount, Client toClient, double bedrag) {

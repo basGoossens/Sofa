@@ -32,11 +32,11 @@
             <td><input type="text" th:field="*{Address.houseNumber}"/></td>
         </tr>
         <tr>
-            <td>zipCode:</td>
+            <td>Postcode:</td>
             <td><input type="text" th:field="*{Address.zipCode}"/></td>
         </tr>
         <tr>
-            <td>city:</td>
+            <td>Stad:</td>
             <td><input type="text" th:field="*{Address.city}"/></td>
         </tr>
         <tr>
@@ -57,7 +57,9 @@
         </tr>
         <tr>
             <td>Geslacht:</td>
-            <td><input type="text" th:field="*{gender}"/></td>
+            <td><input type="radio" name="gender" value="male" th:field="*{gender}"> Male
+            <input type="radio" name="gender" value="female"th:field="*{gender}"> Female
+            <input type="radio" name="gender" value="other"th:field="*{gender}"> Other</td>
         </tr>
         <tr>
             <td>Gebruikersnaam:</td>
@@ -73,6 +75,6 @@
     </table>
 </form>
 
-Ga <a href="index">terug</a> naar het begin...
+<p>Ga <a href="index">terug</a> naar het begin...</p>
 </body>
 </html>

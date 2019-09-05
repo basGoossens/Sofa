@@ -17,7 +17,7 @@ public class SSNFunctionality {
 
     public SSNFunctionality(){
         do {bsn = bsnGenerator();
-        } while (!BSNcheck(bsn));
+        } while (!ssnCheck(bsn));
     }
 
     /**
@@ -27,7 +27,7 @@ public class SSNFunctionality {
      * @return false als de invoer de proef niet doorstaat en true bij technisch geldig BSN.
      * er is geen controle op daadwerkelijk actief en uitgegeven BSN, alleen of het technisch een BSN kan zijn.
      */
-    public static boolean BSNcheck(String ssn){
+    public static boolean ssnCheck(String ssn){
         int sum = 0;
         int multiply = 9;
         for (int i = 0; i < ssn.length()-1; i++) {
