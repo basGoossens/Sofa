@@ -25,13 +25,5 @@ public class DashboardClientController {
         model.addAttribute("account", chosenAccount);
         return "dashboard_client"*/
 
-    //Ga terug naar de overview pagina van Client//
-    @GetMapping(value = "backToClientView")
-    public String backToClientView(Model model) {
-        Client client = new Client();
-        model.addAttribute("client", client);
-        return "client-view";
-
-    }
 
 }

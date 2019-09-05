@@ -27,7 +27,7 @@
 
             <tr th:each="BusinessAccount : ${tenHighestBalance}">
                 <td>
-                    <a th:href="@{BusinessEmployeeViewHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.IBAN}"/></a></td>
+                    <a th:href="@{BusinessEmployeeViewHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.Iban}"/></a></td>
                 <td><span th:text="${BusinessAccount.owners.get(0).getLastName()}"/></td>
                 <td><span th:text="${BusinessAccount.balance}"/></td>
             </tr>
