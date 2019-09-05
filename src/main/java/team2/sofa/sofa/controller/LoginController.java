@@ -9,12 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Employee;
+import team2.sofa.sofa.model.EmployeeRole;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 import team2.sofa.sofa.service.PasswordValidator;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
 import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,10 +46,10 @@ public class LoginController {
 
     @PostMapping(value = "loginClientHandler")
     public String loginClientHandler(@ModelAttribute Client client, Model model) {
-        if (client.getUsername().isEmpty()){
+        if (client.getUsername().isEmpty()) {
             return "login";
         }
-        if (client.getPassword().isEmpty()){
+        if (client.getPassword().isEmpty()) {
             return "login";
         }
         boolean loginOk = passwordValidator.validateClientPassword(client);
@@ -59,10 +62,10 @@ public class LoginController {
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute Employee employee, Model model) {
-        if (employee.getUsername().isEmpty()){
+        if (employee.getUsername().isEmpty()) {
             return "login_employee";
         }
-        if (employee.getPassword().isEmpty()){
+        if (employee.getPassword().isEmpty()) {
             return "login_employee";
         }
         boolean loginOk = passwordValidator.validateEmployeePassword(employee);
@@ -70,10 +73,19 @@ public class LoginController {
             Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
             model.addAttribute("employee", currentEmployee);
 
-            List<Account> topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
-            Map<Client, Integer> topTenMostActive = topTenMostActiveClientFinder.getTopTenMostActiveClients();
+            List<Account> topTenHighest;
+
+            if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
+                topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
+            } else {
+                Map<Client, Integer> topTenMostActive = new LinkedHashMap<>();
+                topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
+                topTenMostActive = topTenMostActiveClientFinder.getTopTenMostActiveClients();
+                model.addAttribute("tenMostActive", topTenMostActive);
+            }
+
             model.addAttribute("tenHighestBalance", topTenHighest);
-            model.addAttribute("tenMostActive", topTenMostActive);
+
 
             return "employee_view";
         } else return "login_employee";
