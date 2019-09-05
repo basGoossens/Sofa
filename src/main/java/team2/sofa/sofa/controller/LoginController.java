@@ -1,11 +1,10 @@
 package team2.sofa.sofa.controller;
 
+import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Employee;
@@ -15,6 +14,9 @@ import team2.sofa.sofa.service.PasswordValidator;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
 import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
 
+import javax.persistence.Id;
+import javax.servlet.http.HttpSession;
+import java.net.http.HttpClient;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +40,17 @@ public class LoginController {
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
         return "login_employee";
+    }
+    @GetMapping(value = "login_client")
+    public String goTologinClientHandler(Model model) {
+        Client client = new Client();
+        model.addAttribute("client", client);
+        return "login";
+    }
 
+    @RequestMapping(value = "logoutClientHandler")
+    public String logOutClientHandler(){
+        return "login";
     }
 
     @PostMapping(value = "loginClientHandler")
