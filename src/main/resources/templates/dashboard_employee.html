@@ -16,8 +16,8 @@
 <div th:unless="${#lists.isEmpty(allTransactions)}">
     <table>
         <tr>
-            <td>naam</td>
-            <td>bedrag</td>
+            <td>Naam</td>
+            <td>Bedrag</td>
         </tr>
         <tr th:each="account : ${allTransactions}">
             <td>Kapitalist BV<span th:text="${transaction.ibandebet.name}"/></a></td>
@@ -36,9 +36,10 @@
 
 <!--knop voor uitloggen!-->
 <div>
-    <a href="login_employee"> <input type="submit" value="Uitloggen"> </a>
-    <!-- popup-functie voor bevestiging nog bouwen !-->
+    <a href="login"> <input type="submit" value="Uitloggen"> </a>
 </div>
+
+    <!-- popup-functie voor bevestiging nog bouwen !-->
 
 </body>
 </html>

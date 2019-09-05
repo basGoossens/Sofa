@@ -11,11 +11,11 @@
 <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transaction}" method="post">
     <table>
         <tr>
-            <td>bedrag:</td>
+            <td>Bedrag:</td>
             <td><input type="text" th:field="*{amount}"/></td>
         </tr>
         <tr>
-            <td>omschrijving:</td>
+            <td>Omschrijving:</td>
             <td><input type="text" th:field="*{description}"/></td>
         </tr>
         <tr>
@@ -36,6 +36,9 @@
 <form>
     <input type="button" value="Terug naar dashboard" onClick="javascript:history.go(-1)" />
 </form>
+<div>
+    <a href="login"> <input type="submit" value="Uitloggen"> </a>
+</div>
 
 </body>
 </html>

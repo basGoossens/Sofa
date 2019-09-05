@@ -1,6 +1,6 @@
 package team2.sofa.sofa.controller;
 
-import org.apache.catalina.Session;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +14,8 @@ import team2.sofa.sofa.model.dao.EmployeeDao;
 import team2.sofa.sofa.service.PasswordValidator;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
 import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
-
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 public class LoginController {

@@ -9,7 +9,7 @@
 <div> <a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 
-<h1>Rekening <span th:text="${account.iban}"/></h1>
+<h1>Rekening <span th:text="${account.Iban}"/></h1>
 <h2>Saldo = <span th:text="${account.balance}"/></h2>
 
 <!-- hier wordt een lijst met alle transacties ingeladen !-->
@@ -42,9 +42,9 @@
 </form>
 
 <!--knop voor uitloggen!-->
-<form>
-    <a href="/logoutClientHandler"> <input type="submit" value="Uitloggen"> </a>
-</form>
+<div>
+    <a href="login"> <input type="submit" value="Uitloggen"> </a>
+</div>
 
 
 <!-- popup-functie voor bevestiging nog bouwen !-->

@@ -25,5 +25,4 @@ public class DashboardClientController {
         model.addAttribute("account", chosenAccount);
         return "dashboard_client"*/
 
-
 }
