@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public class Transaction {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "TRANS_SEQ")
     private int id;
     private double amount;
     private String description;
@@ -18,7 +18,6 @@ public class Transaction {
     private Account debitAccount;
 
     public Transaction(double amount, String description, LocalDate date, Account creditAccount, Account debitAccount){
-        this();
         this.amount = amount;
         this.description = description;
         this.date = date;
@@ -27,8 +26,7 @@ public class Transaction {
     }
 
     public Transaction(){
-        super();
-        this.id = 0;
+        this(0,"",LocalDate.now(),null,null);
     }
 
     public int getId() {

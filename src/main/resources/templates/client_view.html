@@ -21,7 +21,7 @@
         </tr>
         <tr th:each="account : *{accounts}">
             <td>
-                <a th:href="@{clientViewHandler(id=${account.id})}"><span th:text="${account.IBAN}"/></a>
+                <a th:href="@{clientViewHandler(id=${account.id})}"><span th:text="${account.iban}"/></a>
 
             </td>
 

@@ -8,23 +8,23 @@
 <!--home knop!-->
 <div><a href="index"><input type="submit" value ="Home"></a></div>
 <h2>Geld overmaken naar </h2>
-<form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${account}" method="post">
+<form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transaction}" method="post">
     <table>
         <tr>
-            <td>Voornaam rekeninghouder:</td>
-            <td><input type="text" th:field="*{firstName}"/></td>
-        </tr>
-        <tr>
-            <td>Achternaam rekeninghouder:</td>
-            <td><input type="text" th:field="*{lastName}"/></td>
-        </tr>
-        <tr>
-            <td>IBAN rekeninghouder:</td>
-            <td><input type="text" th:field="*{iban}"/></td>
-        </tr>
-        <tr>
-            <td>Bedrag:</td>
+            <td>bedrag:</td>
             <td><input type="text" th:field="*{amount}"/></td>
+        </tr>
+        <tr>
+            <td>omschrijving:</td>
+            <td><input type="text" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td>IBAN creditrekening:</td>
+            <td><input type="text" th:field="*{creditAccount.iban}"/></td>
+        </tr>
+        <tr>
+            <td>IBAN debitrekening:</td>
+            <td><input type="text" th:field ="*{debitAccount.iban}" th:text="${account.iban}"/></td>
         </tr>
         <tr>
             <td><input type="submit" value="Overmaken"></td>

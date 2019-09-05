@@ -66,7 +66,7 @@ public class DbInitializer {
         for (int i = 0; i < count; i++) {
             BusinessAccount ba = new BusinessAccount();
             Random r = new Random();
-            ba.setIBAN(ibanStack.pop());
+            ba.setIban(ibanStack.pop());
             ba.setBalance((int) (r.nextDouble() * 10000) / 100.0);
             Business b = businessDao.findById(i + 1).get();
             ba.setBusiness(b);
@@ -220,7 +220,7 @@ public class DbInitializer {
             int result = r.nextInt(3);
             for (int i = 0; i < result; i++) {
                 Account a = new Account();
-                a.setIBAN(ibanStack.pop());
+                a.setIban(ibanStack.pop());
                 a.setBalance((int) (r.nextDouble() * 10000) / 100.0);
                 connectAccount(c, a);
             }

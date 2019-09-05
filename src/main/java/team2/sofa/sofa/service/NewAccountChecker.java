@@ -37,6 +37,7 @@ public class NewAccountChecker {
         switch (type) {
             case "username":
                 System.out.println("kies andere username");
+
                 return "new_account";
             case "ssn":
                 System.out.println("BSN al in gebruik, log gewoon in");
@@ -90,7 +91,7 @@ public class NewAccountChecker {
         Client savedClient = clientDao.findClientByUsername(client.getUsername());
         IBANGenerator newIBAN = new IBANGenerator();
         Account newAccount = new Account();
-        newAccount.setIBAN(newIBAN.getIBAN());
+        newAccount.setIban(newIBAN.getIBAN());
         newAccount.addClient(savedClient);
         savedClient.addAccount(newAccount);
         clientDao.save(savedClient);

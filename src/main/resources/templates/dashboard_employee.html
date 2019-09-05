@@ -9,7 +9,7 @@
 <div> <a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 
-<h1>Rekening <span th:text="${account.IBAN}"/></h1>
+<h1>Rekening <span th:text="${account.iban}"/></h1>
 
 <!-- hier wordt een lijst met alle transacties ingeladen !-->
 <h2>Transacties</h2>
@@ -20,7 +20,7 @@
             <td>bedrag</td>
         </tr>
         <tr th:each="account : ${allTransactions}">
-            <td>Kapitalist BV<span th:text="${transaction.IBANdebet.name}"/></a></td>
+            <td>Kapitalist BV<span th:text="${transaction.ibandebet.name}"/></a></td>
             <td>500<span th:text="${transaction.amount}"/></td></a>
         </tr>
     </table>
