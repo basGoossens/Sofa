@@ -26,15 +26,9 @@
 
         <tr th:each="PrivateAccount : ${tenHighestBalance}">
             <td>
-<<<<<<< HEAD:src/main/resources/templates/employee_view_particulieren.html
-                <a th:href="@{PrivateEmployeeViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a></td>
+                <a th:href="@{PrivateEmployeeViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a></td>
             <td><span th:text="${PrivateAccount.owners.get(0).getLastName()}"/></td>
             <td><span th:text="${PrivateAccount.balance}"/></td>
-=======
-                <a th:href="@{EmployeeViewHandler(id=${Account.id})}"><span th:text="${Account.iban}"/></a></td>
-            <td><span th:text="${Account.owners.get(0).getLastName()}"/></td>
-            <td><span th:text="${Account.balance}"/></td>
->>>>>>> transaction:src/main/resources/templates/employee_view.html
         </tr>
     </table>
 </div>
