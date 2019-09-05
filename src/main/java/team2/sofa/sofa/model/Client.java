@@ -17,13 +17,16 @@ public class Client extends User {
     @ManyToMany(mappedBy = "owners")
     private List<Account> accounts;
 
+    private int totalNumberOfTransactions;
+
     public Client() {
-        this(0, "", "", "", null, "", "", "", null, "");
+        this(0, "", "", "", null, "", "", "", null, "" );
     }
 
     public Client(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email, String telephoneNr, String birthday, String gender) {
         super(id, firstName, prefix, lastName, address, SSN, email, telephoneNr, birthday, gender);
         this.accounts = new ArrayList<>();
+        this.totalNumberOfTransactions = calculateTotalNumberOfTransactions();
     }
 
     public Client(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email, String telephoneNr, String birthday, String gender, String username, String password, List<Account> accounts) {
@@ -61,8 +64,12 @@ public class Client extends User {
         this.accounts.add(account);
     }
 
+    public int getTotalNumberOfTransactions() {
+        return totalNumberOfTransactions;
+    }
+
     /** Methode om het totaal aantal transacties van alle rekeningen van een klant te berekenen */
-    public int getTotalNumberOfTransactions(){
+    public int calculateTotalNumberOfTransactions(){
         Client client = this;
         int totalNumberOfTransactions = 0;
         for (Account a: client.getAccounts()

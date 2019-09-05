@@ -46,9 +46,9 @@
                 <td>Transacties</td>
             </tr>
             <tr th:each="Client : ${tenMostActive}">
-                <td><span th:text="${Client.key.getId()}"/></td>
-                <td><a th:href="@{TenMostActiveHandler(id=${Client.key.getId()})}"><span th:text="${Client.key.getLastName()}"/></a> </td>
-                <td><span th:text="${Client.value}"/></td>
+                <td><span th:text="${Client.getId()}"/></td>
+                <td><a th:href="@{TenMostActiveHandler(id=${Client.getId()})}"><span th:text="${Client.getLastName()}"/></a> </td>
+                <td><span th:text="${Client.getTotalNumberOfTransactions()}"/></td>
 
 
             </tr>

@@ -78,7 +78,7 @@ public class LoginController {
                 return "employee_view_particulieren";
 
             } else {
-                Map<Client, Integer> topTenMostActive = new LinkedHashMap<>();
+                List<Client> topTenMostActive;
                 List<BusinessAccount> topTenHighest;
                 topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
                 topTenMostActive = topTenMostActiveClientFinder.getTopTenMostActiveClients();
