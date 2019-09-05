@@ -12,7 +12,7 @@
 ​
 <h1>Hallo <span th:text="${employee.firstName}"/></h1>
 ​
-​<form action="#" th:action="@{/EmployeeViewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
+​<form action="#" th:action="@{/PrivateEmployeeViewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
 <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
 <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
     <h2>De tien rijkste stinkerds</h2>

@@ -10,7 +10,6 @@ import team2.sofa.sofa.service.BalanceChecker;
 
 import java.util.List;
 
-
 @Service
 public class FundTransfer {
 

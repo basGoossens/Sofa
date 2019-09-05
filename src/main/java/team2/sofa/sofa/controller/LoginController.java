@@ -7,15 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import team2.sofa.sofa.model.*;
+import org.springframework.web.bind.annotation.*;
+import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.Employee;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 import team2.sofa.sofa.service.PasswordValidator;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
 import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
-
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 public class LoginController {
@@ -37,7 +38,17 @@ public class LoginController {
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
         return "login_employee";
+    }
+    @GetMapping(value = "login_client")
+    public String goTologinClientHandler(Model model) {
+        Client client = new Client();
+        model.addAttribute("client", client);
+        return "login";
+    }
 
+    @RequestMapping(value = "logoutClientHandler")
+    public String logOutClientHandler(){
+        return "login";
     }
 
     @PostMapping(value = "loginClientHandler")
@@ -86,10 +97,6 @@ public class LoginController {
                 model.addAttribute("tenHighestBalance", topTenHighest);
                 return "employee_view_mkb";
             }
-
-
-
-
 
         } else return "login_employee";
     }
