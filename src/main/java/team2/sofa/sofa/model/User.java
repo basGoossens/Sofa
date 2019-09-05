@@ -25,6 +25,7 @@ public abstract class User {
     private String telephoneNr;
     @NotBlank (message = "Voer a.u.b. een geldige datum in")
     private String birthday;
+    @NotBlank (message = "kies een geslacht")
     private String gender;
 
     public User() {

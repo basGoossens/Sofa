@@ -6,7 +6,7 @@
 </head>
 <body>
 <!--home knop!-->
-<div><a href="index"><input type="submit" value ="Home"></a></div>
+<div><a href="index"><input type="submit" value="Home"></a></div>
 
 <h2>Account aanmaken</h2>
 <form name="new_client" id="new_client" action="#" th:action="@{newAccountHandler}" th:object="${client}" method="post">
@@ -14,6 +14,7 @@
         <tr>
             <td>Voornaam:</td>
             <td><input type="text" th:field="*{firstName}"/></td>
+            <td th:errors="*{firstName}"></td>
         </tr>
         <tr>
             <td>Tussenvoegsel:</td>
@@ -22,6 +23,7 @@
         <tr>
             <td>Achternaam:</td>
             <td><input type="text" th:field="*{lastName}"/></td>
+            <td th:errors="*{lastName}"></td>
         </tr>
         <tr>
             <td>Straatnaam:</td>
@@ -42,6 +44,7 @@
         <tr>
             <td>Burger service nummer:</td>
             <td><input type="text" th:field="*{ssn}"/></td>
+            <td th:errors="*{ssn}"></td>
         </tr>
         <tr>
             <td>Emailadres:</td>
@@ -54,20 +57,25 @@
         <tr>
             <td>Geboortedatum:</td>
             <td><input type="text" th:field="*{birthday}"/></td>
+            <td th:errors="*{birthday}"></td>
         </tr>
         <tr>
             <td>Geslacht:</td>
             <td><input type="radio" name="gender" value="male" th:field="*{gender}"> Male
-            <input type="radio" name="gender" value="female"th:field="*{gender}"> Female
-            <input type="radio" name="gender" value="other"th:field="*{gender}"> Other</td>
+                <input type="radio" name="gender" value="female" th:field="*{gender}"> Female
+                <input type="radio" name="gender" value="other" th:field="*{gender}"> Other
+            </td>
+            <td th:errors="*{gender}"></td>
         </tr>
         <tr>
             <td>Gebruikersnaam:</td>
             <td><input type="text" th:field="*{username}"/></td>
+            <td th:errors="*{username}"></td>
         </tr>
         <tr>
             <td>Wachtwoord</td>
             <td><input type="password" th:field="*{password}"/></td>
+            <td th:errors="*{password}"></td>
         </tr>
         <tr>
             <td><input type="submit" value="verzenden"></td>
