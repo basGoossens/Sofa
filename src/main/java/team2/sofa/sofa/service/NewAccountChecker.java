@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.PrivateAccount;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.AddressDao;
 import team2.sofa.sofa.model.dao.ClientDao;
@@ -88,7 +89,7 @@ public class NewAccountChecker {
         clientDao.save(client);
         Client savedClient = clientDao.findClientByUsername(client.getUsername());
         IBANGenerator newIBAN = new IBANGenerator();
-        Account newAccount = new Account();
+        Account newAccount = new PrivateAccount();
         newAccount.setIBAN(newIBAN.getIBAN());
         newAccount.addClient(savedClient);
         savedClient.addAccount(newAccount);

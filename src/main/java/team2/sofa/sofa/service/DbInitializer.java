@@ -219,7 +219,7 @@ public class DbInitializer {
             Random r = new Random();
             int result = r.nextInt(3);
             for (int i = 0; i < result; i++) {
-                Account a = new Account();
+                Account a = new PrivateAccount();
                 a.setIBAN(ibanStack.pop());
                 a.setBalance((int) (r.nextDouble() * 10000) / 100.0);
                 connectAccount(c, a);

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Account {
+public abstract class Account {
 
     @Id
     @GeneratedValue (generator = "ACC_SEQ")
