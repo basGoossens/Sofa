@@ -2,16 +2,23 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Client View</title>
+    <title>Account Overview</title>
 </head>
 <body>
 
 <!--home knop!-->
 <div><a href="index"> <input type="submit" value ="Home"> </a> </div>
 
-<h1>Hallo, <span th:text="${client.firstName}"/></h1>
+<h1>Overzicht klant </h1>
 
-<form action="#" th:action="@{/clientViewHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+
+<form action="#" th:action="@{/AccountOverviewHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
 
     <h2>Overzicht rekeningen</h2>
     <h3>Particuliere rekeningen</h3>
@@ -22,14 +29,14 @@
         </tr>
         <tr th:each="PrivateAccount : *{accounts}">
             <td>
-                <a th:href="@{clientViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a>
+                <a th:href="@{AccountOverviewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a>
 
             </td>
 
             <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
         </tr>
     </table>
-<br>
+    <br>
     <h3>Zakelijke rekeningen</h3>
     <table>
         <tr>

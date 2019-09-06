@@ -32,44 +32,7 @@
         </tr>
     </table>
 </div>
-​
 
-<!--lijst met actiefste rekeningen - functionaliteit met th:if werkt nog niet en is uitgecomment-->
-<div th:unless="${#lists.isEmpty(tenMostActive)}"> <!--, th:if="${employee.getRole() == 'HOOFD_MKB'}"!-->
-    <h2>De tien meest actieve klanten</h2>
-    <table>
-        ​
-        <tr>
-            <td>KlantId</td>
-            <td>Naam</td>
-            <td>Transacties</td>
-        </tr>
-        <tr th:each="Client : ${tenMostActive}">
-            <td><span th:text="${Client.key.getId()}"/></td>
-            <td><a th:href="@{TenMostActiveHandler(id=${Client.key.getId()})}"><span th:text="${Client.key.getLastName()}"/></a> </td>
-            <td><span th:text="${Client.value}"/></td>
-
-
-        </tr>
-    </table>
-</div>
-​
-<!--gemiddelde per sector functionaliteit met th:if werkt nog niet en is uitgecomment-->
-<div th:unless="${#lists.isEmpty(averageBalancePerSector)}"> <!--th:if="${employee.getRole() == 'HOOFD_MKB'!-->
-    <h2>Gemiddelde per sector</h2>
-    <table>
-        <tr>
-            <td>Sector</td>
-            <td>Gemiddeld saldo</td>
-        </tr>
-        ​
-        <tr th:each="sector : ${averageBalancePerSector}">
-            <td><span th:text="${sector.NAME}"></span></td>
-            <td><span th:text="${sector.averageBalance}"></span></td>
-            ​
-        </tr>
-    </table>
-</div>
 ​
 <!--knop voor uitloggen!-->
 <div>
