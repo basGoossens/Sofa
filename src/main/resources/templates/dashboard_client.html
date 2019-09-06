@@ -15,31 +15,19 @@
 <!-- hier wordt een lijst met alle transacties ingeladen !-->
 <h2>Transacties</h2>
 <div th:unless="${#lists.isEmpty(account.transactions)}">
-    <h3>Bijschijvingen</h3>
     <table>
         <tr>
             <td>naam</td>
             <td>bedrag</td>
-        </tr>
-        <tr th:each="transaction : ${bij}">
-            <td><span th:text="${transaction.description}"/></td>
-            <td><span th:text="${transaction.amount}"/></td>
-            <td><span th:text="${transaction.debitAccount.getIban()}"/></td>
-    </tr>
-    </table>
-</div>
-<div th:unless="${#lists.isEmpty(account.transactions)}">
-    <h3>Afschrijvingen</h3>
-    <table>
-        <tr>
-            <td>naam</td>
-            <td>bedrag</td>
+            <td>debit rekening</td>
+            <td>credit rekening</td>
         </tr>
         <tr th:each="transaction : ${account.transactions}">
             <td><span th:text="${transaction.description}"/></td>
             <td><span th:text="${transaction.amount}"/></td>
+            <td><span th:text="${transaction.debitAccount.getIban()}"/></td>
             <td><span th:text="${transaction.creditAccount.getIban()}"/></td>
-        </tr>
+    </tr>
     </table>
 </div>
 <br>

@@ -79,6 +79,7 @@ public abstract class Account {
     public void addTransaction(Transaction transaction){
         this.transactions.add(transaction);
     }
+
     public void lowerBalance(double amount){
         this.balance -= amount;
     }

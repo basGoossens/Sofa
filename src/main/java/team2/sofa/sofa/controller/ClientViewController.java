@@ -31,7 +31,11 @@ public class ClientViewController {
         System.out.println("HEY!" + id);
         System.out.println("HEY" + account);
         PrivateAccount chosenAccount = privateAccountDao.findAccountById(id);
+//        List<Transaction> bij = transactionDao.findTransactionsByCreditAccount(id);
+//        List<Transaction> af = transactionDao.findTransactionsByDebitAccount(id);
         model.addAttribute("account", chosenAccount);
+//        model.addAttribute("bij", bij);
+//        model.addAttribute("af", af);
         return "dashboard_client";
     }
 
