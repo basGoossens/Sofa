@@ -15,7 +15,7 @@ public abstract class Account {
     private double balance;
     @ManyToMany
     private List<Client> owners;
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToMany (fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
     public Account(String iban, double balance, List<Transaction> transactions){
