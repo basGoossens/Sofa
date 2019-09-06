@@ -20,7 +20,7 @@
             <th>rekeningnummer</th>
             <th>saldo</th>
         </tr>
-        <tr th:each="PrivateAccount : *{accounts}">
+        <tr th:each="PrivateAccount: *{accounts}">
             <td>
                 <a th:href="@{PrivateAccountListHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a>
 
@@ -29,9 +29,13 @@
             <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
         </tr>
     </table>
+</form>
 <br>
 
+
+
     <form action="#" th:action="@{BusinessAccountListHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
+
     <h3>Zakelijke rekeningen</h3>
     <table>
         <tr>
@@ -45,7 +49,8 @@
             <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
         </tr>
     </table>
-
+        </div>
+    </form>
 
     <!-- knop voor uitloggen !-->
     <div>

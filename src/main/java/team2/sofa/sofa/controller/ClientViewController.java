@@ -21,15 +21,15 @@ public class ClientViewController {
     BusinessAccountDao businessAccountDao;
 
     @GetMapping(value = "PrivateAccountListHandler")
-    public String PrivateAccountListHandler(@RequestParam(name = "id") int id, PrivateAccount account, Model model){
-        Account chosenAccount = privateAccountDao.findAccountById(id);
+    public String PrivateAccountListHandler(@RequestParam(name = "id") int id, Model model){
+        PrivateAccount chosenAccount = privateAccountDao.findAccountById(id);
         model.addAttribute("account", chosenAccount);
         return "dashboard_client";
     }
 
     @GetMapping(value = "BusinessAccountListHandler")
-    public String clientViewHandler(@RequestParam(name = "id") int id, BusinessAccount account, Model model){
-        Account chosenAccount = businessAccountDao.findAccountById(id);
+    public String BusinessAccountListHandler(@RequestParam(name = "id") int id, Model model){
+        BusinessAccount chosenAccount = businessAccountDao.findAccountById(id);
         model.addAttribute("account", chosenAccount);
         return "dashboard_client";
     }
