@@ -5,18 +5,10 @@ import javax.persistence.Entity;
 @Entity
 public class PrivateAccount extends Account {
 
-    private boolean isBusinessAccount;
 
     public PrivateAccount(){
         super();
-        this.isBusinessAccount = false;
+        super.setBusinessAccount(true);
     }
 
-    public boolean isBusinessAccount() {
-        return isBusinessAccount;
-    }
-
-    public void setBusinessAccount(boolean businessAccount) {
-        isBusinessAccount = businessAccount;
-    }
 }

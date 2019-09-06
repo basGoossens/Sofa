@@ -11,20 +11,19 @@ public class BusinessAccount extends Account{
     private List<PDQ> coupledPdqMachines;
     @ManyToOne
     private Business business;
-    private boolean isBusinessAccount;
 
     public BusinessAccount() {
         super();
         this.coupledPdqMachines = new ArrayList<>();
         this.business = null;
-        this.isBusinessAccount = true;
+        super.setBusinessAccount(true);
     }
 
     public BusinessAccount(List<PDQ> coupledPdqMachines, Business business) {
         this();
         this.coupledPdqMachines = coupledPdqMachines;
         this.business = business;
-        this.isBusinessAccount = true;
+        super.setBusinessAccount(true);
     }
 
     public List<PDQ> getCoupledPdqMachines() {
@@ -47,11 +46,4 @@ public class BusinessAccount extends Account{
         this.business = business;
     }
 
-    public boolean isBusinessAccount() {
-        return isBusinessAccount;
-    }
-
-    public void setBusinessAccount(boolean businessAccount) {
-        isBusinessAccount = businessAccount;
-    }
 }

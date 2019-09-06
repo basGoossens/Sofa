@@ -52,6 +52,10 @@ public class LoginController {
         if (loginOk) {
             Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
             model.addAttribute("client", loggedInClient);
+//            for (Account a:loggedInClient.getAccounts()
+//                 ) { if (a.)
+//
+//            }.getAccounts().
             return "client_view";
         } else return "login";
     }
