@@ -19,11 +19,14 @@
         <tr>
             <td>naam</td>
             <td>bedrag</td>
+            <td>debit rekening</td>
+            <td>credit rekening</td>
         </tr>
         <tr th:each="transaction : ${account.transactions}">
             <td><span th:text="${transaction.description}"/></td>
             <td><span th:text="${transaction.amount}"/></td>
             <td><span th:text="${transaction.debitAccount.getIban()}"/></td>
+            <td><span th:text="${transaction.creditAccount.getIban()}"/></td>
     </tr>
     </table>
 </div>

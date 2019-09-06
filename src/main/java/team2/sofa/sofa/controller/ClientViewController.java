@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.PrivateAccount;
+import team2.sofa.sofa.model.Transaction;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.PrivateAccountDao;
+import team2.sofa.sofa.model.dao.TransactionDao;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,12 +23,19 @@ public class ClientViewController {
     @Autowired
     PrivateAccountDao privateAccountDao;
 
+    @Autowired
+    TransactionDao transactionDao;
+
     @GetMapping(value = "clientViewHandler")
     public String clientViewHandler(@RequestParam(name = "id") int id, PrivateAccount account, Model model){
         System.out.println("HEY!" + id);
         System.out.println("HEY" + account);
         PrivateAccount chosenAccount = privateAccountDao.findAccountById(id);
+//        List<Transaction> bij = transactionDao.findTransactionsByCreditAccount(id);
+//        List<Transaction> af = transactionDao.findTransactionsByDebitAccount(id);
         model.addAttribute("account", chosenAccount);
+//        model.addAttribute("bij", bij);
+//        model.addAttribute("af", af);
         return "dashboard_client";
     }
 

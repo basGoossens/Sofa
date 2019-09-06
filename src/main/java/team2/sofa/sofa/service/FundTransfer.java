@@ -30,9 +30,11 @@ public class FundTransfer {
         if (checkBalance(transaction)){
             transaction.setDebitAccount(debit);
             transaction.setCreditAccount(credit);
-            transactionDao.save(transaction);
+            debit.addTransaction(transaction);
+            credit.addTransaction(transaction);
             debit.lowerBalance(amount);
             credit.raiseBalance(amount);
+            transactionDao.save(transaction);
             privateAccountDao.save(debit);
             privateAccountDao.save(credit);
         }

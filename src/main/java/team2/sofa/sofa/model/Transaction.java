@@ -1,5 +1,7 @@
 package team2.sofa.sofa.model;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -13,8 +15,10 @@ public class Transaction {
     private String description;
     private LocalDate date;
     @ManyToOne
+    @Nullable
     private PrivateAccount creditAccount;
     @ManyToOne
+    @Nullable
     private PrivateAccount debitAccount;
 
     public Transaction(double amount, String description, LocalDate date, PrivateAccount creditAccount, PrivateAccount debitAccount){
