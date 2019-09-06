@@ -5,38 +5,40 @@
     <title>Client View</title>
 </head>
 <body>
-
-<!--home knop!-->
 <div><a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 <h1>Hallo, <span th:text="${client.firstName}"/></h1>
 
+<!--home knop!-->
 <form action="#" th:action="@{/clientViewHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
 
     <h2>Overzicht rekeningen</h2>
     <table>
         <tr>
-            <th>rekeningnummer</th>
-            <th>saldo</th>
+            <th>Rekeningnummer</th>
+            <th>Saldo</th>
         </tr>
-        <tr th:each="account : *{accounts}">
+        <tr th:each="PrivateAccount : *{accounts}">
             <td>
-                <a th:href="@{clientViewHandler(id=${account.id})}"><span th:text="${account.IBAN}"/></a>
+                <a th:href="@{clientViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a>
 
             </td>
 
-            <td><a><span th:text="${account.balance}"/></a></td>
+            <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
         </tr>
     </table>
 
-
+</form>
 
     <!-- knop voor uitloggen !-->
+
     <div>
         <a href="login"> <input type="submit" value="Uitloggen"> </a>
         <!-- popup-functie voor bevestiging nog bouwen !-->
     </div>
-</form>
+
+
+
 
 
 </body>

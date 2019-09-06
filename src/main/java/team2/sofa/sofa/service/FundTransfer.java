@@ -1,16 +1,50 @@
 package team2.sofa.sofa.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Client;
-import team2.sofa.sofa.model.User;
+import team2.sofa.sofa.model.*;
+import team2.sofa.sofa.model.dao.AccountDao;
+import team2.sofa.sofa.model.dao.PrivateAccountDao;
+import team2.sofa.sofa.model.dao.TransactionDao;
 import team2.sofa.sofa.service.BalanceChecker;
 
 import java.util.List;
 
+@Service
 public class FundTransfer {
 
-    public FundTransfer(Account fromAccount, Account toAccount, Client toClient, double bedrag) {
+    @Autowired
+    TransactionDao transactionDao;
+
+    @Autowired
+    PrivateAccountDao privateAccountDao;
+
+    public FundTransfer(){super();}
+
+    public void procesTransaction(Transaction transaction){
+        double amount = transaction.getAmount();
+        String ibanDebit = transaction.getDebitAccount().getIban();
+        String ibanCredit = transaction.getCreditAccount().getIban();
+        PrivateAccount debit = privateAccountDao.findAccountByIban(ibanDebit);
+        PrivateAccount credit = privateAccountDao.findAccountByIban(ibanCredit);
+        if (checkBalance(transaction)){
+            transaction.setDebitAccount(debit);
+            transaction.setCreditAccount(credit);
+            transactionDao.save(transaction);
+            debit.lowerBalance(amount);
+            credit.raiseBalance(amount);
+            privateAccountDao.save(debit);
+            privateAccountDao.save(credit);
+        }
+    }
+
+    public boolean checkBalance(Transaction transaction) {
+        double balance = transaction.getDebitAccount().getBalance();
+        double amount = transaction.getAmount();
+        return (balance - amount) < 0;
+    }
+
+    public void fundTransfer(Account fromAccount, Account toAccount, Client toClient, double bedrag) {
         BalanceChecker checker = new BalanceChecker();
         boolean balanceOk = checker.BalanceCheck(fromAccount, bedrag);
         boolean toAccountOk = accountChecker(toAccount, toClient);

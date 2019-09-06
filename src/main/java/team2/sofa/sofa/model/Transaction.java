@@ -7,18 +7,17 @@ import java.time.LocalDate;
 public class Transaction {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "TRANS_SEQ")
     private int id;
     private double amount;
     private String description;
     private LocalDate date;
     @ManyToOne
-    private Account creditAccount;
+    private PrivateAccount creditAccount;
     @ManyToOne
-    private Account debitAccount;
+    private PrivateAccount debitAccount;
 
-    public Transaction(double amount, String description, LocalDate date, Account creditAccount, Account debitAccount){
-        this();
+    public Transaction(double amount, String description, LocalDate date, PrivateAccount creditAccount, PrivateAccount debitAccount){
         this.amount = amount;
         this.description = description;
         this.date = date;
@@ -27,8 +26,7 @@ public class Transaction {
     }
 
     public Transaction(){
-        super();
-        this.id = 0;
+        this(0,"",LocalDate.now(),null,null);
     }
 
     public int getId() {
@@ -67,7 +65,7 @@ public class Transaction {
         return creditAccount;
     }
 
-    public void setCreditAccount(Account creditAccount) {
+    public void setCreditAccount(PrivateAccount creditAccount) {
         this.creditAccount = creditAccount;
     }
 
@@ -75,7 +73,7 @@ public class Transaction {
         return debitAccount;
     }
 
-    public void setDebitAccount(Account debitAccount) {
+    public void setDebitAccount(PrivateAccount debitAccount) {
         this.debitAccount = debitAccount;
     }
 }

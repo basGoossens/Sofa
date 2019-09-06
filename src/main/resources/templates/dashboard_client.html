@@ -4,24 +4,26 @@
     <meta charset="UTF-8">
     <title>Dashboard Client</title>
 </head>
-<body>
+
 <!--home knop!-->
 <div> <a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 
-<h1>Rekening <span th:text="${account.IBAN}"/></h1>
+<h1>Rekening <span th:text="${account.Iban}"/></h1>
+<h2>Saldo = <span th:text="${account.balance}"/></h2>
 
 <!-- hier wordt een lijst met alle transacties ingeladen !-->
 <h2>Transacties</h2>
-<div th:unless="${#lists.isEmpty(allTransactions)}">
+<div th:unless="${#lists.isEmpty(account.transactions)}">
     <table>
         <tr>
             <td>naam</td>
             <td>bedrag</td>
         </tr>
-        <tr th:each="account : ${allTransactions}">
-        <td>Kapitalist BV<span th:text="${transaction.IBANdebet.name}"/></a></td>
-        <td>500<span th:text="${transaction.amount}"/></td></a>
+        <tr th:each="transaction : ${account.transactions}">
+            <td><span th:text="${transaction.description}"/></td>
+            <td><span th:text="${transaction.amount}"/></td>
+            <td><span th:text="${transaction.debitAccount.getIban()}"/></td>
     </tr>
     </table>
 </div>
@@ -30,22 +32,21 @@
 
 <!--betaalformulier! Nog te maken-->
 <div>
-    <form action="#" th:action="@{TransferHandler}" etc...>
-        <input type="submit" value="Hier komt het betaalformulier" > </form>
+    <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
+        <a th:href="@{TransferHandler(id=${account.id})}">betaalopdracht</a></form>
 </div>
-
 
 <!--terug-knop!-->
-<div>
-    <a href="client_view"> <input type="submit" value="Terug naar overzicht"> </a>
-</div>
-
+<form>
+    <input type="button" value="Terug naar overzicht" onClick="javascript:history.go(-1)" />
+</form>
 
 <!--knop voor uitloggen!-->
 <div>
     <a href="login"> <input type="submit" value="Uitloggen"> </a>
-    <!-- popup-functie voor bevestiging nog bouwen !-->
 </div>
 
-</body>
+
+<!-- popup-functie voor bevestiging nog bouwen !-->
+
 </html>

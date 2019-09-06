@@ -9,18 +9,18 @@
 <div> <a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 
-<h1>Rekening <span th:text="${account.IBAN}"/></h1>
+<h1>Rekening <span th:text="${account.iban}"/></h1>
 
 <!-- hier wordt een lijst met alle transacties ingeladen !-->
 <h2>Transacties</h2>
 <div th:unless="${#lists.isEmpty(allTransactions)}">
     <table>
         <tr>
-            <td>naam</td>
-            <td>bedrag</td>
+            <td>Naam</td>
+            <td>Bedrag</td>
         </tr>
         <tr th:each="account : ${allTransactions}">
-            <td>Kapitalist BV<span th:text="${transaction.IBANdebet.name}"/></a></td>
+            <td>Kapitalist BV<span th:text="${transaction.ibandebet.name}"/></a></td>
             <td>500<span th:text="${transaction.amount}"/></td></a>
         </tr>
     </table>
@@ -29,16 +29,17 @@
 
 
 <!--terug-knop!-->
-<div>
-    <a href="employee_view"> <input type="submit" value="Terug naar overzicht"> </a>
-</div>
+<form>
+    <input type="button" value="Terug naar overzicht" onClick="javascript:history.go(-1)" />
+</form>
 
 
 <!--knop voor uitloggen!-->
 <div>
     <a href="login"> <input type="submit" value="Uitloggen"> </a>
-    <!-- popup-functie voor bevestiging nog bouwen !-->
 </div>
+
+    <!-- popup-functie voor bevestiging nog bouwen !-->
 
 </body>
 </html>

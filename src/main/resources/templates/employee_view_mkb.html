@@ -12,7 +12,7 @@
 ​
 <h1>Hallo <span th:text="${employee.firstName}"/></h1>
 ​
-​<form action="#" th:action="@{/EmployeeViewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
+​<form action="#" th:action="@{/BusinessEmployeeViewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
 
     <!--de tien rekeningen met het hoogste saldo!-->
     <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
@@ -27,7 +27,7 @@
 
             <tr th:each="BusinessAccount : ${tenHighestBalance}">
                 <td>
-                    <a th:href="@{BusinessEmployeeViewHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.IBAN}"/></a></td>
+                    <a th:href="@{BusinessEmployeeViewHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.Iban}"/></a></td>
                 <td><span th:text="${BusinessAccount.owners.get(0).getLastName()}"/></td>
                 <td><span th:text="${BusinessAccount.balance}"/></td>
             </tr>
@@ -46,9 +46,9 @@
                 <td>Transacties</td>
             </tr>
             <tr th:each="Client : ${tenMostActive}">
-                <td><span th:text="${Client.key.getId()}"/></td>
-                <td><a th:href="@{TenMostActiveHandler(id=${Client.key.getId()})}"><span th:text="${Client.key.getLastName()}"/></a> </td>
-                <td><span th:text="${Client.value}"/></td>
+                <td><span th:text="${Client.getId()}"/></td>
+                <td><a th:href="@{TenMostActiveHandler(id=${Client.getId()})}"><span th:text="${Client.getLastName()}"/></a> </td>
+                <td><span th:text="${Client.getTotalNumberOfTransactions()}"/></td>
 
 
             </tr>
@@ -71,7 +71,7 @@
             </tr>
         </table>
     </div>
-    ​
+    ​</form> ​
     <!--knop voor uitloggen!-->
     <div>
         <a href="login_employee"> <input type="submit" value="Uitloggen"> </a>
@@ -82,6 +82,6 @@
     <div>
         <a href="login_employee"> <input type="submit" value="Terug naar overzicht"> </a>
     </div>
-    ​</form>
+
 </body>
 </html>

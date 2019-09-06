@@ -12,7 +12,7 @@
 ​
 <h1>Hallo <span th:text="${employee.firstName}"/></h1>
 ​
-​<form action="#" th:action="@{/EmployeeViewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
+​<form action="#" th:action="@{/PrivateEmployeeViewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
 <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
 <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
     <h2>De tien rijkste stinkerds</h2>
@@ -26,7 +26,7 @@
 
         <tr th:each="PrivateAccount : ${tenHighestBalance}">
             <td>
-                <a th:href="@{PrivateEmployeeViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a></td>
+                <a th:href="@{PrivateEmployeeViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a></td>
             <td><span th:text="${PrivateAccount.owners.get(0).getLastName()}"/></td>
             <td><span th:text="${PrivateAccount.balance}"/></td>
         </tr>
@@ -70,7 +70,7 @@
         </tr>
     </table>
 </div>
-​
+​​</form>
 <!--knop voor uitloggen!-->
 <div>
     <a href="login_employee"> <input type="submit" value="Uitloggen"> </a>
@@ -81,6 +81,6 @@
 <div>
     <a href="login_employee"> <input type="submit" value="Terug naar overzicht"> </a>
 </div>
-    ​</form>
+
 </body>
 </html>

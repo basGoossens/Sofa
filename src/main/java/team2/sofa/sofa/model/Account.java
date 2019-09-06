@@ -11,7 +11,7 @@ public abstract class Account {
     @Id
     @GeneratedValue (generator = "ACC_SEQ")
     private int id;
-    private String IBAN;
+    private String iban;
     private double balance;
     @ManyToMany
     private List<Client> owners;
@@ -20,7 +20,7 @@ public abstract class Account {
 
     public Account(String iban, double balance, List<Transaction> transactions){
         this();
-        this.IBAN = iban;
+        this.iban = iban;
         this.balance = balance;
         this.transactions = transactions;
     }
@@ -40,12 +40,12 @@ public abstract class Account {
         this.id = id;
     }
 
-    public String getIBAN() {
-        return IBAN;
+    public String getIban() {
+        return iban;
     }
 
-    public void setIBAN(String IBAN) {
-        this.IBAN = IBAN;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
     public double getBalance() {
@@ -78,5 +78,11 @@ public abstract class Account {
 
     public void addTransaction(Transaction transaction){
         this.transactions.add(transaction);
+    }
+    public void lowerBalance(double amount){
+        this.balance -= amount;
+    }
+    public void raiseBalance(double amount){
+        this.balance += amount;
     }
 }

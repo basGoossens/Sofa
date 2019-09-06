@@ -66,7 +66,7 @@ public class DbInitializer {
         for (int i = 0; i < count; i++) {
             BusinessAccount ba = new BusinessAccount();
             Random r = new Random();
-            ba.setIBAN(ibanStack.pop());
+            ba.setIban(ibanStack.pop());
             ba.setBalance((int) (r.nextDouble() * 10000) / 100.0);
             Business b = businessDao.findById(i + 1).get();
             ba.setBusiness(b);
@@ -212,15 +212,15 @@ public class DbInitializer {
      * Dit zodat er onderscheid is tusen Clients zonder particuliere Rekening, sommige met maar 1 en sommige met 2.
      * Tevens wordt er random een saldo gecreëerd op het gemaakte account tussen de 99.99 en 0.01
      */
-    public void fillAccounts() {
+    public void fillPrivateAccounts() {
         Iterable<Client> client = clientDao.findAll();
         for (Client c : client
         ) {
             Random r = new Random();
             int result = r.nextInt(3);
             for (int i = 0; i < result; i++) {
-                Account a = new PrivateAccount();
-                a.setIBAN(ibanStack.pop());
+                PrivateAccount a = new PrivateAccount();
+                a.setIban(ibanStack.pop());
                 a.setBalance((int) (r.nextDouble() * 10000) / 100.0);
                 connectAccount(c, a);
             }
