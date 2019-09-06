@@ -11,9 +11,9 @@
 
 <h1>Hallo, <span th:text="${client.firstName}"/></h1>
 
-<form action="#" th:action="@{/clientViewHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
 
-    <h2>Overzicht rekeningen</h2>
+<form action="#" th:action="@{PrivateAccountListHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
+<h2>Overzicht rekeningen</h2>
     <h3>Particuliere rekeningen</h3>
     <table>
         <tr>
@@ -22,7 +22,7 @@
         </tr>
         <tr th:each="PrivateAccount : *{accounts}">
             <td>
-                <a th:href="@{clientViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a>
+                <a th:href="@{PrivateAccountListHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a>
 
             </td>
 
@@ -30,6 +30,8 @@
         </tr>
     </table>
 <br>
+
+    <form action="#" th:action="@{BusinessAccountListHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
     <h3>Zakelijke rekeningen</h3>
     <table>
         <tr>
@@ -38,7 +40,7 @@
         </tr>
         <tr th:each="BusinessAccount : *{accounts}">
             <td>
-                <a th:href="@{clientViewHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.IBAN}"/></a>
+                <a th:href="@{BusinessAccountListHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.IBAN}"/></a>
             </td>
             <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
         </tr>

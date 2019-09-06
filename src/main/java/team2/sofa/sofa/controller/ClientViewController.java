@@ -6,19 +6,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.dao.AccountDao;
+import team2.sofa.sofa.model.BusinessAccount;
+import team2.sofa.sofa.model.PrivateAccount;
+import team2.sofa.sofa.model.dao.BusinessAccountDao;
+import team2.sofa.sofa.model.dao.PrivateAccountDao;
 
 @Controller
 public class ClientViewController {
 
     @Autowired
-    AccountDao accountDao;
+    PrivateAccountDao privateAccountDao;
 
-    @GetMapping(value = "clientViewHandler")
-    public String clientViewHandler(@RequestParam(name = "id") int id,Account account, Model model){
-        System.out.println("HEY!" + id);
-        System.out.println("HEY" + account);
-        Account chosenAccount = accountDao.findAccountById(id);
+    @Autowired
+    BusinessAccountDao businessAccountDao;
+
+    @GetMapping(value = "PrivateAccountListHandler")
+    public String PrivateAccountListHandler(@RequestParam(name = "id") int id, PrivateAccount account, Model model){
+        Account chosenAccount = privateAccountDao.findAccountById(id);
+        model.addAttribute("account", chosenAccount);
+        return "dashboard_client";
+    }
+
+    @GetMapping(value = "BusinessAccountListHandler")
+    public String clientViewHandler(@RequestParam(name = "id") int id, BusinessAccount account, Model model){
+        Account chosenAccount = businessAccountDao.findAccountById(id);
         model.addAttribute("account", chosenAccount);
         return "dashboard_client";
     }
