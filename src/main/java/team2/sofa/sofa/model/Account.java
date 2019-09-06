@@ -18,11 +18,14 @@ public abstract class Account {
     @ManyToMany (fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
+    private boolean isBusinessAccount;
+
     public Account(String iban, double balance, List<Transaction> transactions){
         this();
         this.iban = iban;
         this.balance = balance;
         this.transactions = transactions;
+        this.isBusinessAccount = false;
     }
 
     public Account(){
@@ -30,6 +33,7 @@ public abstract class Account {
         this.id = 0;
         this.owners = new ArrayList<>();
         this.transactions = new ArrayList<>();
+        this.isBusinessAccount = false;
     }
 
     public int getId() {
@@ -85,5 +89,13 @@ public abstract class Account {
     }
     public void raiseBalance(double amount){
         this.balance += amount;
+    }
+
+    public boolean isBusinessAccount() {
+        return isBusinessAccount;
+    }
+
+    public void setBusinessAccount(boolean businessAccount) {
+        isBusinessAccount = businessAccount;
     }
 }
