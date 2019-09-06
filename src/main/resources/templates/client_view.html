@@ -20,7 +20,7 @@
             <th>rekeningnummer</th>
             <th>saldo</th>
         </tr>
-        <tr th:each="PrivateAccount: *{accounts}">
+        <tr th:each="PrivateAccount: ${listPrivateAccounts}">
             <td>
                 <a th:href="@{PrivateAccountListHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a>
 
@@ -42,7 +42,7 @@
             <th>rekeningnummer</th>
             <th>saldo</th>
         </tr>
-        <tr th:each="BusinessAccount : *{accounts}">
+        <tr th:each="BusinessAccount : ${listBusinessAccounts}">
             <td>
                 <a th:href="@{BusinessAccountListHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.IBAN}"/></a>
             </td>

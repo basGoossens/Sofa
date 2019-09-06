@@ -8,7 +8,7 @@ public class PrivateAccount extends Account {
 
     public PrivateAccount(){
         super();
-        super.setBusinessAccount(true);
+        super.setBusinessAccount(false);
     }
 
 }

@@ -13,6 +13,7 @@ import team2.sofa.sofa.service.PasswordValidator;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
 import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,10 +53,15 @@ public class LoginController {
         if (loginOk) {
             Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
             model.addAttribute("client", loggedInClient);
-//            for (Account a:loggedInClient.getAccounts()
-//                 ) { if (a.)
-//
-//            }.getAccounts().
+//            Accounts van klant scheiden in business en private
+            ArrayList<Account> listPrivateAccounts = new ArrayList<>();
+            ArrayList<Account> listBusinessAccounts = new ArrayList<>();
+            for (Account a:loggedInClient.getAccounts()
+                 ) { if (a.isBusinessAccount()) {listBusinessAccounts.add(a);}
+                 else {listPrivateAccounts.add(a);}
+            }
+            model.addAttribute("listPrivateAccounts", listPrivateAccounts);
+            model.addAttribute("listBusinessAccounts", listBusinessAccounts);
             return "client_view";
         } else return "login";
     }
