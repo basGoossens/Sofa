@@ -27,17 +27,6 @@ public class PaymentController {
     @Autowired
     FundTransfer fundTransfer;
 
-    @GetMapping(value = "TransferHandler")
-    public String transfer(@RequestParam(name = "id") int id, PrivateAccount account, Model model){
-        Transaction t = new Transaction();
-        PrivateAccount a = privateAccountDao.findAccountById(id);
-        model.addAttribute("transaction", t);
-        model.addAttribute("account", a);
-        model.addAttribute("client", a.getOwners().get(0));
-        return "money_transfer";
-    }
-
-
     @PostMapping(value = "transferMoneyHandler")
     public String transferMoneyHandler (Model model, Transaction transaction){
         fundTransfer.procesTransaction(transaction);

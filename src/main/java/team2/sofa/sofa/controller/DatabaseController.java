@@ -13,19 +13,25 @@ import team2.sofa.sofa.service.DbInitializer;
  */
 @Controller
 public class DatabaseController {
+    // samen nooit meer dan hoeveelheid in dataset die wordt ingeladen in de service DbInitializer
+    // Small tot 99
+    // Medium tot 5000
+    // Large tot 7000
+    private final int CLIENTS = 50;
+    private final int BUSINESS = 20;
+
 
     @Autowired
     DbInitializer dbInitializer;
 
     @GetMapping(value = "initdb")
     public String indexInitdbHandler(Model model) {
-        dbInitializer.makeClient(20);
+        dbInitializer.makeClient(CLIENTS);
         dbInitializer.fillPrivateAccounts();
-        dbInitializer.makeEmployee(EmployeeRole.HOOFD_PARTICULIEREN);
-        dbInitializer.makeEmployee(EmployeeRole.HOOFD_MKB);
-        dbInitializer.makeEmployee(EmployeeRole.ACCOUNTMANAGER);
-        dbInitializer.makeBusiness(5);
-        dbInitializer.makeBusinessAccount(5);
+        dbInitializer.makeEmployee(EmployeeRole.HOOFD_PARTICULIEREN, 1);
+        dbInitializer.makeEmployee(EmployeeRole.HOOFD_MKB,2);
+        dbInitializer.makeEmployee(EmployeeRole.ACCOUNTMANAGER, 3);
+        dbInitializer.makeBusiness(BUSINESS, CLIENTS);
         return "index";
     }
 }

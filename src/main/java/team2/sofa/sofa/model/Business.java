@@ -17,7 +17,7 @@ public class Business {
     private Client owner;
 
     public Business(){
-        this(0,"", BusinessSector.LEEG, null);
+        this(0,"", BusinessSector.AGRARISCH, null);
     }
 
     public Business(int id, String businessName, BusinessSector sector, Client owner) {
