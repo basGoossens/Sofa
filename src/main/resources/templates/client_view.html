@@ -9,26 +9,46 @@
 
 <h1>Hallo, <span th:text="${client.firstName}"/></h1>
 
-<!--home knop!-->
-<form action="#" th:action="@{/clientViewHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
 
-    <h2>Overzicht rekeningen</h2>
+<form action="#" th:action="@{PrivateAccountListHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
+<h2>Overzicht rekeningen</h2>
+    <h3>Particuliere rekeningen</h3>
     <table>
         <tr>
             <th>Rekeningnummer</th>
             <th>Saldo</th>
         </tr>
-        <tr th:each="PrivateAccount : *{accounts}">
+        <tr th:each="PrivateAccount: ${listPrivateAccounts}">
             <td>
-                <a th:href="@{clientViewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a>
+                <a th:href="@{PrivateAccountListHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a>
 
             </td>
 
             <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
         </tr>
     </table>
-
 </form>
+<br>
+
+
+
+    <form action="#" th:action="@{BusinessAccountListHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
+
+    <h3>Zakelijke rekeningen</h3>
+    <table>
+        <tr>
+            <th>rekeningnummer</th>
+            <th>saldo</th>
+        </tr>
+        <tr th:each="BusinessAccount : ${listBusinessAccounts}">
+            <td>
+                <a th:href="@{BusinessAccountListHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.iban}"/></a>
+            </td>
+            <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
+        </tr>
+    </table>
+        </div>
+    </form>
 
     <!-- knop voor uitloggen !-->
 
@@ -36,9 +56,7 @@
         <a href="login"> <input type="submit" value="Uitloggen"> </a>
         <!-- popup-functie voor bevestiging nog bouwen !-->
     </div>
-
-
-
+</form>
 
 
 </body>

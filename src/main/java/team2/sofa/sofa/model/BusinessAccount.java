@@ -16,12 +16,14 @@ public class BusinessAccount extends Account{
         super();
         this.coupledPdqMachines = new ArrayList<>();
         this.business = null;
+        super.setBusinessAccount(true);
     }
 
     public BusinessAccount(List<PDQ> coupledPdqMachines, Business business) {
         this();
         this.coupledPdqMachines = coupledPdqMachines;
         this.business = business;
+        super.setBusinessAccount(true);
     }
 
     public List<PDQ> getCoupledPdqMachines() {
@@ -43,4 +45,5 @@ public class BusinessAccount extends Account{
     public void setBusiness(Business business) {
         this.business = business;
     }
+
 }

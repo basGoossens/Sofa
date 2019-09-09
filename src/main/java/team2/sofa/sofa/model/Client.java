@@ -2,6 +2,7 @@ package team2.sofa.sofa.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +17,12 @@ public class Client extends User {
     private String password;
     @ManyToMany(mappedBy = "owners")
     private List<Account> accounts;
+
+//    //attributen om business en private te scheiden -  @Transient geeft aan dat deze niet worden gemapt door Hibernate.
+//    @Transient
+//    private List<PrivateAccount> privateAccounts;
+//    @Transient
+//    private List<BusinessAccount> businessAccounts;
 
     private int totalNumberOfTransactions;
 

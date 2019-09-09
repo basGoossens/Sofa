@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
-import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
-import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
-
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class EmployeeViewController {
@@ -48,7 +43,7 @@ public class EmployeeViewController {
     public String TenMostActiveHandler(@RequestParam(name = "id") int id, Client client, Model model) {
         Client chosenClient = clientDao.findClientById(id);
         model.addAttribute("client", chosenClient);
-        return "client_view";
+        return "client_view_for_employee";
     }
 
 }

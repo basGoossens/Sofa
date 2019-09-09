@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Overview</title>
+</head>
+<body>
+
+<!--home knop!-->
+<div><a href="index"> <input type="submit" value ="Home"> </a> </div>
+
+<h1>Overzicht klant </h1>
+
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+<span th:text="${client.firstName}"/>
+
+<form action="#" th:action="@{/AccountOverviewHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
+
+    <h2>Overzicht rekeningen</h2>
+    <h3>Particuliere rekeningen</h3>
+    <table>
+        <tr>
+            <th>rekeningnummer</th>
+            <th>saldo</th>
+        </tr>
+        <tr th:each="PrivateAccount : *{accounts}">
+            <td>
+                <a th:href="@{AccountOverviewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.IBAN}"/></a>
+
+            </td>
+
+            <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
+        </tr>
+    </table>
+    <br>
+    <h3>Zakelijke rekeningen</h3>
+    <table>
+        <tr>
+            <th>rekeningnummer</th>
+            <th>saldo</th>
+        </tr>
+        <tr th:each="BusinessAccount : *{accounts}">
+            <td>
+                <a th:href="@{clientViewHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.IBAN}"/></a>
+            </td>
+            <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
+        </tr>
+    </table>
+
+
+    <!-- knop voor uitloggen !-->
+    <div>
+        <a href="login"> <input type="submit" value="Uitloggen"> </a>
+        <!-- popup-functie voor bevestiging nog bouwen !-->
+    </div>
+</form>
+
+
+</body>
+</html>
