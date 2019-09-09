@@ -13,7 +13,10 @@ import team2.sofa.sofa.service.DbInitializer;
  */
 @Controller
 public class DatabaseController {
-    // samen nooit meer dan hoeveelheid in dataset ;)
+    // samen nooit meer dan hoeveelheid in dataset die wordt ingeladen in de service DbInitializer
+    // Small tot 99
+    // Medium tot 5000
+    // Large tot 7000
     private final int CLIENTS = 50;
     private final int BUSINESS = 20;
 

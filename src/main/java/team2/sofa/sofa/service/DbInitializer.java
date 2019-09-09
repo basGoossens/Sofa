@@ -15,6 +15,7 @@ import java.util.*;
 @Service
 public class DbInitializer {
     //verschillende statics afhankelijk van hoeveelheid data die je wil inladen.
+    //zie ook comment in Controller DatabaseController
     private final String BIG = "Data7000.csv";
     private final String MEDIUM = "Data5000.csv";
     private final String SMALL = "Data99.csv";
