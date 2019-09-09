@@ -8,7 +8,7 @@ import java.util.List;
 public class BusinessAccount extends Account{
 
     @OneToMany
-    private List<PDQ> coupledPdqMachines;
+    private List<pdq> coupledPdqMachines;
     @ManyToOne
     private Business business;
 
@@ -19,22 +19,22 @@ public class BusinessAccount extends Account{
         super.setBusinessAccount(true);
     }
 
-    public BusinessAccount(List<PDQ> coupledPdqMachines, Business business) {
+    public BusinessAccount(List<pdq> coupledPdqMachines, Business business) {
         this();
         this.coupledPdqMachines = coupledPdqMachines;
         this.business = business;
         super.setBusinessAccount(true);
     }
 
-    public List<PDQ> getCoupledPdqMachines() {
+    public List<pdq> getCoupledPdqMachines() {
         return coupledPdqMachines;
     }
 
-    public void setCoupledPdqMachines(List<PDQ> coupledPdqMachines) {
+    public void setCoupledPdqMachines(List<pdq> coupledPdqMachines) {
         this.coupledPdqMachines = coupledPdqMachines;
     }
 
-    public void addPdqMachine(PDQ pdqMachine){
+    public void addPdqMachine(pdq pdqMachine){
         this.coupledPdqMachines.add(pdqMachine);
     }
 

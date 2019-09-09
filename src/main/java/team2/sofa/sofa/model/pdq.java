@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class PDQ {
+public class pdq {
 
     @Id
     @GeneratedValue
@@ -15,13 +15,13 @@ public class PDQ {
     @ManyToOne
     private Account coupledAccount;
 
-    public PDQ(String pdqMachineName, Account coupledAccount) {
+    public pdq(String pdqMachineName, Account coupledAccount) {
         this();
         this.pdqMachineName = pdqMachineName;
         this.coupledAccount = coupledAccount;
     }
 
-    public PDQ() {
+    public pdq() {
         super();
         this.id=0;
     }
