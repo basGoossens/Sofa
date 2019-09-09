@@ -1,7 +1,10 @@
 package team2.sofa.sofa.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
@@ -19,6 +22,7 @@ public abstract class User {
     @ManyToOne
     private Address address;
     @NotBlank (message = "Voer een geldig BSN in")
+    @Size(max = 9, min = 9, message = "BSN moet 9 cijfers bevatten")
     private String ssn;
     private String email;
     private String telephoneNr;

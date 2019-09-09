@@ -10,12 +10,15 @@ import team2.sofa.sofa.model.dao.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 @Service
 public class DbInitializer {
+    //verschillende statics afhankelijk van hoeveelheid data die je wil inladen.
+    private final String BIG = "Data7000.csv";
+    private final String MEDIUM = "Data5000.csv";
+    private final String SMALL = "Data99.csv";
+
     @Autowired
     ClientDao clientDao;
     @Autowired
@@ -27,14 +30,14 @@ public class DbInitializer {
     @Autowired
     BusinessDao businessDao;
 
-    private Stack<String[]> rawData;
+    private List<String[]> rawData;
     private Stack<String> ssnStack;
     private Stack<String> ibanStack;
     private Stack<String> companyList;
 
     public DbInitializer() {
         super();
-        rawData = makeDataList();
+        rawData = makeDataList(SMALL);
         ssnStack = SSNFunctionality.bsnStack(rawData.size());
         this.ibanStack = new IBANGenerator().ibanStack(rawData.size());
         this.companyList = makeCompanyList();
@@ -43,36 +46,37 @@ public class DbInitializer {
     /**
      * Genereert business objects om op te slaan in de DB
      *
-     * @param count aantal te creëren businesses
+     * @param countb aantal te creëren businesses
      */
-    public void makeBusiness(int count) {
-        for (int i = 0; i < count; i++) {
+    public void makeBusiness(int countb, int countC) {
+        for (int i = 0; i < countb; i++) {
+            Random r = new Random();
             Business b = new Business();
             b.setBusinessName(companyList.pop());
             BusinessSector[] businessSectors = (BusinessSector.values());
-            b.setSector(businessSectors[i]);
-            Client c = clientDao.findClientById(i + 1);
+            b.setSector(businessSectors[i%11]);
+            int randomClient = r.nextInt(countC);
+            if (randomClient == 0){
+                randomClient = 1;
+            }
+            Client c = clientDao.findClientById(randomClient);
             b.setOwner(c);
             businessDao.save(b);
+            makeBusinessAccount(b,c);
         }
     }
 
     /**
      * maakt businessaccounts aan en koppelt deze aan clients
      *
-     * @param count aantal accounts
      */
-    public void makeBusinessAccount(int count) {
-        for (int i = 0; i < count; i++) {
+    private void makeBusinessAccount(Business business, Client client) {
             BusinessAccount ba = new BusinessAccount();
             Random r = new Random();
             ba.setIban(ibanStack.pop());
             ba.setBalance((int) (r.nextDouble() * 10000) / 100.0);
-            Business b = businessDao.findById(i + 1).get();
-            ba.setBusiness(b);
-            Client c = clientDao.findClientById(i + 4);
-            connectAccount(c, ba);
-        }
+            ba.setBusiness(business);
+            connectAccount(client, ba);
     }
 
     /**
@@ -83,7 +87,8 @@ public class DbInitializer {
     private Stack<String> makeCompanyList() {
         Stack<String> comp = new Stack<>();
         for (int i = 0; i < rawData.size(); i++) {
-            comp.push(rawData.pop()[11].replace("\"", ""));
+            if (!(rawData.get(i).length == 11))
+            comp.push(rawData.get(i)[11].replace("\"", ""));
         }
         return comp;
     }
@@ -93,22 +98,22 @@ public class DbInitializer {
      *
      * @return Lijst van iedere line in CSV bestand als ruwe String inclusief comma's.
      */
-    private Stack<String[]> makeDataList() {
+    private List<String[]> makeDataList(String size) {
         Scanner fileReader;
-        Stack<String[]> u = new Stack<>();
+        List<String[]> data = new ArrayList<>();
         try {
-            Resource resource = new ClassPathResource("DataKlein.csv");
+            Resource resource = new ClassPathResource(size);
             File customerList = resource.getFile();
             fileReader = new Scanner(customerList);
             fileReader.nextLine();
             while (fileReader.hasNextLine()) {
                 String[] split = fileReader.nextLine().split(",");
-                u.push(split);
+                data.add(split);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return u;
+        return data;
     }
 
     /**
@@ -119,16 +124,16 @@ public class DbInitializer {
     public void makeClient(int count) {
         for (int i = 0; i < count; i++) {
             Client client = new Client();
-            String[] x = rawData.pop();
-            setName(client, x);
-            client.setAddress(makeAddress(x));
-            client.setEmail(x[5]);
-            client.setTelephoneNr(x[6]);
+            String[] data = rawData.get(i);
+            setName(client, data);
+            client.setAddress(makeAddress(data));
+            client.setEmail(data[5]);
+            client.setTelephoneNr(data[6]);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-            client.setBirthday(x[7]);
-            client.setGender(x[8]);
-            client.setUsername(x[9]);
-            client.setPassword(x[10]);
+            client.setBirthday(data[7]);
+            client.setGender(data[8]);
+            client.setUsername(data[9]);
+            client.setPassword(data[10]);
             client.setSsn(ssnStack.pop());
             clientDao.save(client);
         }
@@ -139,9 +144,9 @@ public class DbInitializer {
      *
      * @param role de rol van de te maken Employee zoals vermeld in Enum EmployeeRole
      */
-    public void makeEmployee(EmployeeRole role) {
+    public void makeEmployee(EmployeeRole role, int index) {
         Employee employee = new Employee();
-        String[] emp = rawData.pop();
+        String[] emp = rawData.get(index);
         setName(employee, emp);
         employee.setAddress(makeAddress(emp));
         employee.setRole(role);
