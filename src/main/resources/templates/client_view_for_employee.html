@@ -9,16 +9,24 @@
 <!--home knop!-->
 <div><a href="index"> <input type="submit" value ="Home"> </a> </div>
 
-<h1>Overzicht klant </h1>
+<h1>Overzicht klant (voor medewerkers) </h1>
 
-<span th:text="${client.firstName}"/>
-<span th:text="${client.firstName}"/>
-<span th:text="${client.firstName}"/>
-<span th:text="${client.firstName}"/>
-<span th:text="${client.firstName}"/>
-<span th:text="${client.firstName}"/>
+<span th:text="${client.id}"/><br>
+<span th:text="${client.username}"/><br>
+<span th:text="${client.firstName}"/><br>
+<span th:text="${client.prefix}"/><br>
+<span th:text="${client.lastName}"/><br>
+<span th:text="${client.getAddress().getStreet()}"/><br>
+<span th:text="${client.getAddress().getHouseNumber()}"/><br>
+<span th:text="${client.getAddress().getZipCode()}"/><br>
+<span th:text="${client.getAddress().getCity()}"/><br>
+<span th:text="${client.ssn}"/><br>
+<span th:text="${client.email}"/><br>
+<span th:text="${client.telephoneNr}"/><br>
+<span th:text="${client.birthday}"/><br>
+<span th:text="${client.gender}"/><br>
 
-<form action="#" th:action="@{PrivateAccountListHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
+<form action="#" th:action="@{PrivateAccountListHandlerForEmployee}" th:object="${client}" method="post" onsubmit="return validateForm();">
     <h2>Overzicht rekeningen</h2>
     <h3>Particuliere rekeningen</h3>
     <table>
@@ -28,7 +36,7 @@
         </tr>
         <tr th:each="PrivateAccount: ${listPrivateAccounts}">
             <td>
-                <a th:href="@{PrivateAccountListHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a>
+                <a th:href="@{PrivateAccountListHandlerForEmployee(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a>
 
             </td>
 
