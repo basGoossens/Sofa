@@ -22,7 +22,7 @@ public class Login {
     @Autowired
     TopTenHighestBalanceFinder topTenHighestBalanceFinder;
     @Autowired
-    TopTenMostActiveClientFinder topTenMostActiveClientFinder;
+    TopTenMostActiveClient topTenMostActiveClient;
 
 
     public Login() { super();}
@@ -56,7 +56,7 @@ public class Login {
             List<Client> topTenMostActive;
             List<BusinessAccount> topTenHighest;
             topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
-            topTenMostActive = topTenMostActiveClientFinder.getTopTenMostActiveClients();
+            topTenMostActive = topTenMostActiveClient.getTopTenMostActiveClients();
             model.addAttribute("tenMostActive", topTenMostActive);
             model.addAttribute("tenHighestBalance", topTenHighest);
             return "employee_view_mkb";
