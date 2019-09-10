@@ -16,12 +16,12 @@ public class Transaction {
     private LocalDate date;
     @ManyToOne
     @Nullable
-    private PrivateAccount creditAccount;
+    private Account creditAccount;
     @ManyToOne
     @Nullable
-    private PrivateAccount debitAccount;
+    private Account debitAccount;
 
-    public Transaction(double amount, String description, LocalDate date, PrivateAccount creditAccount, PrivateAccount debitAccount){
+    public Transaction(double amount, String description, LocalDate date, Account creditAccount, Account debitAccount){
         this.amount = amount;
         this.description = description;
         this.date = date;
@@ -69,7 +69,7 @@ public class Transaction {
         return creditAccount;
     }
 
-    public void setCreditAccount(PrivateAccount creditAccount) {
+    public void setCreditAccount(Account creditAccount) {
         this.creditAccount = creditAccount;
     }
 
@@ -77,7 +77,7 @@ public class Transaction {
         return debitAccount;
     }
 
-    public void setDebitAccount(PrivateAccount debitAccount) {
+    public void setDebitAccount(Account debitAccount) {
         this.debitAccount = debitAccount;
     }
 }

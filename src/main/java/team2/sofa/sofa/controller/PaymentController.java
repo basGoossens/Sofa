@@ -30,7 +30,7 @@ public class PaymentController {
     @PostMapping(value = "transferMoneyHandler")
     public String transferMoneyHandler (Model model, Transaction transaction){
         fundTransfer.procesTransaction(transaction);
-        PrivateAccount a = privateAccountDao.findAccountByIban(transaction.getDebitAccount().getIban());
+        Account a = privateAccountDao.findAccountByIban(transaction.getDebitAccount().getIban());
         model.addAttribute("account", a);
         return "dashboard_client";
     }

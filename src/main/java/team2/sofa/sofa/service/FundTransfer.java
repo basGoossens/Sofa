@@ -17,7 +17,7 @@ public class FundTransfer {
     TransactionDao transactionDao;
 
     @Autowired
-    PrivateAccountDao privateAccountDao;
+    AccountDao accountDao;
 
     public FundTransfer(){super();}
 
@@ -25,9 +25,9 @@ public class FundTransfer {
         double amount = transaction.getAmount();
         String ibanDebit = transaction.getDebitAccount().getIban();
         String ibanCredit = transaction.getCreditAccount().getIban();
-        PrivateAccount debit = privateAccountDao.findAccountByIban(ibanDebit);
-        PrivateAccount credit = privateAccountDao.findAccountByIban(ibanCredit);
-        if (checkBalance(transaction)){
+        Account debit = accountDao.findAccountByIban(ibanDebit);
+        Account credit = accountDao.findAccountByIban(ibanCredit);
+        if (!checkBalance(transaction, debit)){
             transaction.setDebitAccount(debit);
             transaction.setCreditAccount(credit);
             debit.addTransaction(transaction);
@@ -35,13 +35,13 @@ public class FundTransfer {
             debit.lowerBalance(amount);
             credit.raiseBalance(amount);
             transactionDao.save(transaction);
-            privateAccountDao.save(debit);
-            privateAccountDao.save(credit);
+            accountDao.save(debit);
+            accountDao.save(credit);
         }
     }
 
-    public boolean checkBalance(Transaction transaction) {
-        double balance = transaction.getDebitAccount().getBalance();
+    public boolean checkBalance(Transaction transaction, Account account) {
+        double balance = account.getBalance();
         double amount = transaction.getAmount();
         return (balance - amount) < 0;
     }

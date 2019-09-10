@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Geld overmaken</title>
+    <style>h2 {color:mediumseagreen}{background-color:rosybrown}</style>
 </head>
 <body>
 <!--home knop!-->
@@ -10,6 +11,10 @@
 <h2>Geld overmaken naar </h2>
 <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transaction}" method="post">
     <table>
+        <tr>
+            <td>Naam:</td>
+            <td><input type="text" th:value="${client.firstName}"/></td>
+        </tr>
         <tr>
             <td>Bedrag:</td>
             <td><input type="text" th:field="*{amount}"/></td>
