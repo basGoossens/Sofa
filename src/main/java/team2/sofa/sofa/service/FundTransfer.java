@@ -2,6 +2,7 @@ package team2.sofa.sofa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.PrivateAccountDao;
@@ -21,15 +22,18 @@ public class FundTransfer {
 
     public FundTransfer(){super();}
 
-    public void procesTransaction(Transaction transaction){
-        double amount = transaction.getAmount();
-        String ibanDebit = transaction.getDebitAccount().getIban();
-        String ibanCredit = transaction.getCreditAccount().getIban();
+    public void procesTransaction(TransactionForm transactionForm){
+        double amount = transactionForm.getAmount();
+        String ibanDebit = transactionForm.getDebetAccount();
+        String ibanCredit = transactionForm.getCreditAccount();
         Account debit = accountDao.findAccountByIban(ibanDebit);
         Account credit = accountDao.findAccountByIban(ibanCredit);
-        if (!checkBalance(transaction, debit)){
+        if (!checkBalance(amount, debit)){
+            Transaction transaction = new Transaction();
             transaction.setDebitAccount(debit);
             transaction.setCreditAccount(credit);
+            transaction.setAmount(amount);
+            transaction.setDescription(transactionForm.getDescription());
             debit.addTransaction(transaction);
             credit.addTransaction(transaction);
             debit.lowerBalance(amount);
@@ -40,9 +44,8 @@ public class FundTransfer {
         }
     }
 
-    public boolean checkBalance(Transaction transaction, Account account) {
+    public boolean checkBalance(double amount, Account account) {
         double balance = account.getBalance();
-        double amount = transaction.getAmount();
         return (balance - amount) < 0;
     }
 
