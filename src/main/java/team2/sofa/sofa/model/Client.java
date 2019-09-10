@@ -11,9 +11,8 @@ import java.util.List;
 @Entity
 public class Client extends User {
 
-    @NotBlank(message = "Voer a.u.b. een gebruikersnaam in")
+
     private String username;
-    @NotBlank (message = "Voer a.u.b. een wachtwoord in")
     private String password;
     @ManyToMany(mappedBy = "owners")
     private List<Account> accounts;

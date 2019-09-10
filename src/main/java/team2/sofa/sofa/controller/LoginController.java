@@ -4,6 +4,8 @@ package team2.sofa.sofa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import team2.sofa.sofa.service.PasswordValidator;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
 import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,8 +47,8 @@ public class LoginController {
 
     @GetMapping(value = "login_client")
     public String goTologinClientHandler(Model model) {
-        Client client = new Client();
-        model.addAttribute("client", client);
+        LoginForm loginForm = new LoginForm();
+        model.addAttribute("loginForm", loginForm);
         return "login";
     }
 
@@ -55,13 +58,14 @@ public class LoginController {
     }
 
     @PostMapping(value = "loginClientHandler")
-    public String loginClientHandler(@ModelAttribute Client client, Model model) {
-        if (client.getUsername().isEmpty()) {
+    public String loginClientHandler(@ModelAttribute @Valid LoginForm loginForm, Model model, Errors error, BindingResult result) {
+        if (result.hasErrors()){
+            model.addAttribute("error", error);
             return "login";
         }
-        if (client.getPassword().isEmpty()) {
-            return "login";
-        }
+        Client client = new Client();
+        client.setUsername(loginForm.getUsername1());
+        client.setPassword(loginForm.getPassword1());
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
             Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
