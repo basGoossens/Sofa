@@ -14,33 +14,11 @@ import java.util.ArrayList;
 @Controller
 public class EmployeeViewController {
 
-    @Autowired
-    AccountDao accountDao;
 
     @Autowired
     ClientDao clientDao;
 
 
-    @GetMapping(value = "PrivateEmployeeViewHandler")
-    public String PrivateEmployeeViewHandler(@RequestParam(name = "id") int id, PrivateAccount account, Model model) {
-        System.out.println("HEY!" + id);
-        System.out.println("HEY" + account);
-        Account chosenAccount = accountDao.findAccountById(id);
-        model.addAttribute("account", chosenAccount);
-        return "dashboard_employee";
-    }
-
-    @GetMapping(value = "BusinessEmployeeViewHandler")
-    public String BusinessEmployeeViewHandler(@RequestParam(name = "id") int id, BusinessAccount account, Model model) {
-        System.out.println("HEY!" + id);
-        System.out.println("HEY" + account);
-        Account chosenAccount = accountDao.findAccountById(id);
-        model.addAttribute("account", chosenAccount);
-        return "dashboard_employee";
-    }
-
-
-//werkt nog niet
     @GetMapping(value = "TenMostActiveHandler")
     public String TenMostActiveHandler(@RequestParam(name = "id") int id, Client client, Model model) {
         Client chosenClient = clientDao.findClientById(id);
