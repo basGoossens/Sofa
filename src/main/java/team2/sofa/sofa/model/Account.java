@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Account {
+public class Account {
 
     @Id
     @GeneratedValue (generator = "ACC_SEQ")

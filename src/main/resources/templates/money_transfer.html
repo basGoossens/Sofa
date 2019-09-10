@@ -3,28 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Geld overmaken</title>
+    <style>h2 {color:mediumseagreen}{background-color:rosybrown}</style>
 </head>
 <body>
 <!--home knop!-->
 <div><a href="index"><input type="submit" value ="Home"></a></div>
 <h2>Geld overmaken naar </h2>
-<form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transaction}" method="post">
+<form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${form}" method="post">
     <table>
+        <tr>
+            <td>Naam:</td>
+            <td><input type="text" th:field="*{name}"/></td>
+            <td th:errors="*{name}" style="color: red"></td>
+        </tr>
         <tr>
             <td>Bedrag:</td>
             <td><input type="text" th:field="*{amount}"/></td>
+            <td th:errors="*{amount}" style="color: red"></td>
         </tr>
         <tr>
             <td>Omschrijving:</td>
             <td><input type="text" th:field="*{description}"/></td>
+            <td th:errors="*{description}" style="color: red"></td>
         </tr>
         <tr>
             <td>IBAN creditrekening:</td>
-            <td><input type="text" th:field="*{creditAccount.iban}"/></td>
+            <td><input type="text" th:field="*{creditAccount}"/></td>
+            <td th:errors="*{creditAccount}" style="color: red"></td>
         </tr>
         <tr>
             <td>IBAN debitrekening:</td>
-            <td><input type="text" th:field ="*{debitAccount.iban}" th:text="${account.iban}"/></td>
+            <td><input type="text" th:field ="*{debetAccount}" th:text="${account.iban}"/></td>
+            <td th:errors="*{debetAccount}" style="color: red"></td>
         </tr>
         <tr>
             <td><input type="submit" value="Overmaken"></td>
