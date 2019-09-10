@@ -27,13 +27,5 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping(value = "login")
-    public String indexHandler(Model model) {
-        LoginForm loginForm = new LoginForm();
-        model.addAttribute("loginForm", loginForm);
-
-        return "login";
-
-    }
 }
 

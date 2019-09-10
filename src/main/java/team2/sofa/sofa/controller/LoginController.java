@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
+import team2.sofa.sofa.service.Login;
 import team2.sofa.sofa.service.PasswordValidator;
 import team2.sofa.sofa.service.TopTenHighestBalanceFinder;
 import team2.sofa.sofa.service.TopTenMostActiveClientFinder;
@@ -25,18 +26,19 @@ import java.util.List;
 
 @Controller
 public class LoginController {
-
     @Autowired
-    ClientDao clientDao;
-    @Autowired
-    EmployeeDao employeeDao;
+    Login login;
     @Autowired
     PasswordValidator passwordValidator;
-    @Autowired
-    TopTenHighestBalanceFinder topTenHighestBalanceFinder;
-    @Autowired
-    TopTenMostActiveClientFinder topTenMostActiveClientFinder;
 
+
+
+    @GetMapping(value = "login")
+    public String indexHandler(Model model) {
+        LoginForm loginForm = new LoginForm();
+        model.addAttribute("loginForm", loginForm);
+        return "login";
+    }
 
     @GetMapping(value = "login_employee")
     public String goTologinEmployeeHandler(Model model) {
@@ -68,18 +70,7 @@ public class LoginController {
         client.setPassword(loginForm.getPassword1());
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
-            Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
-            model.addAttribute("client", loggedInClient);
-//            Accounts van klant scheiden in business en private
-            ArrayList<Account> listPrivateAccounts = new ArrayList<>();
-            ArrayList<Account> listBusinessAccounts = new ArrayList<>();
-            for (Account a:loggedInClient.getAccounts()
-                 ) { if (a.isBusinessAccount()) {listBusinessAccounts.add(a);}
-                 else {listPrivateAccounts.add(a);}
-            }
-            model.addAttribute("listPrivateAccounts", listPrivateAccounts);
-            model.addAttribute("listBusinessAccounts", listBusinessAccounts);
-            return "client_view";
+            return login.clientLogin(client, model);
         } else return "login";
     }
 
@@ -93,10 +84,10 @@ public class LoginController {
         }
         boolean loginOk = passwordValidator.validateEmployeePassword(employee);
         if (loginOk) {
+            return login.employeeLogin(employee, model);
+/*
             Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
             model.addAttribute("employee", currentEmployee);
-
-
 
             if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
                 List<PrivateAccount> topTenHighest;
@@ -113,11 +104,7 @@ public class LoginController {
                 model.addAttribute("tenHighestBalance", topTenHighest);
                 return "employee_view_mkb";
             }
-
-
-
-
-
+*/
         } else return "login_employee";
     }
 }
