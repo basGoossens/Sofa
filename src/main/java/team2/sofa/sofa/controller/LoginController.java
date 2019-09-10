@@ -85,26 +85,6 @@ public class LoginController {
         boolean loginOk = passwordValidator.validateEmployeePassword(employee);
         if (loginOk) {
             return login.employeeLogin(employee, model);
-/*
-            Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
-            model.addAttribute("employee", currentEmployee);
-
-            if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
-                List<PrivateAccount> topTenHighest;
-                topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
-                model.addAttribute("tenHighestBalance", topTenHighest);
-                return "employee_view_particulieren";
-
-            } else {
-                List<Client> topTenMostActive;
-                List<BusinessAccount> topTenHighest;
-                topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
-                topTenMostActive = topTenMostActiveClientFinder.getTopTenMostActiveClients();
-                model.addAttribute("tenMostActive", topTenMostActive);
-                model.addAttribute("tenHighestBalance", topTenHighest);
-                return "employee_view_mkb";
-            }
-*/
         } else return "login_employee";
     }
 }
