@@ -1,7 +1,9 @@
 package team2.sofa.sofa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.PrivateAccountDao;
@@ -20,6 +22,15 @@ public class FundTransfer {
     PrivateAccountDao privateAccountDao;
 
     public FundTransfer(){super();}
+
+    public String readyTransaction(int id, Model model) {
+        Transaction t = new Transaction();
+        PrivateAccount a = privateAccountDao.findAccountById(id);
+        model.addAttribute("transaction", t);
+        model.addAttribute("account", a);
+        model.addAttribute("client", a.getOwners().get(0));
+        return "money_transfer";
+    }
 
     public void procesTransaction(Transaction transaction){
         double amount = transaction.getAmount();
