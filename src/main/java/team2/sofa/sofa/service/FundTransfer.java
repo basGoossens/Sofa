@@ -2,6 +2,7 @@ package team2.sofa.sofa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.PrivateAccountDao;
@@ -17,32 +18,34 @@ public class FundTransfer {
     TransactionDao transactionDao;
 
     @Autowired
-    PrivateAccountDao privateAccountDao;
+    AccountDao accountDao;
 
     public FundTransfer(){super();}
 
-    public void procesTransaction(Transaction transaction){
-        double amount = transaction.getAmount();
-        String ibanDebit = transaction.getDebitAccount().getIban();
-        String ibanCredit = transaction.getCreditAccount().getIban();
-        PrivateAccount debit = privateAccountDao.findAccountByIban(ibanDebit);
-        PrivateAccount credit = privateAccountDao.findAccountByIban(ibanCredit);
-        if (checkBalance(transaction)){
+    public void procesTransaction(TransactionForm transactionForm){
+        double amount = transactionForm.getAmount();
+        String ibanDebit = transactionForm.getDebetAccount();
+        String ibanCredit = transactionForm.getCreditAccount();
+        Account debit = accountDao.findAccountByIban(ibanDebit);
+        Account credit = accountDao.findAccountByIban(ibanCredit);
+        if (!checkBalance(amount, debit)){
+            Transaction transaction = new Transaction();
             transaction.setDebitAccount(debit);
             transaction.setCreditAccount(credit);
+            transaction.setAmount(amount);
+            transaction.setDescription(transactionForm.getDescription());
             debit.addTransaction(transaction);
             credit.addTransaction(transaction);
             debit.lowerBalance(amount);
             credit.raiseBalance(amount);
             transactionDao.save(transaction);
-            privateAccountDao.save(debit);
-            privateAccountDao.save(credit);
+            accountDao.save(debit);
+            accountDao.save(credit);
         }
     }
 
-    public boolean checkBalance(Transaction transaction) {
-        double balance = transaction.getDebitAccount().getBalance();
-        double amount = transaction.getAmount();
+    public boolean checkBalance(double amount, Account account) {
+        double balance = account.getBalance();
         return (balance - amount) < 0;
     }
 

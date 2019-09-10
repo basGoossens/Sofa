@@ -5,8 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.PrivateAccount;
 import team2.sofa.sofa.model.Transaction;
+import team2.sofa.sofa.model.TransactionForm;
+import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.PrivateAccountDao;
 import team2.sofa.sofa.model.dao.TransactionDao;
 
@@ -17,12 +20,14 @@ public class DashboardClientController {
     TransactionDao transactionDao;
     @Autowired
     PrivateAccountDao privateAccountDao;
+    @Autowired
+    AccountDao accountDao;
 
     @GetMapping(value = "TransferHandler")
-    public String transfer(@RequestParam(name = "id") int id, PrivateAccount account, Model model){
-        Transaction t = new Transaction();
-        PrivateAccount a = privateAccountDao.findAccountById(id);
-        model.addAttribute("transaction", t);
+    public String transfer(@RequestParam(name = "id") int id, Model model){
+        TransactionForm t = new TransactionForm();
+        Account a = accountDao.findAccountById(id);
+        model.addAttribute("form", t);
         model.addAttribute("account", a);
         model.addAttribute("client", a.getOwners().get(0));
         return "money_transfer";
