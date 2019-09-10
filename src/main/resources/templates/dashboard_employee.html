@@ -9,17 +9,20 @@
 <div> <a href="index"> <input type="submit" value ="Home"> </a> </div>
 
 
-<h1>Rekening <span th:text="${account.iban}"/></h1>
+<h1>Rekening <span th:text="${account.iban}"/> (Transactieoverzicht voor medewerkers)</h1>
+
+<!--link naar klant werkt nog niet!-->
+<h2>Rekening hoort bij klant: <a href="client_view_for_employee"> <span th:text="${account.getOwners().get(0).getId()}"/></a></h2>
 
 <!-- hier wordt een lijst met alle transacties ingeladen !-->
 <h2>Transacties</h2>
-<div th:unless="${#lists.isEmpty(allTransactions)}">
+<div th:unless="${#lists.isEmpty(account.transactions)}">
     <table>
         <tr>
             <td>Naam</td>
             <td>Bedrag</td>
         </tr>
-        <tr th:each="account : ${allTransactions}">
+        <tr th:each="account : ${account.transactions}">
             <td>Kapitalist BV<span th:text="${transaction.ibandebet.name}"/></a></td>
             <td>500<span th:text="${transaction.amount}"/></td></a>
         </tr>
