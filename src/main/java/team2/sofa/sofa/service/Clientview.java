@@ -30,19 +30,19 @@ public class Clientview {
     }
 
     public String accountFinderClient(int id,  Model model, boolean business) {
-        if (business = false){
-        PrivateAccount chosenAccount = privateAccountDao.findAccountById(id);
+        if (business == false){
+        Account chosenAccount = accountDao.findAccountById(id);
         model.addAttribute("account", chosenAccount);
         return "dashboard_client";}
         else {
-            BusinessAccount chosenAccount = businessAccountDao.findAccountById(id);
+            Account chosenAccount = accountDao.findAccountById(id);
             model.addAttribute("account", chosenAccount);
             return "dashboard_client";
         }
     }
 
     public String accountFinderEmployee(int id,  Model model, boolean business) {
-        if (business = false){
+        if (business == false){
             PrivateAccount chosenAccount = privateAccountDao.findAccountById(id);
             model.addAttribute("account", chosenAccount);
             return "dashboard_employee";}

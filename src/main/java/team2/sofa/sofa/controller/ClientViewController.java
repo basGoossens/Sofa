@@ -13,7 +13,7 @@ public class ClientViewController {
     @Autowired
     Clientview clientview;
 
-    @GetMapping(value = "clientViewHandler")
+    @GetMapping(value = "PrivateAccountListHandler")
     public String clientViewHandler(@RequestParam(name = "id") int id,  Model model){
         return clientview.accountFinderClient(id, model, false);
     }
