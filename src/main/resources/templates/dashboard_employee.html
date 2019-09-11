@@ -11,9 +11,6 @@
 
 <h1>Rekening <span th:text="${account.iban}"/> (Transactieoverzicht voor medewerkers)</h1>
 
-<!--link naar klant werkt nog niet!-->
-<h2>Rekening hoort bij klant: <a href="client_view_for_employee"> <span th:text="${account.getOwners().get(0).getId()}"/></a></h2>
-
 <!-- hier wordt een lijst met alle transacties ingeladen !-->
 <h2>Transacties</h2>
 <div th:unless="${#lists.isEmpty(account.transactions)}">
