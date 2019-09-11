@@ -12,14 +12,20 @@
 <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transactionForm}" method="post">
     <table>
         <tr>
-            <td>Naam:</td>
+            <td>Achternaam:</td>
             <td><input type="text" th:field="*{name}"/></td>
             <td th:errors="*{name}" style="color: red"></td>
+            <div th:unless="${mismatch == null}">
+                <td th:text="${mismatch }"></td>
+            </div>
         </tr>
         <tr>
             <td>Bedrag:</td>
             <td><input type="text" th:field="*{amount}"/></td>
             <td th:errors="*{amount}" style="color: red"></td>
+            <div th:unless="${saldo == null}">
+                <td th:text="${saldo}"></td>
+            </div>
         </tr>
         <tr>
             <td>Omschrijving:</td>
@@ -30,6 +36,9 @@
             <td>IBAN creditrekening:</td>
             <td><input type="text" th:field="*{creditAccount}"/></td>
             <td th:errors="*{creditAccount}" style="color: red"></td>
+            <div th:unless="${fout == null}">
+                <td th:text="${fout}"></td>
+            </div>
         </tr>
         <tr>
             <td>IBAN debitrekening:</td>

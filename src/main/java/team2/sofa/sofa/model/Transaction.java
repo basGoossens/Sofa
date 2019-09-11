@@ -29,6 +29,10 @@ public class Transaction {
         this.debitAccount = debitAccount;
     }
 
+    public Transaction(double amount, String description, @Nullable Account creditAccount, @Nullable Account debitAccount) {
+        this (amount,description, LocalDate.now(), creditAccount, debitAccount);
+    }
+
     public Transaction(){
         this(0,"",LocalDate.now(),null,null);
     }

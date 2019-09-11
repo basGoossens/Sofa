@@ -5,10 +5,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
+import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.PrivateAccountDao;
 import team2.sofa.sofa.model.dao.TransactionDao;
 import team2.sofa.sofa.service.BalanceChecker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,13 +20,19 @@ public class FundTransfer {
     TransactionDao transactionDao;
 
     @Autowired
-    PrivateAccountDao privateAccountDao;
+    AccountDao accountDao;
 
     @Autowired
-    AccountDao accountDao;
+    ClientDao clientDao;
 
     public FundTransfer(){super();}
 
+    /**
+     * wordt gebruikt om form in Money_transfer voor te bereiden
+     * @param id
+     * @param model
+     * @return
+     */
     public String readyTransaction(int id, Model model) {
         TransactionForm t = new TransactionForm();
         Account a = accountDao.findAccountById(id);
@@ -32,63 +40,63 @@ public class FundTransfer {
         model.addAttribute("transactionForm", t);
         return "money_transfer";
     }
+    public String readyDashboard(TransactionForm transactionForm, Model model){
+        Account a = accountDao.findAccountByIban(transactionForm.getDebetAccount());
+        model.addAttribute("account", a);
+        return "dashboard_client";
+    }
 
     public void procesTransaction(TransactionForm transactionForm){
         double amount = transactionForm.getAmount();
-        String ibanDebit = transactionForm.getDebetAccount();
-        String ibanCredit = transactionForm.getCreditAccount();
-        Account debit = accountDao.findAccountByIban(ibanDebit);
-        Account credit = accountDao.findAccountByIban(ibanCredit);
-        if (!checkBalance(amount, debit)){
-            Transaction transaction = new Transaction();
-            transaction.setDebitAccount(debit);
-            transaction.setCreditAccount(credit);
-            transaction.setAmount(amount);
-            transaction.setDescription(transactionForm.getDescription());
-            debit.addTransaction(transaction);
-            credit.addTransaction(transaction);
-            debit.lowerBalance(amount);
-            credit.raiseBalance(amount);
-            transactionDao.save(transaction);
-            accountDao.save(debit);
-            accountDao.save(credit);
-        }
+        Account debit = accountDao.findAccountByIban(transactionForm.getDebetAccount());
+        Account credit = accountDao.findAccountByIban(transactionForm.getCreditAccount());
+        Transaction transaction = new Transaction(amount, transactionForm.getDescription(), credit, debit);
+        storeTransaction(debit,credit,transaction);
     }
 
-    public boolean checkBalance(double amount, Account account) {
+    private void storeTransaction(Account debit, Account credit, Transaction transaction){
+        debit.addTransaction(transaction);
+        credit.addTransaction(transaction);
+        debit.lowerBalance(transaction.getAmount());
+        credit.raiseBalance(transaction.getAmount());
+        transactionDao.save(transaction);
+        accountDao.save(debit);
+        accountDao.save(credit);
+    }
+
+
+    public boolean checkBalance(TransactionForm transactionForm){
+        double amount = transactionForm.getAmount();
+        Account account = accountDao.findAccountByIban(transactionForm.getDebetAccount());
+        return checkBalance(amount,account);
+    }
+    /**
+     * controle of er voldoende saldo is op debitrekening
+     * @param amount bedrag dat is ingevoerd in formulier money_transfer
+     * @param account het debitAccount dat gebruikt is in het formulier money_transfer
+     * @return
+     */
+    private boolean checkBalance(double amount, Account account) {
         double balance = account.getBalance();
         return (balance - amount) < 0;
     }
 
-    public void fundTransfer(Account fromAccount, Account toAccount, Client toClient, double bedrag) {
-        BalanceChecker checker = new BalanceChecker();
-        boolean balanceOk = checker.BalanceCheck(fromAccount, bedrag);
-        boolean toAccountOk = accountChecker(toAccount, toClient);
-
-        if (!toAccountOk) { //report error en breek transactie af indien check niet OK
-            reportError();
-            return;
-        }
-
-        if (balanceOk) { //report error en breek transactie af indien check niet OK
-            fromAccount.setBalance(fromAccount.getBalance() - bedrag);
-            toAccount.setBalance(toAccount.getBalance() + bedrag);
-        }
-        else reportError();
+    /**
+     * controle of ingevoerd IBAN creditAccount een bestaand IBAN is
+     * @param creditIban het IBAN dat is ingevoerd in money_transfer form in veld CreditAccount
+     * @return
+     */
+    public boolean checkToAccount (String creditIban){
+        return accountDao.existsAccountByIban(creditIban);
     }
-
-    private boolean accountChecker(Account toAccount, Client client){
-        List<Account> accountList = client.getAccounts();
-        boolean accountOk = false;
-        for (Account item: accountList){
-            if (toAccount.equals(item)) return accountOk = true;
+    public boolean nameCheckIban(String lastName, String creditIban){
+        Account creditAccount = accountDao.findAccountByIban(creditIban);
+        List<Client> owners = creditAccount.getOwners();
+        for (Client owner: owners){
+            if (owner.getLastName().equals(lastName)) {
+                return true;
+            }
         }
-        return accountOk;
-    }
-
-    private void reportError() {
-        //todo Report error to user
-        System.out.print("Er is onvoldoende saldo voor een transfer.");
-        System.out.print("Of kan niet overmaken vanwege ongeldig account");
+       return false;
     }
 }
