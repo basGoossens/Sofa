@@ -28,9 +28,8 @@ public class FundTransfer {
     public String readyTransaction(int id, Model model) {
         TransactionForm t = new TransactionForm();
         Account a = accountDao.findAccountById(id);
-        model.addAttribute("form", t);
-        model.addAttribute("account", a);
-        model.addAttribute("client", a.getOwners().get(0));
+        t.setDebetAccount(a.getIban());
+        model.addAttribute("transactionForm", t);
         return "money_transfer";
     }
 

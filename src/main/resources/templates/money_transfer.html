@@ -9,7 +9,7 @@
 <!--home knop!-->
 <div><a href="index"><input type="submit" value ="Home"></a></div>
 <h2>Geld overmaken naar </h2>
-<form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${form}" method="post">
+<form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transactionForm}" method="post">
     <table>
         <tr>
             <td>Naam:</td>
@@ -33,7 +33,7 @@
         </tr>
         <tr>
             <td>IBAN debitrekening:</td>
-            <td><input type="text" th:field ="*{debetAccount}" th:text="${account.iban}"/></td>
+            <td><input type="text" th:field="*{debetAccount}"/></td>
             <td th:errors="*{debetAccount}" style="color: red"></td>
         </tr>
         <tr>

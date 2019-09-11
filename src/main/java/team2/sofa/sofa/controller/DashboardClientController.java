@@ -16,8 +16,6 @@ public class DashboardClientController {
 
     @Autowired
     FundTransfer fundTransfer;
-    @Autowired
-    PrivateAccountDao privateAccountDao;
 
     @GetMapping(value = "TransferHandler")
     public String transfer(@RequestParam(name = "id") int id, Model model){

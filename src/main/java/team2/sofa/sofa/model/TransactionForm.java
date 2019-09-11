@@ -5,15 +5,15 @@ import javax.validation.constraints.Positive;
 
 public class TransactionForm {
 
-    @NotBlank
+    @NotBlank (message = "vul naam rekeninghouder in")
     String name;
-    @Positive
+    @Positive (message = "vul een positief bedrag in")
     double amount;
-    @NotBlank
+    @NotBlank (message = "vul een omschrijving in")
     String description;
-    @NotBlank
+    @NotBlank (message = "vul een geldig IBAN in behorend bij naam rekeninghouder")
     String creditAccount;
-    @NotBlank
+    @NotBlank (message = "vul eigen IBAN in")
     String debetAccount;
 
     public TransactionForm() {

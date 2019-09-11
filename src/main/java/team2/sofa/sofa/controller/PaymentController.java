@@ -29,9 +29,9 @@ public class PaymentController {
     FundTransfer fundTransfer;
 
     @PostMapping(value = "transferMoneyHandler")
-    public String transferMoneyHandler (@ModelAttribute @Valid TransactionForm transactionForm, Model model, BindingResult result, Errors error){
+    public String transferMoneyHandler (@ModelAttribute @Valid TransactionForm transactionForm, BindingResult result, Model model, Errors error){
         if (result.hasErrors()){
-            model.addAttribute(error);
+            model.addAttribute("error", error);
             return "money_transfer";
         }
         fundTransfer.procesTransaction(transactionForm);
