@@ -26,9 +26,9 @@ public class FundTransfer {
     public FundTransfer(){super();}
 
     public String readyTransaction(int id, Model model) {
-        Transaction t = new Transaction();
-        PrivateAccount a = privateAccountDao.findAccountById(id);
-        model.addAttribute("transaction", t);
+        TransactionForm t = new TransactionForm();
+        Account a = accountDao.findAccountById(id);
+        model.addAttribute("form", t);
         model.addAttribute("account", a);
         model.addAttribute("client", a.getOwners().get(0));
         return "money_transfer";
