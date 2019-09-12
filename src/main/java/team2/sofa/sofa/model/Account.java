@@ -1,6 +1,7 @@
 package team2.sofa.sofa.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Account {
     @GeneratedValue (generator = "ACC_SEQ")
     private int id;
     private String iban;
-    private double balance;
+    private BigDecimal balance;
     @ManyToMany
     private List<Client> owners;
 
@@ -21,7 +22,7 @@ public class Account {
 
     private boolean isBusinessAccount;
 
-    public Account(String iban, double balance, List<Transaction> transactions){
+    public Account(String iban, BigDecimal balance, List<Transaction> transactions){
         this();
         this.iban = iban;
         this.balance = balance;
@@ -53,11 +54,11 @@ public class Account {
         this.iban = iban;
     }
 
-    public double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -85,11 +86,15 @@ public class Account {
         this.transactions.add(transaction);
     }
 
-    public void lowerBalance(double amount){
-        this.balance -= amount;
+    public void lowerBalance(BigDecimal amount){
+        BigDecimal balance = this.balance;
+        BigDecimal lower = balance.subtract(amount);
+        this.balance = lower;
     }
-    public void raiseBalance(double amount){
-        this.balance += amount;
+    public void raiseBalance(BigDecimal amount){
+        BigDecimal balance = this.balance;
+        BigDecimal higher = balance.add(amount);
+        this.balance = higher;
     }
 
     public boolean isBusinessAccount() {
