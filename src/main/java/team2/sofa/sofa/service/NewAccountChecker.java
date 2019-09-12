@@ -4,10 +4,7 @@ package team2.sofa.sofa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Address;
-import team2.sofa.sofa.model.Client;
-import team2.sofa.sofa.model.PrivateAccount;
+import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.AddressDao;
 import team2.sofa.sofa.model.dao.ClientDao;
@@ -44,6 +41,7 @@ public class NewAccountChecker {
             client.setAddress(a); }
         if (errorList.isEmpty()) {
             makeNewAccount(client);
+            model.addAttribute("loginForm", new LoginForm());
             return "login";
         } else {
             model.addAttribute("errorList", errorList);
