@@ -13,7 +13,7 @@
     <table>
         <tr>
             <td>Achternaam:</td>
-            <td><input type="text" th:field="*{name}"/></td>
+            <td><input type="text" th:field="*{name}" required/></td>
             <td th:errors="*{name}" style="color: red"></td>
             <div th:unless="${mismatch == null}">
                 <td th:text="${mismatch }"></td>
@@ -21,7 +21,7 @@
         </tr>
         <tr>
             <td>Bedrag:</td>
-            <td><input type="text" th:field="*{amount}"/></td>
+            <td><input type="number" th:field="*{amount}" required placeholder="5.85" step="0.01" min="0.0"/></td>
             <td th:errors="*{amount}" style="color: red"></td>
             <div th:unless="${saldo == null}">
                 <td th:text="${saldo}"></td>
@@ -29,12 +29,12 @@
         </tr>
         <tr>
             <td>Omschrijving:</td>
-            <td><input type="text" th:field="*{description}"/></td>
+            <td><input type="text" th:field="*{description}" required/></td>
             <td th:errors="*{description}" style="color: red"></td>
         </tr>
         <tr>
             <td>IBAN creditrekening:</td>
-            <td><input type="text" th:field="*{creditAccount}"/></td>
+            <td><input type="text" th:field="*{creditAccount}" placeholder="NL00SOFA0123456789" required/></td>
             <td th:errors="*{creditAccount}" style="color: red"></td>
             <div th:unless="${fout == null}">
                 <td th:text="${fout}"></td>
@@ -45,7 +45,7 @@
         </tr>
         <tr>
             <td>IBAN debitrekening:</td>
-            <td><input type="text" th:field="*{debetAccount}"/></td>
+            <td><input type="text" th:field="*{debetAccount}" readonly/></td>
             <td th:errors="*{debetAccount}" style="color: red"></td>
         </tr>
         <tr>
