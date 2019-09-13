@@ -27,14 +27,7 @@ public class TopTenMostActiveClient {
     public String mostActiveClientBuilder(int id, Model model) {
         Client chosenClient = clientDao.findClientById(id);
         //            Accounts van klant scheiden in business en private
-        ArrayList<Account> listPrivateAccounts = new ArrayList<>();
-        ArrayList<Account> listBusinessAccounts = new ArrayList<>();
-        for (Account a:chosenClient.getAccounts()
-        ) { if (a.isBusinessAccount()) {listBusinessAccounts.add(a);}
-        else {listPrivateAccounts.add(a);}
-        }
-        model.addAttribute("listPrivateAccounts", listPrivateAccounts);
-        model.addAttribute("listBusinessAccounts", listBusinessAccounts);
+        Login.splitPrivateAndBusiness(chosenClient, model);
         model.addAttribute("client", chosenClient);
         return "client_view_for_employee";
     }

@@ -5,8 +5,7 @@ import javax.persistence.Entity;
 @Entity
 public class PrivateAccount extends Account {
 
-
-    public PrivateAccount(){
+    public PrivateAccount() {
         super();
         super.setBusinessAccount(false);
     }
