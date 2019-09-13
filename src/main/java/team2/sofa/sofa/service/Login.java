@@ -7,7 +7,6 @@ import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,24 +24,36 @@ public class Login {
     TopTenMostActiveClient topTenMostActiveClient;
 
 
-    public Login() { super();}
+    public Login() {
+        super();
+    }
 
-    public String clientLogin (Client client, Model model) {
+    public String clientLogin(Client client, Model model) {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
         model.addAttribute("client", loggedInClient);
+        Account account = new Account();
 //            Accounts van klant scheiden in business en private
-        ArrayList<Account> listPrivateAccounts = new ArrayList<>();
-        ArrayList<Account> listBusinessAccounts = new ArrayList<>();
-        for (Account a:loggedInClient.getAccounts()
-        ) { if (a.isBusinessAccount()) {listBusinessAccounts.add(a);}
-        else {listPrivateAccounts.add(a);}
-        }
-        model.addAttribute("listPrivateAccounts", listPrivateAccounts);
-        model.addAttribute("listBusinessAccounts", listBusinessAccounts);
+        splitPrivateAndBusiness(loggedInClient, model);
+        model.addAttribute("account", account);
         return "client_view";
     }
 
-    public String employeeLogin (Employee employee, Model model) {
+    static void splitPrivateAndBusiness(Client loggedInClient, Model model) {
+        ArrayList<Account> listPrivateAccounts = new ArrayList<>();
+        ArrayList<Account> listBusinessAccounts = new ArrayList<>();
+        for (Account a : loggedInClient.getAccounts()
+        ) {
+            if (a.isBusinessAccount()) {
+                listBusinessAccounts.add(a);
+            } else {
+                listPrivateAccounts.add(a);
+            }
+        }
+        model.addAttribute("listPrivateAccounts", listPrivateAccounts);
+        model.addAttribute("listBusinessAccounts", listBusinessAccounts);
+    }
+
+    public String employeeLogin(Employee employee, Model model) {
         Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
         model.addAttribute("employee", currentEmployee);
 

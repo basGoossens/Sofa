@@ -29,16 +29,10 @@ public class Clientview {
     public Clientview() { super();
     }
 
-    public String accountFinderClient(int id,  Model model, boolean business) {
-        if (business == false){
+    public String accountFinderClient(int id,  Model model) {
         Account chosenAccount = accountDao.findAccountById(id);
         model.addAttribute("account", chosenAccount);
-        return "dashboard_client";}
-        else {
-            Account chosenAccount = accountDao.findAccountById(id);
-            model.addAttribute("account", chosenAccount);
-            return "dashboard_client";
-        }
+        return "dashboard_client";
     }
 
     public String accountFinderEmployee(int id,  Model model, boolean business) {

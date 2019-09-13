@@ -1,11 +1,13 @@
 package team2.sofa.sofa.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class BusinessAccount extends Account{
+public class BusinessAccount extends Account {
 
     @OneToMany
     private List<pdq> coupledPdqMachines;
@@ -34,7 +36,7 @@ public class BusinessAccount extends Account{
         this.coupledPdqMachines = coupledPdqMachines;
     }
 
-    public void addPdqMachine(pdq pdqMachine){
+    public void addPdqMachine(pdq pdqMachine) {
         this.coupledPdqMachines.add(pdqMachine);
     }
 
