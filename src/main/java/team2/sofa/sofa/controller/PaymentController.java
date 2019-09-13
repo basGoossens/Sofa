@@ -42,6 +42,11 @@ public class PaymentController {
             model.addAttribute("mismatch", fout);
             return "money_transfer";
         }
+        if (transactionForm.getCreditAccount().equals(transactionForm.getDebetAccount())) {
+            String fout = "Je kan niet geld naar je eigen bankrekening overmaken";
+            model.addAttribute("foei", fout);
+            return "money_transfer";
+        }
         fundTransfer.procesTransaction(transactionForm);
         return fundTransfer.readyDashboard(transactionForm, model);
     }

@@ -11,6 +11,7 @@ import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.TransactionDao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -63,7 +64,7 @@ public class FundTransfer {
      * @param transactionForm
      */
     public void procesTransaction(TransactionForm transactionForm) {
-        double amount = transactionForm.getAmount();
+        BigDecimal amount = transactionForm.getAmount();
         Account debit = accountDao.findAccountByIban(transactionForm.getDebetAccount());
         Account credit = accountDao.findAccountByIban(transactionForm.getCreditAccount());
         Transaction transaction = new Transaction(amount, transactionForm.getDescription(), credit, debit);
@@ -95,7 +96,7 @@ public class FundTransfer {
      * @return
      */
     public boolean checkBalance(TransactionForm transactionForm) {
-        double amount = transactionForm.getAmount();
+        BigDecimal amount = transactionForm.getAmount();
         Account account = accountDao.findAccountByIban(transactionForm.getDebetAccount());
         return checkBalance(amount, account);
     }
@@ -107,9 +108,11 @@ public class FundTransfer {
      * @param account het debitAccount dat gebruikt is in het formulier money_transfer
      * @return
      */
-    private boolean checkBalance(double amount, Account account) {
-        double balance = account.getBalance();
-        return (balance - amount) < 0;
+    private boolean checkBalance(BigDecimal amount, Account account) {
+        BigDecimal balance = account.getBalance();
+        BigDecimal change = balance.subtract(amount);
+        double check = change.doubleValue();
+        return (check < 0);
     }
 
     /**

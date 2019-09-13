@@ -3,6 +3,7 @@ package team2.sofa.sofa.model;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -11,7 +12,7 @@ public class Transaction {
     @Id
     @GeneratedValue(generator = "TRANS_SEQ")
     private int id;
-    private double amount;
+    private BigDecimal amount;
     private String description;
     private LocalDate date;
     @ManyToOne
@@ -21,7 +22,7 @@ public class Transaction {
     @Nullable
     private Account debitAccount;
 
-    public Transaction(double amount, String description, LocalDate date, Account creditAccount, Account debitAccount){
+    public Transaction(BigDecimal amount, String description, LocalDate date, Account creditAccount, Account debitAccount){
         this.amount = amount;
         this.description = description;
         this.date = date;
@@ -29,12 +30,12 @@ public class Transaction {
         this.debitAccount = debitAccount;
     }
 
-    public Transaction(double amount, String description, @Nullable Account creditAccount, @Nullable Account debitAccount) {
+    public Transaction(BigDecimal amount, String description, @Nullable Account creditAccount, @Nullable Account debitAccount) {
         this (amount,description, LocalDate.now(), creditAccount, debitAccount);
     }
 
     public Transaction(){
-        this(0,"",LocalDate.now(),null,null);
+        this(null,"",LocalDate.now(),null,null);
     }
 
     public int getId() {
@@ -45,11 +46,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

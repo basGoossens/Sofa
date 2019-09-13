@@ -9,6 +9,7 @@ import team2.sofa.sofa.model.dao.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -75,7 +76,7 @@ public class DbInitializer {
             BusinessAccount ba = new BusinessAccount();
             Random r = new Random();
             ba.setIban(ibanStack.pop());
-            ba.setBalance((int) (r.nextDouble() * 10000) / 100.0);
+            ba.setBalance(new BigDecimal(r.nextInt(100)));
             ba.setBusiness(business);
             connectAccount(client, ba);
     }
@@ -227,7 +228,7 @@ public class DbInitializer {
             for (int i = 0; i < result; i++) {
                 PrivateAccount a = new PrivateAccount();
                 a.setIban(ibanStack.pop());
-                a.setBalance((int) (r.nextDouble() * 10000) / 100.0);
+                a.setBalance(new BigDecimal(r.nextInt(100)));
                 connectAccount(c, a);
             }
         }

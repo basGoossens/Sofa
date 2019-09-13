@@ -1,14 +1,17 @@
 package team2.sofa.sofa.model;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 
 public class TransactionForm {
 
     @NotBlank (message = "vul naam rekeninghouder in")
     String name;
     @Positive (message = "vul een positief bedrag in")
-    double amount;
+    @Digits(integer=10, fraction=2, message = "voer een bedrag in met 2 cijfers achter de comma")
+    BigDecimal amount;
     @NotBlank (message = "vul een omschrijving in")
     String description;
     @NotBlank (message = "vul een geldig IBAN in behorend bij naam rekeninghouder")
@@ -17,10 +20,10 @@ public class TransactionForm {
     String debetAccount;
 
     public TransactionForm() {
-        this("", 0, "", "", "");
+        this("", null, "", "", "");
     }
 
-    public TransactionForm(String name, double amount, String description, String creditAccount, String debetAccount) {
+    public TransactionForm(String name, BigDecimal amount, String description, String creditAccount, String debetAccount) {
         this.name = name;
         this.amount = amount;
         this.description = description;
@@ -36,11 +39,11 @@ public class TransactionForm {
         this.name = name;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
