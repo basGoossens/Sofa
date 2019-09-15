@@ -10,7 +10,7 @@
 
 
 <h1>Rekening <span th:text="${account.Iban}"/></h1>
-<h2>Saldo = <span th:text="${account.balance}"/></h2>
+<h2>Saldo = &euro; <span th:text="${account.balance}"/></h2>
 
 <!-- hier wordt een lijst met alle transacties ingeladen !-->
 <h2>Transacties</h2>
@@ -24,7 +24,9 @@
         </tr>
         <tr th:each="transaction : ${account.transactions}">
             <td><span th:text="${transaction.description}"/></td>
-            <td><span th:text="${transaction.amount}"/></td>
+<!--            <div th:if="${transaction.debitAccount.iban == account.iban}">-->
+            <td><span th:text="${transaction.debitAccount.iban == account.iban} ? '- &euro; ' + ${transaction.amount} : '&euro; ' + ${transaction.amount}"/></td>
+<!--            </div>-->
             <td><span th:text="${transaction.debitAccount.getIban()}"/></td>
             <td><span th:text="${transaction.creditAccount.getIban()}"/></td>
     </tr>
@@ -36,13 +38,19 @@
 <!--betaalformulier! Nog te maken-->
 <div>
     <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
-        <a th:href="@{TransferHandler(id=${account.id})}">betaalopdracht</a></form>
+        <input type=hidden th:field="${account.id}"/>
+        <input type="submit" value="betaalopdracht"/>
+    </form>
 </div>
 
 <!--terug-knop!-->
-<form>
-    <input type="button" value="Terug naar overzicht" onClick="javascript:history.go(-1)" />
+<div>
+<form action="#" th:action="@{backToOverview}" th:object="${account}" method="post">
+    <input type=hidden th:field="${account.id}"/>
+    <input type="submit" value="Terug naar overzicht"/>
+<!--    <input type="button" value="Terug naar overzicht" onClick="javascript:history.go(-1)" />-->
 </form>
+</div>
 
 <!--knop voor uitloggen!-->
 <div>

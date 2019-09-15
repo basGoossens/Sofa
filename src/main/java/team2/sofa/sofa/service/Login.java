@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import team2.sofa.sofa.model.*;
+import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 
@@ -14,6 +15,8 @@ import java.util.List;
 @Service
 public class Login {
 
+    @Autowired
+    AccountDao accountDao;
     @Autowired
     ClientDao clientDao;
     @Autowired
@@ -26,6 +29,15 @@ public class Login {
 
     public Login() {
         super();
+    }
+
+    public String backFromDashboard(Account account, Model model){
+        Account a = accountDao.findAccountById(account.getId());
+        Client c = a.getOwners().get(0);
+        model.addAttribute("client", c);
+        splitPrivateAndBusiness(c, model);
+        model.addAttribute("account", a);
+        return "client_view";
     }
 
     public String clientLogin(Client client, Model model) {
