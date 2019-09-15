@@ -6,7 +6,7 @@
 </head>
 
 <!--home knop!-->
-<div> <a href="index"> <input type="submit" value ="Home"> </a> </div>
+<div><a href="index"> <input type="submit" value="Home"> </a></div>
 
 
 <h1>Rekening <span th:text="${account.Iban}"/></h1>
@@ -24,12 +24,12 @@
         </tr>
         <tr th:each="transaction : ${account.transactions}">
             <td><span th:text="${transaction.description}"/></td>
-<!--            <div th:if="${transaction.debitAccount.iban == account.iban}">-->
-            <td><span th:text="${transaction.debitAccount.iban == account.iban} ? '- &euro; ' + ${transaction.amount} : '&euro; ' + ${transaction.amount}"/></td>
-<!--            </div>-->
+            <td><span
+                    th:text="${transaction.debitAccount.iban == account.iban} ? '- &euro; ' + ${transaction.amount} : '&euro; ' + ${transaction.amount}"/>
+            </td>
             <td><span th:text="${transaction.debitAccount.getIban()}"/></td>
             <td><span th:text="${transaction.creditAccount.getIban()}"/></td>
-    </tr>
+        </tr>
     </table>
 </div>
 <br>
@@ -45,11 +45,11 @@
 
 <!--terug-knop!-->
 <div>
-<form action="#" th:action="@{backToOverview}" th:object="${account}" method="post">
-    <input type=hidden th:field="${account.id}"/>
-    <input type="submit" value="Terug naar overzicht"/>
-<!--    <input type="button" value="Terug naar overzicht" onClick="javascript:history.go(-1)" />-->
-</form>
+    <form action="#" th:action="@{backToOverview}" th:object="${account}" method="post">
+        <input type=hidden th:field="${account.id}"/>
+        <input type="submit" value="Terug naar overzicht"/>
+        <!--    <input type="button" value="Terug naar overzicht" onClick="javascript:history.go(-1)" />-->
+    </form>
 </div>
 
 <!--knop voor uitloggen!-->
