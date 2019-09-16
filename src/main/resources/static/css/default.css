@@ -16,6 +16,16 @@ h2{
   padding-left: 8px;
 }
 
+h8 {
+    font-size: 14pt;
+    color: black;
+}
+
+h7 {
+    font-size: 16pt;
+    color: black;
+}
+
 .nav {
   background-color: #961540;
   color: #d5dfe5;

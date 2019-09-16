@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <title>Account Overview</title>
     <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" th:href="@{static/css/loggedIn.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
-
+    <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
 
 </head>
 <body>
@@ -23,10 +22,8 @@
 
 <div class="grid-container">
     <div class="clientdata">
+        <h8>Klant met id: <span th:text="${client.id}"/></h8>
         <table>
-            <tr>
-                <th>Klant met id: <span th:text="${client.id}"/></th>
-            </tr>
             <tr>
                 <th>Gebruikersnaam:</th>
                 <td><span th:text="${client.username}"/></td>
@@ -81,12 +78,11 @@
             </tr>
         </table>
     </div>
-</div>
 
+<div class="accounttables">
 <form action="#" th:action="@{PrivateAccountListHandlerForEmployee}" th:object="${client}" method="post"
       onsubmit="return validateForm();">
-    <h2>Overzicht rekeningen</h2>
-    <h3>Particuliere rekeningen</h3>
+    <h8>Particuliere rekeningen</h8>
     <table>
         <tr>
             <th>Rekeningnummer</th>
@@ -108,12 +104,11 @@
 
 <form action="#" th:action="@{BusinessAccountListHandler}" th:object="${client}" method="post"
       onsubmit="return validateForm();">
-
-    <h3>Zakelijke rekeningen</h3>
+    <h8>Zakelijke rekeningen</h8>
     <table>
         <tr>
-            <th>rekeningnummer</th>
-            <th>saldo</th>
+            <th>Rekeningnummer</th>
+            <th>Saldo</th>
         </tr>
         <tr th:each="BusinessAccount : ${listBusinessAccounts}">
             <td>
@@ -123,16 +118,9 @@
             <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
         </tr>
     </table>
-    </div>
 </form>
-
-
-<!-- knop voor uitloggen !-->
-<div>
-    <a href="login"> <input type="submit" value="Uitloggen"> </a>
-    <!-- popup-functie voor bevestiging nog bouwen !-->
 </div>
-</form>
+</div>
 
 
 </body>
