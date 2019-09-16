@@ -4,33 +4,87 @@
     <meta charset="UTF-8">
     <title>Account Overview</title>
     <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
     <link rel="stylesheet" type="text/css" th:href="@{static/css/loggedIn.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+
 
 </head>
 <body>
 
-<!--home knop!-->
-<div><a href="index"> <input type="submit" value ="Home"> </a> </div>
+<div class="nav">
+    <ul style="position: absolute;">
+        <li style="align: left" onClick="javascript:history.go(-1)">Terug</li>
+    </ul>
+    <ul>
+        <li><a href="index" class="link">Home</a></li>
+        <li><a href="Uitloggen" class="link">Logout</a></li>
+    </ul>
+</div>
 
-<h1>Overzicht klant (voor medewerkers) </h1>
+<div class="grid-container">
+    <div class="clientdata">
+        <table>
+            <tr>
+                <th>Klant met id: <span th:text="${client.id}"/></th>
+            </tr>
+            <tr>
+                <th>Gebruikersnaam:</th>
+                <td><span th:text="${client.username}"/></td>
+            </tr>
+            <tr>
+                <th>Voornaam:</th>
+                <td><span th:text="${client.firstName}"/></td>
+            </tr>
+            <tr>
+                <th>Tussenvoegsel:</th>
+                <td><span th:text="${client.prefix}"/></td>
+            </tr>
+            <tr>
+                <th>Achternaam:</th>
+                <td><span th:text="${client.lastName}"/></td>
+            </tr>
+            <tr>
+                <th>Straat:</th>
+                <td><span th:text="${client.getAddress().getStreet()}"/></td>
+            </tr>
+            <tr>
+                <th>Huisnummer:</th>
+                <td><span th:text="${client.getAddress().getHouseNumber()}"/></td>
+            </tr>
+            <tr>
+                <th>Postcode:</th>
+                <td><span th:text="${client.getAddress().getZipCode()}"/></td>
+            </tr>
+            <tr>
+                <th>Stad:</th>
+                <td><span th:text="${client.getAddress().getCity()}"/></td>
+            </tr>
+            <tr>
+                <th>BSN:</th>
+                <td><span th:text="${client.ssn}"/></td>
+            </tr>
+            <tr>
+                <th>Emailadres:</th>
+                <td><span th:text="${client.email}"/></td>
+            </tr>
+            <tr>
+                <th>telefoonnummer</th>
+                <td><span th:text="${client.telephoneNr}"/></td>
+            </tr>
+            <tr>
+                <th>Geboortedatum:</th>
+                <td><span th:text="${client.birthday}"/></td>
+            </tr>
+            <tr>
+                <th>Geslacht:</th>
+                <td><span th:text="${client.gender}"/></td>
+            </tr>
+        </table>
+    </div>
+</div>
 
-<span th:text="${client.id}"/><br>
-<span th:text="${client.username}"/><br>
-<span th:text="${client.firstName}"/><br>
-<span th:text="${client.prefix}"/><br>
-<span th:text="${client.lastName}"/><br>
-<span th:text="${client.getAddress().getStreet()}"/><br>
-<span th:text="${client.getAddress().getHouseNumber()}"/><br>
-<span th:text="${client.getAddress().getZipCode()}"/><br>
-<span th:text="${client.getAddress().getCity()}"/><br>
-<span th:text="${client.ssn}"/><br>
-<span th:text="${client.email}"/><br>
-<span th:text="${client.telephoneNr}"/><br>
-<span th:text="${client.birthday}"/><br>
-<span th:text="${client.gender}"/><br>
-
-<form action="#" th:action="@{PrivateAccountListHandlerForEmployee}" th:object="${client}" method="post" onsubmit="return validateForm();">
+<form action="#" th:action="@{PrivateAccountListHandlerForEmployee}" th:object="${client}" method="post"
+      onsubmit="return validateForm();">
     <h2>Overzicht rekeningen</h2>
     <h3>Particuliere rekeningen</h3>
     <table>
@@ -40,7 +94,8 @@
         </tr>
         <tr th:each="PrivateAccount: ${listPrivateAccounts}">
             <td>
-                <a th:href="@{PrivateAccountListHandlerForEmployee(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a>
+                <a th:href="@{PrivateAccountListHandlerForEmployee(id=${PrivateAccount.id})}"><span
+                        th:text="${PrivateAccount.iban}"/></a>
 
             </td>
 
@@ -51,8 +106,8 @@
 <br>
 
 
-
-<form action="#" th:action="@{BusinessAccountListHandler}" th:object="${client}" method="post" onsubmit="return validateForm();">
+<form action="#" th:action="@{BusinessAccountListHandler}" th:object="${client}" method="post"
+      onsubmit="return validateForm();">
 
     <h3>Zakelijke rekeningen</h3>
     <table>
@@ -62,7 +117,8 @@
         </tr>
         <tr th:each="BusinessAccount : ${listBusinessAccounts}">
             <td>
-                <a th:href="@{BusinessAccountListHandler(id=${BusinessAccount.id})}"><span th:text="${BusinessAccount.iban}"/></a>
+                <a th:href="@{BusinessAccountListHandler(id=${BusinessAccount.id})}"><span
+                        th:text="${BusinessAccount.iban}"/></a>
             </td>
             <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
         </tr>
@@ -71,11 +127,11 @@
 </form>
 
 
-    <!-- knop voor uitloggen !-->
-    <div>
-        <a href="login"> <input type="submit" value="Uitloggen"> </a>
-        <!-- popup-functie voor bevestiging nog bouwen !-->
-    </div>
+<!-- knop voor uitloggen !-->
+<div>
+    <a href="login"> <input type="submit" value="Uitloggen"> </a>
+    <!-- popup-functie voor bevestiging nog bouwen !-->
+</div>
 </form>
 
 
