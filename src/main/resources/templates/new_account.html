@@ -2,94 +2,130 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Nieuwe klant</title>
+    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+
 </head>
 <body>
-<!--home knop!-->
-<div><a href="index"><input type="submit" value="Home"></a></div>
+<div class="nav">
+    <ul>
+        <li><a href="index" class="link">Home</a></li>
+        <li><a href="login" class="link">Login</a></li>
+        <li><a href="new_account" class="link">Nieuwe klant</a></li>
+        <li>Werknemers</li>
+    </ul>
+</div>
 
-<h2>Account aanmaken</h2>
+<div class="text-container">
+    <h2>Account aanmaken</h2>
+</div>
+<div class="new-client-container">
+    <div class="form-container">
 
-<form name="new_client" id="new_client" action="#" th:action="@{newAccountHandler}" th:object="${client}" method="post">
+    U kunt hier uw gloednieuwe account aanmaken en klant worden van Sofa. Indien u een nieuwe klant bent krijgt u van ons een
+        rekeningnummer toegewezen en kunt u op het volgende scherm inloggen met uw inloggegevens. Tot snel!
+    </div>
+</div>
+
+<div class="new-client-container">
+    <div class="form-container">
+<form name="new_client" class="new_client" action="#" th:action="@{newAccountHandler}" th:object="${client}" method="post">
     <table>
-        <div th:unless="${#lists.isEmpty(errorList)}">
-            <span th:each="error : ${errorList}">
-                <span th:text="${error}" style="color: red"/>
-            </span>
-        </div>
-
         <tr>
-            <td>Voornaam:</td>
-            <td><input type="text" th:field="*{firstName}"/></td>
-            <td th:errors="*{firstName}" style="color: red"></td>
-        </tr>
-        <tr>
-            <td>Tussenvoegsel:</td>
-            <td><input type="text" th:field="*{prefix}"/></td>
-        </tr>
-        <tr>
-            <td>Achternaam:</td>
-            <td><input type="text" th:field="*{lastName}"/></td>
-            <td th:errors="*{lastName}" style="color: red"></td>
-        </tr>
-        <tr>
-            <td>Straatnaam:</td>
-            <td><input type="text" th:field="*{Address.street}"/></td>
-        </tr>
-        <tr>
-            <td>Huisnummer:</td>
-            <td><input type="text" th:field="*{Address.houseNumber}"/></td>
-        </tr>
-        <tr>
-            <td>Postcode:</td>
-            <td><input type="text" th:field="*{Address.zipCode}"/></td>
-        </tr>
-        <tr>
-            <td>Stad:</td>
-            <td><input type="text" th:field="*{Address.city}"/></td>
-        </tr>
-        <tr>
-            <td>Burger service nummer:</td>
-            <td><input type="text" th:field="*{ssn}"/></td>
-            <td th:errors="*{ssn}" style="color: red"></td>
-        </tr>
-        <tr>
-            <td>Emailadres:</td>
-            <td><input type="text" th:field="*{email}"/></td>
-        </tr>
-        <tr>
-            <td>Telefoonnummer:</td>
-            <td><input type="text" th:field="*{telephoneNr}"/></td>
-        </tr>
-        <tr>
-            <td>Geboortedatum:</td>
-            <td><input type="text" th:field="*{birthday}"/></td>
-            <td th:errors="*{birthday}" style="color: red"></td>
-        </tr>
-        <tr>
-            <td>Geslacht:</td>
-            <td><input type="radio" name="gender" value="male" th:field="*{gender}"> Male
-                <input type="radio" name="gender" value="female" th:field="*{gender}"> Female
-                <input type="radio" name="gender" value="other" th:field="*{gender}"> Other
+            <td><input type="text" th:field="*{firstName}" placeholder="Voornaam" required
+                       oninvalid="this.setCustomValidity('Geef uw voornaam op')"
+                       oninput="setCustomValidity('')"/></td>
             </td>
-            <td th:errors="*{gender}" style="color: red"></td>
         </tr>
         <tr>
-            <td>Gebruikersnaam:</td>
-            <td><input type="text" th:field="*{username}"/></td>
-            <td th:errors="*{username}" style="color: red"></td>
+            <td><input type="text" th:field="*{prefix}" placeholder="Tussenvoegsel"/></td>
         </tr>
         <tr>
-            <td>Wachtwoord</td>
-            <td><input type="password" th:field="*{password}"/></td>
-            <td th:errors="*{password}" style="color: red"></td>
+            <td><input type="text" th:field="*{lastName}" placeholder="Achternaam" required
+                       oninvalid="this.setCustomValidity('Geef uw achternaam op')"
+                       oninput="setCustomValidity('')"/></td>
+
         </tr>
         <tr>
-            <td><input type="submit" value="verzenden"></td>
+            <td><input type="text" th:field="*{Address.street}" placeholder="Straatnaam" required
+                       oninvalid="this.setCustomValidity('Geef uw straatnaam op')"
+                       oninput="setCustomValidity('')"/></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{Address.houseNumber}" placeholder="Huisnummer" required
+                       oninvalid="this.setCustomValidity('Geef uw huisnummer op')"
+                       oninput="setCustomValidity('')"/></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{Address.zipCode}" placeholder="Postcode" required
+                       oninvalid="this.setCustomValidity('Geef uw postcode op')"
+                       oninput="setCustomValidity('')"/></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{Address.city}" placeholder="Woonplaats" required
+                       oninvalid="this.setCustomValidity('Geef uw woonplaats op')"
+                       oninput="setCustomValidity('')"/></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{ssn}" placeholder="BSN" required
+                       oninvalid="this.setCustomValidity('Geef uw BSN op')"
+                       oninput="setCustomValidity('')"/></td>
+
+        </tr>
+        <tr>
+            <td><input type="email" th:field="*{email}" placeholder="Emailadres" required
+                       oninvalid="this.setCustomValidity('Geef een geldig email adres op')"
+                       oninput="setCustomValidity('')"/></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{telephoneNr}" placeholder="Telefoonnummer" required
+                       oninvalid="this.setCustomValidity('Geef uw Telefoonnummer op')"
+                       oninput="setCustomValidity('')"/></td>
+        </tr>
+        <tr>
+            <td><input type="date" class="date" th:field="*{birthday}" required
+                       oninvalid="this.setCustomValidity('Geef uw voornaam op')"
+                       oninput="setCustomValidity('')"/></td>
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{gender}" placeholder="Geslacht" required
+                       oninvalid="this.setCustomValidity('Geef uw geslacht op')"
+                       oninput="setCustomValidity('')"/></td>
+
+        </tr>
+        <tr>
+            <td><input type="text" th:field="*{username}" placeholder="Gebruikersnaam" required
+                       oninvalid="this.setCustomValidity('Geef uw gebruikersnaam op')"
+                       oninput="setCustomValidity('')"/></td>
+
+        </tr>
+        <tr>
+            <td><input type="password" th:field="*{password}" placeholder="Wachtwoord" required
+                       oninvalid="this.setCustomValidity('Geef een wachtwoord op')"
+                       oninput="setCustomValidity('')"/></td>
+
+        </tr>
+        <tr>
+            <td><input class="input-form" type="submit" value="Verzenden"></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="text-container">
+                    <div class="form-container" th:unless="${#lists.isEmpty(errorList)}">
+                        <span th:each="error : ${errorList}">
+                        <span th:text="${error}" style="color: red"/>
+                        </span>
+                    </div>
+                </div>
+            </td>
         </tr>
     </table>
 </form>
+</div>
+</div>
 
-<p>Ga <a href="index">terug</a> naar het begin...</p>
+
 </body>
 </html>
