@@ -8,6 +8,8 @@ import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class Login {
     TopTenHighestBalanceFinder topTenHighestBalanceFinder;
     @Autowired
     TopTenMostActiveClient topTenMostActiveClient;
+    @Autowired
+    SectorAnalyzer sectorAnalyzer;
 
 
     public Login() {
@@ -78,10 +82,18 @@ public class Login {
         } else {
             List<Client> topTenMostActive;
             List<BusinessAccount> topTenHighest;
+            List<String> balancePerSector;
             topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
             topTenMostActive = topTenMostActiveClient.getTopTenMostActiveClients();
+            balancePerSector = sectorAnalyzer.getAverageBalancePerSector();
+            System.out.println(balancePerSector);
+            for (String item : balancePerSector){
+                System.out.println("HALLOKIRSTEN");
+                System.out.println(item);
+            }
             model.addAttribute("tenMostActive", topTenMostActive);
             model.addAttribute("tenHighestBalance", topTenHighest);
+            model.addAttribute("balancePerSector", balancePerSector);
             return "employee_view_mkb";
         }
     }
