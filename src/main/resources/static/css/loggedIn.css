@@ -22,8 +22,14 @@
 
 .account-info-block {
 /*grid-area: 1 / 2 / span 1 / span 1;*/
-    background-color: #96154070;
-    margin: 30px;
+    background-color: #96154010;
+    width: 100%;
+}
+
+.transactions-table{
+    grid-area: 1 / 1 / span 3 / span 3;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .selectaccount{

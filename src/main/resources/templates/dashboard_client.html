@@ -11,64 +11,54 @@
 
 <div th:insert="/headertemplates :: header"/>
 
-<div class="grid-container">
+<div class="new-client-container">
+<div class="w3-container">
 
-
-
-
-    <div class="accounttables" style="grid-area: 2 / 2 / span 1 / span 1">
-<h2>Transacties</h2>
+    <div class="transactions-table">
+<h2>Rekeningoverzicht</h2>
         <div class="account-info-block">
-            <table>
+            <table style="width: 100%;">
                 <tr>
-                    <th>account.iban<br>
-                        Saldo: account.balance<br>
-                        Bestedingsruimte: account.balance<br>
+                    <td>
+                        Overzicht<br>
+                        IBAN: <span th:text="${account.iban}"/><br>
+                        Saldo: &euro; <span th:text="${account.balance}"/><br>
                         BIC:SOFANL2U<br>
-                    </th>
+                    </td>
                 </tr>
             </table>
         </div>
-    <table>
+        <table style="width: 100%; padding: 60%;">
         <tr>
-            <td>naam</td>
-            <td>bedrag</td>
-            <td>debit rekening</td>
-            <td>credit rekening</td>
+            <td>Datum</td>
+            <td>Tegenrekening</td>
+            <td>Omschrijving</td>
+            <td>Bedrag</td>
         </tr>
         <div th:unless="${#lists.isEmpty(account.transactions)}">
         <tr th:each="transaction : ${account.transactions}">
-            <td><span th:text="${transaction.description}"/></td>
+            <td><span th:text="${transaction.date}"/></td>
+            <td> <span th:text="${transaction.debitAccount.iban == account.iban} ? ${transaction.creditAccount.iban} : ${transaction.debitAccount.iban}"/> </td>
+            <td> <span th:text="${transaction.description}"/>
             <td><span
                     th:text="${transaction.debitAccount.iban == account.iban} ? '- &euro; ' + ${transaction.amount} : '&euro; ' + ${transaction.amount}"/>
             </td>
-            <td><span th:text="${transaction.debitAccount.getIban()}"/></td>
-            <td><span th:text="${transaction.creditAccount.getIban()}"/></td>
         </tr>
         </div>
     </table>
-
 <br>
+        <div>
+            <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
+                <input type=hidden th:field="${account.id}"/>
+                <input type="submit" value="betaalopdracht"/>
+            </form>
+        </div>
+</div>
 </div>
 </div>
 
-<!--betaalformulier! Nog te maken-->
-<div>
-    <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
-        <input type=hidden th:field="${account.id}"/>
-        <input type="submit" value="betaalopdracht"/>
-    </form>
-</div>
 
 
-<!--terug-knop!-->
-<div>
-    <form action="#" th:action="@{backToOverview}" th:object="${account}" method="post">
-        <input type=hidden th:field="${account.id}"/>
-        <input type="submit" value="Terug naar overzicht"/>
-        <!--    <input type="button" value="Terug naar overzicht" onClick="javascript:history.go(-1)" />-->
-    </form>
-</div>
 
 
 </body>
