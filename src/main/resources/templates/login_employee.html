@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<body>
-<!--home knop!-->
-<div><a href="index"> <input type="submit" value="Home"> </a></div>
 
+<body>
+<div class="nav">
+    <ul>
+        <li><a href="index" class="link">Home</a></li>
+        <li><a href="login" class="link">Login</a></li>
+        <li><a href="new_account" class="link">Nieuwe klant</a></li>
+        <li><a href="login_employee" class="link">Werknemers</a></li>
+    </ul>
+</div>
 <h2>Sofa login pagina voor werknemers</h2>
 
 <form action="#" th:action="@{loginEmployeeHandler}" th:object="${employee}" method="post">
