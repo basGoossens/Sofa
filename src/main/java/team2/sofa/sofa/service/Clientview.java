@@ -3,10 +3,7 @@ package team2.sofa.sofa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.BusinessAccount;
-import team2.sofa.sofa.model.Client;
-import team2.sofa.sofa.model.PrivateAccount;
+import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.*;
 
 import java.math.BigDecimal;
@@ -27,6 +24,8 @@ public class Clientview {
     AccountDao accountDao;
     @Autowired
     ClientDao clientDao;
+    @Autowired
+    BusinessDao businessDao;
 
     public Clientview() { super();
     }
@@ -70,6 +69,24 @@ public class Clientview {
         String iban = ibanGenerator.ibanGenerator();
         Account a = new PrivateAccount(iban, new BigDecimal(0));
         a.addClient(client);
+        return a;
+    }
+    public Client getClient(int id){
+        return clientDao.findClientById(id);
+    }
+    public Account procesNewBusinessAccount(Business business){
+        IBANGenerator ibanGenerator = new IBANGenerator();
+        String iban = ibanGenerator.ibanGenerator();
+        businessDao.save(business);
+        Client c = business.getOwner();
+        BusinessAccount a = new BusinessAccount();
+        a.addClient(c);
+        a.setIban(iban);
+        a.setBusiness(business);
+        a.setBalance(new BigDecimal(0));
+        c.addAccount(a);
+        clientDao.save(c);
+        accountDao.save(a);
         return a;
     }
 }
