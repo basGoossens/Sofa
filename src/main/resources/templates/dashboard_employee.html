@@ -2,43 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
+
     <title>Dashboard Employee</title>
 </head>
 <body>
 <div th:insert="/headertemplates :: header"/>
 
 
-<h1>Rekening <span th:text="${account.iban}"/> (Transactieoverzicht voor medewerkers)</h1>
-
-<!-- hier wordt een lijst met alle transacties ingeladen !-->
-<h2>Transacties</h2>
-<div th:unless="${#lists.isEmpty(account.transactions)}">
-    <table>
-        <tr>
-            <td>Naam</td>
-            <td>Bedrag</td>
-        </tr>
-        <tr th:each="account : ${account.transactions}">
-            <td>Kapitalist BV<span th:text="${transaction.ibandebet.name}"/></a></td>
-            <td>500<span th:text="${transaction.amount}"/></td></a>
-        </tr>
-    </table>
-</div>
-<br>
-
-
-<!--terug-knop!-->
-<form>
-    <input type="button" value="Terug naar overzicht" onClick="javascript:history.go(-1)" />
-</form>
-
-
-<!--knop voor uitloggen!-->
-<div>
-    <a href="login"> <input type="submit" value="Uitloggen"> </a>
-</div>
-
-    <!-- popup-functie voor bevestiging nog bouwen !-->
+<div th:insert="/dashboard_client :: account-overview"/>
 
 </body>
 </html>
