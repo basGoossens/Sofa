@@ -8,15 +8,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
 </head>
 <body>
-<div class="nav">
-    <ul style="position: absolute;">
-        <li style="align: left" onClick="javascript:history.go(-1)">Terug</li>
-    </ul>
-    <ul>
-        <li><a href="index" class="link">Home</a></li>
-        <li><a href="login" class="link">Logout</a></li>
-    </ul>
-</div>
+
+<div th:insert="/headertemplates :: header"/>
 
 <h1 style="text-align:left">Hallo, <span th:text="${client.firstName}"/></h1>
 

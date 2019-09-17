@@ -10,15 +10,7 @@
 </head>
 <body>
 
-<div class="nav">
-    <ul style="position: absolute;">
-        <li style="align: left" onClick="javascript:history.go(-1)">Terug</li>
-    </ul>
-    <ul>
-        <li><a href="index" class="link">Home</a></li>
-        <li><a href="Uitloggen" class="link">Logout</a></li>
-    </ul>
-</div>
+<div th:insert="/headertemplates :: header"/>
 
 <div class="grid-container">
     <div class="clientdata">
