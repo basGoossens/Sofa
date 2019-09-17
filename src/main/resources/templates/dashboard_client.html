@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Client</title>
+    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
 </head>
+<body>
 
-<!--home knop!-->
-<div><a href="index"> <input type="submit" value="Home"> </a></div>
+<div th:insert="/headertemplates :: header"/>
 
-
+<div class="grid-container">
 <h1>Rekening <span th:text="${account.Iban}"/></h1>
 <h2>Saldo = &euro; <span th:text="${account.balance}"/></h2>
 
@@ -33,7 +36,7 @@
     </table>
 </div>
 <br>
-
+</div>
 
 <!--betaalformulier! Nog te maken-->
 <div>
@@ -42,6 +45,7 @@
         <input type="submit" value="betaalopdracht"/>
     </form>
 </div>
+
 
 <!--terug-knop!-->
 <div>
@@ -52,12 +56,6 @@
     </form>
 </div>
 
-<!--knop voor uitloggen!-->
-<div>
-    <a href="login"> <input type="submit" value="Uitloggen"> </a>
-</div>
 
-
-<!-- popup-functie voor bevestiging nog bouwen !-->
-
+</body>
 </html>

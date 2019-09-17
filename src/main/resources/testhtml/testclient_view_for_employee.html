@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <title>Account Overview</title>
     <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
+    <link rel="stylesheet" type="text/css" href="testdefault.css">
+    <link rel="stylesheet" type="text/css" href="testLoggedIn.css">
 
 </head>
 <body>
 
-<div th:insert="/headertemplates :: header"/>
+<div class="nav">
+<!--    <ul style="position: absolute;">-->
+<!--        <li style="align: left" onClick="javascript:history.go(-1)">Terug</li>-->
+<!--    </ul>-->
+    <ul>
+        <li><a href="index" class="link">Home</a></li>
+        <li><a href="Uitloggen" class="link">Logout</a></li>
+    </ul>
+</div>
 
 <div class="grid-container">
     <div class="clientdata">
@@ -71,6 +79,7 @@
         </table>
     </div>
 
+
 <div class="accounttables">
 <form action="#" th:action="@{PrivateAccountListHandlerForEmployee}" th:object="${client}" method="post"
       onsubmit="return validateForm();">
@@ -91,6 +100,7 @@
         </tr>
     </table>
 </form>
+
 <br>
 
 

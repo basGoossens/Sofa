@@ -1,0 +1,88 @@
+
+/* grid layout */
+.grid-container {
+    display: grid;
+    grid-gap: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 2fr));
+    border: 2px solid black;
+
+}
+
+.clientdata {
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    grid-area: 1 / 1 / span 1 / span 1;
+    border: 2px solid black;
+
+}
+
+.accounttables{
+    grid-area: 1 / 2 / span 1 / span 1;
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    border: 2px solid black;
+}
+
+
+table {
+    border: 2px solid #96154070;
+    /*border-radius:10px;*/
+    border-collapse: collapse;
+    text-align: left;
+    background-color: #96154070;
+    color: black;
+    border-spacing: 0;
+}
+
+/*tr:last-child td:first-child {*/
+/*    border-bottom-left-radius: 10px;*/
+/*}*/
+
+/*tr:last-child td:last-child {*/
+/*    border-bottom-right-radius: 10px;*/
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+th, td {
+    padding: 5px;
+    border: solid 2px #96154070;
+}
+
+
+body {
+    font-size: 10pt;
+}
+
+@media screen and (min-width: 700px) {
+    .nav ul {
+        text-align: right;
+    }
+
+    .nav ul li {
+        display: inline-block;
+        border-bottom: 0px;
+        border-left: 1px solid black;
+        text-align: left;
+    }
+
+    .text {
+        color: #d5dfe5;
+        font-size: 36px;
+        padding: 8px 12px;
+        position: absolute;
+        bottom: 80px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .w3-container {
+        margin: center;
+        float: left;
+        width: 50%;
+        max-width: 700px;
+
+    }
+

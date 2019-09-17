@@ -6,9 +6,7 @@
 </head>
 <body>
 ​
-<!--home knop!-->
-<div> <a href="index"> <input type="submit" value ="Home"> </a> </div>
-​
+<div th:insert="/headertemplates :: header"/>
 ​
 <h1>Hallo <span th:text="${employee.firstName}"/></h1>
 ​
