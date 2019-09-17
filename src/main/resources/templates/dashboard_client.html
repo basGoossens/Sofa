@@ -12,12 +12,22 @@
 <div th:insert="/headertemplates :: header"/>
 
 <div class="grid-container">
-<h1>Rekening <span th:text="${account.Iban}"/></h1>
-<h2>Saldo = &euro; <span th:text="${account.balance}"/></h2>
 
-<!-- hier wordt een lijst met alle transacties ingeladen !-->
+    <div class="account-info-block">
+<table>
+    <tr>
+        <th>account.iban<br>
+            Saldo: account.balance<br>
+            Bestedingsruimte: account.balance<br>
+            BIC:SOFANL2U<br>
+        </th>
+    </tr>
+</table>
+    </div>
+
+
+    <div class="accounttables" style="grid-area: 2 / 2 / span 1 / span 1">
 <h2>Transacties</h2>
-<div th:unless="${#lists.isEmpty(account.transactions)}">
     <table>
         <tr>
             <td>naam</td>
@@ -25,6 +35,7 @@
             <td>debit rekening</td>
             <td>credit rekening</td>
         </tr>
+        <div th:unless="${#lists.isEmpty(account.transactions)}">
         <tr th:each="transaction : ${account.transactions}">
             <td><span th:text="${transaction.description}"/></td>
             <td><span
@@ -33,9 +44,11 @@
             <td><span th:text="${transaction.debitAccount.getIban()}"/></td>
             <td><span th:text="${transaction.creditAccount.getIban()}"/></td>
         </tr>
+        </div>
     </table>
-</div>
+
 <br>
+</div>
 </div>
 
 <!--betaalformulier! Nog te maken-->
