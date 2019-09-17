@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Header</title>
-</head>
-<body>
+/*template voor loggedIn-header*/
+<div class="nav" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
 
-<div class="nav" th:fragment="header">
     <ul style="position: absolute;">
         <li style="align: left" onClick="javascript:history.go(-1)">Terug</li>
     </ul>
@@ -15,6 +9,3 @@
         <li><a href="Uitloggen" class="link">Logout</a></li>
     </ul>
 </div>
-
-</body>
-</html>
