@@ -3,14 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Client View</title>
+    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
 </head>
 <body>
-<div><a href="index"> <input type="submit" value="Home"> </a></div>
+<div class="nav">
+    <ul style="position: absolute;">
+        <li style="align: left" onClick="javascript:history.go(-1)">Terug</li>
+    </ul>
+    <ul>
+        <li><a href="index" class="link">Home</a></li>
+        <li><a href="login" class="link">Logout</a></li>
+    </ul>
+</div>
 
-<h1>Hallo, <span th:text="${client.firstName}"/></h1>
-<h2>Overzicht rekeningen</h2>
+<h1 style="text-align:left">Hallo, <span th:text="${client.firstName}"/></h1>
+
+<div class="grid-container">
+    <div class="accounttables">
+        <h7>Overzicht rekeningen</h7><br><br>
 <div th:unless="${#lists.isEmpty(listPrivateAccounts)}">
-    <h3>Particuliere rekeningen</h3>
+    <h8>Particuliere rekeningen</h8>
     <table>
         <tr>
             <th>Rekeningnummer</th>
@@ -26,7 +40,7 @@
 </div>
 
 <div th:unless="${#lists.isEmpty(listBusinessAccounts)}">
-    <h3>Zakelijke rekeningen</h3>
+    <h8>Zakelijke rekeningen</h8>
     <table>
         <tr>
             <th>rekeningnummer</th>
@@ -48,15 +62,8 @@
         </option>
     </select>
 </form>
-<br>
-<!-- knop voor uitloggen !-->
-
-<div>
-    <a href="login"> <input type="submit" value="Uitloggen"> </a>
-    <!-- popup-functie voor bevestiging nog bouwen !-->
+    </div>
 </div>
-</form>
-
 
 </body>
 </html>
