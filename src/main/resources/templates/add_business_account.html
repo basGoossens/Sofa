@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>nieuwe business account</title>
+</head>
+<body>
+<h1>gegevens voor nieuwe business</h1>
+<p>Hallo <span th:text="${business.owner.firstName}">naam</span></p>
+<form action="#" th:action="@{NewBusiness}" th:object="${business}" method="post">
+    <input type="text" th:field="*{businessName}">
+    <select th:field="*{sector}">
+        <option th:each="sector : ${T(team2.sofa.sofa.model.BusinessSector).values()}"
+                th:value="${sector}" th:text="${sector}"></option>
+    </select>
+    <input type="hidden" name="owner" id="owner" th:value="*{owner.id}"/>
+
+    <input type="submit" value="Nieuwe Rekening">
+</form>
+
+</body>
+</html>
