@@ -9,7 +9,8 @@
 
 <h1>Hallo, <span th:text="${client.firstName}"/></h1>
 <h2>Overzicht rekeningen</h2>
-<div th:unless="${#lists.isEmpty(listPrivateAccounts)}">
+<div th:unless="${#lists.isEmpty(client.accounts)}">
+<!--    <div th:each="Account : ${client.accounts}" th:unless="#bools.client.accounts.Or(Account.isBusinessAccount)">-->
     <h3>Particuliere rekeningen</h3>
     <table>
         <tr>
@@ -17,24 +18,30 @@
             <th>Saldo</th>
 
         </tr>
-        <tr th:each="Account : ${listPrivateAccounts} ">
+        <tr th:each="Account : ${client.accounts} ">
+            <div th:unless="${Account.isBusinessAccount}">
             <td><span th:text="${Account.iban}"/></td>
             <td><span th:text="${Account.balance}"/></td>
+            </div>
         </tr>
     </table>
+    </div>
     <br>
 </div>
 
-<div th:unless="${#lists.isEmpty(listBusinessAccounts)}">
+<div th:unless="${#lists.isEmpty(client.accounts)}">
     <h3>Zakelijke rekeningen</h3>
     <table>
         <tr>
             <th>rekeningnummer</th>
             <th>saldo</th>
         </tr>
-        <tr th:each="Account : ${listBusinessAccounts}">
+        <tr th:each="Account : ${client.accounts}">
+            <div th:if="${Account.isBusinessAccount}">
             <td><span th:text="${Account.iban}"/></td>
             <td><span th:text="${Account.balance}"/></td>
+            </div>
+
         </tr>
     </table>
     <br>
@@ -49,6 +56,11 @@
     </select>
 </form>
 <br>
+</div>
+<form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
+    <input type="hidden" name="id" id="id" th:value="${client.id}">
+    <input type="submit" value="Open extra particuliere rekening"/>
+</form>
 <!-- knop voor uitloggen !-->
 
 <div>

@@ -29,7 +29,7 @@ public class DashboardClientController {
     }
 
     @PostMapping(value = "backToOverview")
-    public String backToOverviw(Account account, Model model) {
+    public String backToOverview(Account account, Model model) {
         return login.backFromDashboard(account, model);
     }
 }
