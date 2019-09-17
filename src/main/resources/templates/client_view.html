@@ -47,6 +47,10 @@
             <input type="hidden" name="id" id="id" th:value="${client.id}">
             <input type="submit" value="Open nieuwe particuliere rekening"/>
         </form>
+        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
+            <input type="hidden" name="id" id="id" th:value="${client.id}">
+            <input type="submit" value="Open nieuwe zakelijke rekening"/>
+        </form>
         <br>
         <div th:unless="${#lists.isEmpty(client.accounts)}">
             <h8>Zakelijke rekeningen</h8>
