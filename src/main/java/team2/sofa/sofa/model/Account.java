@@ -12,6 +12,7 @@ public class Account {
     @Id
     @GeneratedValue (generator = "ACC_SEQ")
     private int id;
+    @Column(unique = true)
     private String iban;
     private BigDecimal balance;
     @ManyToMany
@@ -22,20 +23,24 @@ public class Account {
 
     private boolean isBusinessAccount;
 
-    public Account(String iban, BigDecimal balance, List<Transaction> transactions){
-        this();
+    public Account(int id, String iban, BigDecimal balance, List<Client> owners, List<Transaction> transactions, boolean isBusinessAccount) {
+        this.id = id;
         this.iban = iban;
         this.balance = balance;
+        this.owners = owners;
         this.transactions = transactions;
-        this.isBusinessAccount = false;
+        this.isBusinessAccount = isBusinessAccount;
+    }
+    public Account(String iban, BigDecimal balance, List<Transaction> transactions){
+        this(0, iban, balance, null, transactions, false);
+    }
+
+    public Account (String iban, BigDecimal balance){
+        this(0, iban,balance, new ArrayList<>(),new ArrayList<>(),false);
     }
 
     public Account(){
-        super();
-        this.id = 0;
-        this.owners = new ArrayList<>();
-        this.transactions = new ArrayList<>();
-        this.isBusinessAccount = false;
+        this(0,"", null, new ArrayList<>(), new ArrayList<>(), false);
     }
 
     public int getId() {
