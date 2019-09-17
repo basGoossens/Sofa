@@ -23,7 +23,8 @@
 <div class="grid-container">
     <div class="accounttables">
         <h7>Overzicht rekeningen</h7><br><br>
-<div th:unless="${#lists.isEmpty(listPrivateAccounts)}">
+<div th:unless="${#lists.isEmpty(client.accounts)}">
+    <!--    <div th:each="Account : ${client.accounts}" th:unless="#bools.client.accounts.Or(Account.isBusinessAccount)">-->
     <h8>Particuliere rekeningen</h8>
     <table>
         <tr>
@@ -31,24 +32,29 @@
             <th>Saldo</th>
 
         </tr>
-        <tr th:each="Account : ${listPrivateAccounts} ">
+        <tr th:each="Account : ${client.accounts} ">
+            <div th:unless="${Account.isBusinessAccount}">
             <td><span th:text="${Account.iban}"/></td>
             <td><span th:text="${Account.balance}"/></td>
+            </div>
         </tr>
     </table>
     <br>
 </div>
 
-<div th:unless="${#lists.isEmpty(listBusinessAccounts)}">
+<div th:unless="${#lists.isEmpty(client.accounts)}">
     <h8>Zakelijke rekeningen</h8>
     <table>
         <tr>
             <th>rekeningnummer</th>
             <th>saldo</th>
         </tr>
-        <tr th:each="Account : ${listBusinessAccounts}">
+        <tr th:each="Account : ${client.accounts}">
+            <div th:if="${Account.isBusinessAccount}">
             <td><span th:text="${Account.iban}"/></td>
             <td><span th:text="${Account.balance}"/></td>
+            </div>
+
         </tr>
     </table>
     <br>
@@ -62,6 +68,17 @@
         </option>
     </select>
 </form>
+<br>
+</div>
+<form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
+    <input type="hidden" name="id" id="id" th:value="${client.id}">
+    <input type="submit" value="Open extra particuliere rekening"/>
+</form>
+<!-- knop voor uitloggen !-->
+
+<div>
+    <a href="login"> <input type="submit" value="Uitloggen"> </a>
+    <!-- popup-functie voor bevestiging nog bouwen !-->
     </div>
 </div>
 

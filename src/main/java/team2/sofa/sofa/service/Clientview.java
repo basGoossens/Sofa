@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.BusinessAccount;
+import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.PrivateAccount;
-import team2.sofa.sofa.model.dao.AccountDao;
-import team2.sofa.sofa.model.dao.BusinessAccountDao;
-import team2.sofa.sofa.model.dao.PrivateAccountDao;
-import team2.sofa.sofa.model.dao.TransactionDao;
+import team2.sofa.sofa.model.dao.*;
+
+import java.math.BigDecimal;
 
 @Service
 public class Clientview {
@@ -25,6 +25,8 @@ public class Clientview {
 
     @Autowired
     AccountDao accountDao;
+    @Autowired
+    ClientDao clientDao;
 
     public Clientview() { super();
     }
@@ -51,5 +53,23 @@ public class Clientview {
         Account chosenAccount = accountDao.findAccountById(id);
         model.addAttribute("account", chosenAccount);
         return "dashboard_employee";
+    }
+    public String createNewPrivate(Client client, Model model){
+        Client c = clientDao.findClientById(client.getId());
+        Account a = makeAccount(c);
+        c.addAccount(a);
+        clientDao.save(c);
+        accountDao.save(a);
+        model.addAttribute("client", c);
+        model.addAttribute("account", a);
+        return "client_view";
+    }
+
+    public Account makeAccount(Client client){
+        IBANGenerator ibanGenerator = new IBANGenerator();
+        String iban = ibanGenerator.ibanGenerator();
+        Account a = new PrivateAccount(iban, new BigDecimal(0));
+        a.addClient(client);
+        return a;
     }
 }

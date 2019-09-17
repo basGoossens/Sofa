@@ -9,6 +9,7 @@ import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.AddressDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +88,7 @@ public class NewAccountChecker {
         clientDao.save(client);
         Client savedClient = clientDao.findClientByUsername(client.getUsername());
         IBANGenerator newIBAN = new IBANGenerator();
-        Account newAccount = new PrivateAccount();
-        newAccount.setIban(newIBAN.getIBAN());
+        Account newAccount = new PrivateAccount(newIBAN.getIBAN(), new BigDecimal(0));
         newAccount.addClient(savedClient);
         savedClient.addAccount(newAccount);
         clientDao.save(savedClient);

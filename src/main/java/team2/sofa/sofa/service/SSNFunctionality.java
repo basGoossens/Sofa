@@ -16,8 +16,6 @@ public class SSNFunctionality {
     private String bsn;
 
     public SSNFunctionality(){
-        do {bsn = bsnGenerator();
-        } while (!ssnCheck(bsn));
     }
 
     /**
@@ -56,8 +54,11 @@ public class SSNFunctionality {
      */
     public static Stack<String> bsnStack(int count){
         Stack<String> ssnStack = new Stack<>();
+        String bsn;
         for (int i = 0; i < count ; i++) {
-            ssnStack.push(bsnGenerator());
+            do {bsn = bsnGenerator();
+            } while (!ssnCheck(bsn));
+            ssnStack.push(bsn);
         }
         return ssnStack;
     }
