@@ -20,6 +20,7 @@ public class DbInitializer {
     private final String BIG = "Data7000.csv";
     private final String MEDIUM = "Data5000.csv";
     private final String SMALL = "Data99.csv";
+    private final int AMOUNT = 1000;
 
     @Autowired
     ClientDao clientDao;
@@ -76,7 +77,7 @@ public class DbInitializer {
             BusinessAccount ba = new BusinessAccount();
             Random r = new Random();
             ba.setIban(ibanStack.pop());
-            ba.setBalance(new BigDecimal(r.nextInt(100)));
+            ba.setBalance(new BigDecimal(r.nextInt(AMOUNT)));
             ba.setBusiness(business);
             connectAccount(client, ba);
     }

@@ -104,4 +104,8 @@ public class Account {
     public void setBusinessAccount(boolean businessAccount) {
         isBusinessAccount = businessAccount;
     }
+
+    public boolean getIsBusinessAccount(){
+        return isBusinessAccount;
+    }
 }
