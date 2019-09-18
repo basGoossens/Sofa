@@ -23,15 +23,15 @@
 
 <div class="new-client-container">
     <div class="form-container">
-        <form class="new_client" action="#" th:action="@{loginEmployeeHandler}" th:object="${employee}" method="post">
+        <form class="new_client" action="#" th:action="@{loginEmployeeHandler}" th:object="${loginEmpForm}" method="post">
             <table>
                 <tr>
-                    <td><input type="text" th:field="*{username}" placeholder="Gebruikersnaam" required
+                    <td><input type="text" th:field="*{username1}" placeholder="Gebruikersnaam" required
                                oninvalid="this.setCustomValidity('Geef gebruikersnaam in')"
                                oninput="setCustomValidity('')"/>
                     </tr>
                 <tr>
-                    <td><input type="text" th:field="*{password}" placeholder="Wachtwoord" required
+                    <td><input type="text" th:field="*{password1}" placeholder="Wachtwoord" required
                                oninvalid="this.setCustomValidity('Geef uw wachtwoord in')"
                                oninput="setCustomValidity('')"/>
                 </tr>
