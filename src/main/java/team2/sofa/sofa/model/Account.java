@@ -15,6 +15,7 @@ public class Account {
     @Column(unique = true)
     private String iban;
     private BigDecimal balance;
+    private String pin;
     @ManyToMany
     private List<Client> owners;
 
@@ -23,7 +24,7 @@ public class Account {
 
     private boolean isBusinessAccount;
 
-    public Account(int id, String iban, BigDecimal balance, List<Client> owners, List<Transaction> transactions, boolean isBusinessAccount) {
+    public Account(int id, String iban, BigDecimal balance, List<Client> owners, List<Transaction> transactions, boolean isBusinessAccount, String pin) {
         this.id = id;
         this.iban = iban;
         this.balance = balance;

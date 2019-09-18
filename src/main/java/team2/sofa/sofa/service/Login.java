@@ -35,7 +35,6 @@ public class Login {
         Account a = accountDao.findAccountById(account.getId());
         Client c = a.getOwners().get(0);
         model.addAttribute("client", c);
-//        splitPrivateAndBusiness(c, model);
         model.addAttribute("account", a);
         return "client_view";
     }
@@ -44,8 +43,6 @@ public class Login {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
         model.addAttribute("client", loggedInClient);
         Account account = new Account();
-//            Accounts van klant scheiden in business en private
-//        splitPrivateAndBusiness(loggedInClient, model);
         model.addAttribute("account", account);
         return "client_view";
     }
