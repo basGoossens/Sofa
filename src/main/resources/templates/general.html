@@ -31,11 +31,11 @@
 
             <div class="transactions-table">
                 <h2>Rekeningoverzicht</h2>
-                <div class="account-info-block">
+                <div class="account-info-block" th:fragment="account-info-block">
                     <table style="width: 100%;">
                         <tr>
                             <td>
-                                Overzicht<br>
+                                Rekening<br>
                                 IBAN: <span th:text="${account.iban}"/><br>
                                 Saldo: &euro; <span th:text="${account.balance}"/><br>
                                 BIC:SOFANL2U<br>

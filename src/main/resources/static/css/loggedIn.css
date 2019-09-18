@@ -22,7 +22,6 @@
 .account-info-block {
     /*grid-area: 1 / 2 / span 1 / span 1;*/
     background-color: #96154010;
-    width: 100%;
 }
 
 .transactions-table {
@@ -37,6 +36,10 @@
     margin-right: auto;
 }
 
+.transfer-table tr:nth-child(even) {
+    background-color: #96154070;
+}
+
 
 table {
     border: 2px solid #96154070;
@@ -48,12 +51,6 @@ table {
     border-spacing: 0;
 }
 
-/*tr:last-child td:first-child {*/
-/*    border-bottom-left-radius: 10px;*/
-/*}*/
-
-/*tr:last-child td:last-child {*/
-/*    border-bottom-right-radius: 10px;*/
 
 tr:nth-child(even) {
     background-color: #f2f2f2;

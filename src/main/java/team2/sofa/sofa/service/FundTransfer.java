@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class FundTransfer {
+public class    FundTransfer {
 
     @Autowired
     TransactionDao transactionDao;
