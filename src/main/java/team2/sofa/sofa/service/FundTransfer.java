@@ -87,6 +87,14 @@ public class FundTransfer {
         transactionDao.save(transaction);
         accountDao.save(debit);
         accountDao.save(credit);
+        for (Client c: debit.getOwners()
+             ) {c.setTotalNumberOfTransactions();
+             clientDao.save(c);
+        }
+        for (Client c: credit.getOwners()
+             ) {c.setTotalNumberOfTransactions();
+            clientDao.save(credit.getOwners().get(0));
+        }
     }
 
     /**
