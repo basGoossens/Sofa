@@ -37,8 +37,8 @@ public class LoginController {
 
     @GetMapping(value = "login_employee")
     public String goTologinEmployeeHandler(Model model) {
-        Employee employee = new Employee();
-        model.addAttribute("employee", employee);
+        LoginForm loginEmpForm = new LoginForm();
+        model.addAttribute("loginEmpForm", loginEmpForm);
         return "login_employee";
     }
 
@@ -76,8 +76,8 @@ public class LoginController {
             return "login_employee";
         }
         Employee employee1 = new Employee();
-        employee1.setUsername(employee1.getUsername());
-        employee1.setPassword(employee1.getPassword());
+        employee1.setUsername(loginEmpForm.getUsername1());
+        employee1.setPassword(loginEmpForm.getPassword1());
         boolean loginOK = passwordValidator.validateEmployeePassword(employee1);
         if (loginOK) {
             return login.employeeLogin(employee1, model);
