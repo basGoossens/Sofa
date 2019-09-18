@@ -7,11 +7,11 @@
 <body>
 <div th:insert="/general :: header"/>
 ​
+
 <h1 style="text-align: left;">Welkom <span th:text="${employee.firstName}"/></h1>
 
 <div class="grid-container">
     <div class="top-ten-highest-tables">
-
 
         ​
         <form action="#" th:action="@{AccountOverviewHandler}" th:object="${employee}" method="post"
@@ -38,7 +38,6 @@
             </div>
             ​
 
-            <!--lijst met actiefste rekeningen!-->
             <div th:unless="${#lists.isEmpty(tenMostActive)}">
                 <h7>De tien meest actieve klanten</h7>
                 <table>

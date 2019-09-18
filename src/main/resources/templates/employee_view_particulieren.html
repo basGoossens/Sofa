@@ -8,61 +8,40 @@
 ​
 <div th:insert="/general :: header"/>
 ​
-<h1>Hallo <span th:text="${employee.firstName}"/></h1>
-​
-​<form action="#" th:action="@{AccountOverviewHandler}" th:object="${employee}" method="post" onsubmit="return validateForm();">
-<!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
-<div th:unless="${#lists.isEmpty(tenHighestBalance)}">
-    <h2>De tien rijkste stinkerds</h2>
-    <table>
+<h1 style="text-align: left;">Welkom <span th:text="${employee.firstName}"/></h1>
+
+<div class="grid-container">
+    <div class="top-ten-highest-tables">
         ​
-        <tr>
-            <td>IBAN</td>
-            <td>Naam</td>
-            <td>Saldo</td>
-        </tr>
-
-        <tr th:each="PrivateAccount : ${tenHighestBalance}">
-            <td>
-                <a th:href="@{AccountOverviewHandler(id=${PrivateAccount.id})}"><span th:text="${PrivateAccount.iban}"/></a></td>
-            <td><span th:text="${PrivateAccount.owners.get(0).getLastName()}"/></td>
-            <td><span th:text="${PrivateAccount.balance}"/></td>
-        </tr>
-    </table>
-</div>
-
-
-        </tr>
-    </table>
-</div>
-​
-<!--gemiddelde per sector functionaliteit met th:if werkt nog niet en is uitgecomment-->
-<div th:unless="${#lists.isEmpty(averageBalancePerSector)}"> <!--th:if="${employee.getRole() == 'HOOFD_MKB'!-->
-    <h2>Gemiddelde per sector</h2>
-    <table>
-        <tr>
-            <td>Sector</td>
-            <td>Gemiddeld saldo</td>
-        </tr>
         ​
-        <tr th:each="sector : ${averageBalancePerSector}">
-            <td><span th:text="${sector.NAME}"></span></td>
-            <td><span th:text="${sector.averageBalance}"></span></td>
-            ​
-        </tr>
-    </table>
+        <form action="#" th:action="@{AccountOverviewHandler}" th:object="${employee}" method="post"
+              onsubmit="return validateForm();">
+            <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
+            <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
+                <h7>Rekeningen met het hoogste saldo</h7>
+                <table>
+                    ​
+                    <tr>
+                        <td>IBAN</td>
+                        <td>Naam</td>
+                        <td>Saldo</td>
+                    </tr>
+
+                    <tr th:each="PrivateAccount : ${tenHighestBalance}">
+                        <td>
+                            <a th:href="@{AccountOverviewHandler(id=${PrivateAccount.id})}"><span
+                                    th:text="${PrivateAccount.iban}"/></a></td>
+                        <td><span th:text="${PrivateAccount.owners.get(0).getLastName()}"/></td>
+                        <td><span th:text="${PrivateAccount.balance}"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            </tr>
+            </table>
+            ​​
+        </form>
+    </div>
 </div>
-​​</form>
-<!--knop voor uitloggen!-->
-<div>
-    <a href="login_employee"> <input type="submit" value="Uitloggen"> </a>
-    <!-- popup-functie voor bevestiging nog bouwen !-->
-</div>
-​
-<!--terug-knop!-->
-<div>
-    <a href="login_employee"> <input type="submit" value="Terug naar overzicht"> </a>
-</div>
-    ​</form>
 </body>
 </html>
