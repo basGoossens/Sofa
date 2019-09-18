@@ -82,15 +82,10 @@ public class Login {
         } else {
             List<Client> topTenMostActive;
             List<BusinessAccount> topTenHighest;
-            List<String> balancePerSector;
+            List<BalancePerSectorData> balancePerSector;
             topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
             topTenMostActive = topTenMostActiveClient.getTopTenMostActiveClients();
             balancePerSector = sectorAnalyzer.getAverageBalancePerSector();
-            System.out.println(balancePerSector);
-            for (String item : balancePerSector){
-                System.out.println("HALLOKIRSTEN");
-                System.out.println(item);
-            }
             model.addAttribute("tenMostActive", topTenMostActive);
             model.addAttribute("tenHighestBalance", topTenHighest);
             model.addAttribute("balancePerSector", balancePerSector);

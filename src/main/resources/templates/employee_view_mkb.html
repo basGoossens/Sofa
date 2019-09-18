@@ -64,9 +64,9 @@
                 <td>Gemiddeld saldo</td>
             </tr>
             ​
-            <tr th:each="sector : ${balancePerSector}">
-                <td><span th:text="${sector.sectorName}"></span></td>
-                <td><span th:text="${sector.averageBalance}"></span></td>
+            <tr th:each="balancePerSectorData : ${balancePerSector}">
+                <td><span th:text="${balancePerSectorData.sector}"></span></td>
+                <td><span th:text="${balancePerSectorData.averageBalance}"></span></td>
                 ​
             </tr>
         </table>
