@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <div th:insert="/general :: headerfiles"/>
     <title>Bevestig betaling</title>
 </head>
 <body>
-<h1>Overzicht betaling</h1>
-<p>Deze betaling gaat naar <span th:text="${benificiary.firstName} + ' ' + ${benificiary.prefix} + ' ' + ${benificiary.lastName}"></span></p>
-<form action="#" th:action="@{confirmPayment}" th:object="${transaction}" method="post">
-<ul>
-    <li><input readonly type="text" th:field="*{name}">naam begunstigde</li>
-    <li><input readonly type="text" th:field="*{amount}">bedrag</li>
-    <li><input readonly type="text" th:field="*{description}" omschrijving</li>
-    <li><input readonly type="text" th:field="*{creditAccount}">Iban Begunstigde</li>
-</ul>
-    <input type="hidden" th:field="*{debetAccount}">
-    <p>voer uw Pincode in</p><input type="text" th:field="*{pin}">
-    <input type="submit" value="bevestig Betaling">
-</form>
-
+<div th:insert="/general :: header"/>
+<div class="new-client-container">
+    <div class="w3-container">
+        <h1>Overzicht betaling</h1>
+        <p>Deze betaling gaat naar <span
+                th:text="${benificiary.firstName} + ' ' + ${benificiary.prefix} + ' ' + ${benificiary.lastName}"></span>
+        </p>
+        <form action="#" th:action="@{confirmPayment}" th:object="${transaction}" method="post">
+            <ul>
+                <li><input readonly type="text" th:field="*{name}">naam begunstigde</li>
+                <li><input readonly type="text" th:field="*{amount}">bedrag</li>
+                <li><input readonly type="text" th:field="*{description}" omschrijving></li>
+                <li><input readonly type="text" th:field="*{creditAccount}">Iban Begunstigde</li>
+            </ul>
+            <input type="hidden" th:field="*{debetAccount}">
+            <p>voer uw Pincode in</p><input type="text" th:field="*{pin}">
+            <input type="submit" value="bevestig Betaling">
+        </form>
+    </div>
+</div>
 </body>
 </html>
