@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>nieuwe business account</title>
+    <div th:insert="/general :: headerfiles"/>
+    <title>New Business Account</title>
 </head>
 <body>
-<h1>gegevens voor nieuwe business</h1>
-<p>Hallo <span th:text="${business.owner.firstName}">naam</span></p>
-<form action="#" th:action="@{NewBusiness}" th:object="${business}" method="post">
-    <input type="text" th:field="*{businessName}">
-    <select th:field="*{sector}">
-        <option th:each="sector : ${T(team2.sofa.sofa.model.BusinessSector).values()}"
-                th:value="${sector}" th:text="${sector}"></option>
-    </select>
-    <input type="hidden" name="owner" id="owner" th:value="*{owner.id}"/>
+<div th:insert="/general :: header"/>
 
-    <input type="submit" value="Nieuwe Rekening">
-</form>
+<div class="new-client-container">
+    <div class="w3-container">
+        <h1 style="text-align: left">Open een zakelijke rekening</h1>
+        <form action="#" th:action="@{NewBusiness}" th:object="${business}" method="post">
+            <table class="new-business-account-table">
+                <tr>
+                    <td>Naam bedrijf:</td>
+                    <td><input type="text" th:field="*{businessName}" style="width: 100%;"></td>
+                </tr>
+                <tr>
+                    <td>Sector:</td>
+                    <td><select th:field="*{sector}">
+                        <option th:each="sector : ${T(team2.sofa.sofa.model.BusinessSector).values()}"
+                                th:value="${sector}" th:text="${sector}"></option>
+                    </select></td>
+                </tr>
+            </table>
+            <input type="hidden" name="owner" id="owner" th:value="*{owner.id}"/>
+
+            <input type="submit" value="Bevestig" style="position:relative; top:20px; right: 280px;"/>
+        
+        </form>
+
+    </div>
+</div>
 
 </body>
 </html>

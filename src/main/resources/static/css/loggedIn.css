@@ -36,7 +36,7 @@
     margin-right: auto;
 }
 
-.transfer-table tr:nth-child(even) {
+.transfer-table, new-business-account-table tr:nth-child(even) {
     background-color: #96154070;
 }
 
