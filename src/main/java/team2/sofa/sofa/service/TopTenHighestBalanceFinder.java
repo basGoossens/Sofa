@@ -23,14 +23,16 @@ public class TopTenHighestBalanceFinder {
     @Autowired
     BusinessAccountDao businessAccountDao;
 
-    //de tien particuliere rekeningen met het hoogste saldo
+    /** vind de tien particuliere rekeningen met het hoogste saldo
+     * @return geeft een geordende lijst terug van PrivateAccount-objecten */
+
     public List<PrivateAccount> getTopTenHighestBalance(){
         List<PrivateAccount> topTen = privateAccountDao.findTop10ByOrderByBalanceDesc();
         return topTen;
     }
 
 
-    //de tien zakelijke rekeningen met het hoogste saldo
+    /** de tien zakelijke rekeningen met het hoogste saldo - zie hierboven */
     public List<BusinessAccount> getTopTenHighestBalanceBusiness(){
         List<BusinessAccount> topTen = businessAccountDao.findTop10ByBusinessIsNotNullOrderByBalanceDesc();
         return topTen;

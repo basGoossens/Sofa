@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <div th:insert="/general :: headerfiles"/>
     <title>Account Overview</title>
-    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
-
 </head>
 <body>
 
-<div th:insert="/headertemplates :: header"/>
+<div th:insert="/general :: header"/>
 
 
 <div class="grid-container">
@@ -72,47 +68,47 @@
         </table>
     </div>
 
-<div class="accounttables">
-<form action="#" th:action="@{PrivateAccountListHandlerForEmployee}" th:object="${client}" method="post"
-      onsubmit="return validateForm();">
-    <h8>Particuliere rekeningen</h8>
-    <table>
-        <tr>
-            <th>Rekeningnummer</th>
-            <th>Saldo</th>
-        </tr>
-        <tr th:each="PrivateAccount: ${listPrivateAccounts}">
-            <td>
-                <a th:href="@{PrivateAccountListHandlerForEmployee(id=${PrivateAccount.id})}"><span
-                        th:text="${PrivateAccount.iban}"/></a>
+    <div class="accounttables">
+        <form action="#" th:action="@{PrivateAccountListHandlerForEmployee}" th:object="${client}" method="post"
+              onsubmit="return validateForm();">
+            <h8>Particuliere rekeningen</h8>
+            <table>
+                <tr>
+                    <th>Rekeningnummer</th>
+                    <th>Saldo</th>
+                </tr>
+                <tr th:each="PrivateAccount: ${listPrivateAccounts}">
+                    <td>
+                        <a th:href="@{PrivateAccountListHandlerForEmployee(id=${PrivateAccount.id})}"><span
+                                th:text="${PrivateAccount.iban}"/></a>
 
-            </td>
+                    </td>
 
-            <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
-        </tr>
-    </table>
-</form>
-<br>
+                    <td><a><span th:text="${PrivateAccount.balance}"/></a></td>
+                </tr>
+            </table>
+        </form>
+        <br>
 
 
-<form action="#" th:action="@{BusinessAccountListHandler}" th:object="${client}" method="post"
-      onsubmit="return validateForm();">
-    <h8>Zakelijke rekeningen</h8>
-    <table>
-        <tr>
-            <th>Rekeningnummer</th>
-            <th>Saldo</th>
-        </tr>
-        <tr th:each="BusinessAccount : ${listBusinessAccounts}">
-            <td>
-                <a th:href="@{BusinessAccountListHandler(id=${BusinessAccount.id})}"><span
-                        th:text="${BusinessAccount.iban}"/></a>
-            </td>
-            <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
-        </tr>
-    </table>
-</form>
-</div>
+        <form action="#" th:action="@{BusinessAccountListHandler}" th:object="${client}" method="post"
+              onsubmit="return validateForm();">
+            <h8>Zakelijke rekeningen</h8>
+            <table>
+                <tr>
+                    <th>Rekeningnummer</th>
+                    <th>Saldo</th>
+                </tr>
+                <tr th:each="BusinessAccount : ${listBusinessAccounts}">
+                    <td>
+                        <a th:href="@{BusinessAccountListHandler(id=${BusinessAccount.id})}"><span
+                                th:text="${BusinessAccount.iban}"/></a>
+                    </td>
+                    <td><a><span th:text="${BusinessAccount.balance}"/></a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </div>
 
 

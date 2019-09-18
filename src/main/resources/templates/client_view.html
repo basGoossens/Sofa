@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <div th:insert="/general :: headerfiles"/>
     <title>Client View</title>
-    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
 </head>
 <body>
 
-<div th:insert="/headertemplates :: header"/>
+<div th:insert="/general :: header"/>
 
 <h1 style="text-align:left">Hallo, <span th:text="${client.firstName}"/></h1>
 
@@ -61,10 +58,11 @@
                 </tr>
             </table>
             <br>
-    </div>
+        </div>
     </div>
 
-    <div class="selectaccount"> <h8>Selecteer een rekening</h8>
+    <div class="selectaccount">
+        <h8>Selecteer een rekening</h8>
         <form action="#" th:action="@{AccountListHandler}" th:object="${account}" method="post">
             <input type="submit" value="Ga naar rekening">
             <select th:field="*{id}">
@@ -78,7 +76,7 @@
 
 
 </div>
-    <br>
+<br>
 
 
 </body>
