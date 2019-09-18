@@ -47,8 +47,14 @@ public class PaymentController {
             model.addAttribute("foei", fout);
             return "money_transfer";
         }
+        return fundTransfer.prepareConfirmation(transactionForm, model);
+    }
+
+    @PostMapping(value = "confirmPayment")
+    public String handleTransfer(TransactionForm transactionForm, Model model){
         fundTransfer.procesTransaction(transactionForm);
         return fundTransfer.readyDashboard(transactionForm, model);
     }
+
 }
 

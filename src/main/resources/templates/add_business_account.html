@@ -5,11 +5,14 @@
     <title>New Business Account</title>
 </head>
 <body>
+<<<<<<< HEAD
 <div th:insert="/general :: header"/>
 
 <div class="new-client-container">
     <div class="w3-container">
         <h1 style="text-align: left">Open een zakelijke rekening</h1>
+        <p>Hallo <span th:text="${business.owner.firstName} + ' ' + ${business.owner.prefix} + ' ' + ${business.owner.lastName}">naam</span> voor welk bedrijf wil je een zakelijke rekening openen</p>
+        <p>vul in onderstaand formulier de benodigde gegevens in om een nieuwe zakelijke rekening te openen</p>
         <form action="#" th:action="@{NewBusiness}" th:object="${business}" method="post">
             <table class="new-business-account-table">
                 <tr>

@@ -17,8 +17,6 @@ import team2.sofa.sofa.service.PasswordValidator;
 
 import javax.validation.Valid;
 
-
-
 @Controller
 public class LoginController {
     @Autowired
@@ -26,12 +24,9 @@ public class LoginController {
     @Autowired
     PasswordValidator passwordValidator;
 
-
-
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
-        LoginForm loginForm = new LoginForm();
-        model.addAttribute("loginForm", loginForm);
+        model.addAttribute("client", new Client());
         return "login";
     }
 
@@ -42,31 +37,20 @@ public class LoginController {
         return "login_employee";
     }
 
-    @GetMapping(value = "login_client")
-    public String goTologinClientHandler(Model model) {
-        LoginForm loginForm = new LoginForm();
-        model.addAttribute("loginForm", loginForm);
-        return "login";
-    }
-
     @RequestMapping(value = "logoutClientHandler")
     public String logOutClientHandler(){
         return "login";
     }
 
     @PostMapping(value = "loginClientHandler")
-    public String loginClientHandler(@ModelAttribute @Valid LoginForm loginForm, Model model, Errors error, BindingResult result) {
-        if (result.hasErrors()){
-            model.addAttribute("error", error);
-            return "login";
-        }
-        Client client = new Client();
-        client.setUsername(loginForm.getUsername1());
-        client.setPassword(loginForm.getPassword1());
+    public String loginClientHandler(Client client, Model model) {
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
             return login.clientLogin(client, model);
-        } else return "login";
+        } else {
+            model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");
+            return "login";
+        }
     }
 
     @PostMapping(value = "loginEmployeeHandler")

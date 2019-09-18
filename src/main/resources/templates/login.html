@@ -18,22 +18,25 @@
 </div>
 
 <div class="text-container">
-<h2>Sofa login pagina</h2>
+    <h2>Sofa login pagina</h2>
+    <div th:unless="${fout == null}">
+        <p th:text="${fout}">foutmelding</p>
+    </div>
 </div>
 
 <div class="new-client-container">
     <div class="form-container">
-        <form class="new_client" action="#" th:action="@{loginClientHandler}" th:object="${loginForm}" method="post">
+        <form class="new_client" action="#" th:action="@{loginClientHandler}" th:object="${client}" method="post">
             <table>
                 <tr>
-                    <td><input type="text" th:field="*{username1}" placeholder="Gebruikersnaam" required
+                    <td><input type="text" th:field="*{username}" placeholder="Gebruikersnaam" required
                                oninvalid="this.setCustomValidity('Geef gebruikersnaam in')"
                                oninput="setCustomValidity('')"/>
 
 
                 </tr>
                 <tr>
-                    <td><input type="text" th:field="*{password1}"placeholder="Wachtwoord" required
+                    <td><input type="text" th:field="*{password}"placeholder="Wachtwoord" required
                                oninvalid="this.setCustomValidity('Geef uw wachtwoord in')"
                                oninput="setCustomValidity('')"/>
 

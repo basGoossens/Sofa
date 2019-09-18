@@ -45,6 +45,15 @@ public class    FundTransfer {
         return "money_transfer";
     }
 
+    public String prepareConfirmation(TransactionForm transactionForm, Model model){
+        Account account = accountDao.findAccountByIban(transactionForm.getDebetAccount());
+        Client benificiary = accountDao.findAccountByIban(transactionForm.getCreditAccount()).getOwners().get(0);
+        model.addAttribute("benificiary", benificiary);
+        model.addAttribute("account", account);
+        model.addAttribute("transaction", transactionForm);
+        return "confirm_payment";
+    }
+
     /**
      * helper methode om juiste data in te laden in model voor dashboard na uitvoeren van betaling
      *
@@ -143,4 +152,5 @@ public class    FundTransfer {
         }
         return false;
     }
+
 }

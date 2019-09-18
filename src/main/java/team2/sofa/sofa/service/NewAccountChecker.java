@@ -42,7 +42,7 @@ public class NewAccountChecker {
             client.setAddress(a); }
         if (errorList.isEmpty()) {
             makeNewAccount(client);
-            model.addAttribute("loginForm", new LoginForm());
+            model.addAttribute("client", client);
             return "login";
         } else {
             model.addAttribute("errorList", errorList);

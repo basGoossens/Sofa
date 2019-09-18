@@ -38,7 +38,7 @@ public class ClientViewController {
 
     @PostMapping(value = "AddNewBusinessAccountHandler")
     public String addNewBusinessAccountHandler(Client client,Model model){
-        Client client2 = clientDao.findClientById(client.getId());
+        Client client2 = clientview.getClient(client.getId());
         Business business = new Business();
         business.setOwner(client2);
         model.addAttribute("business", business);
@@ -47,22 +47,10 @@ public class ClientViewController {
 
     @PostMapping(value = "NewBusiness")
     public String newBAccount(Business business, Model model){
-        IBANGenerator ibanGenerator = new IBANGenerator();
-        String iban = ibanGenerator.ibanGenerator();
-        businessDao.save(business);
+        Account a = clientview.procesNewBusinessAccount(business);
         Client c = business.getOwner();
-        BusinessAccount a = new BusinessAccount();
-        a.addClient(c);
-        a.setIban(iban);
-        a.setBusiness(business);
-        a.setBalance(new BigDecimal(0));
-        c.addAccount(a);
-        clientDao.save(c);
-        accountDao.save(a);
         model.addAttribute("client", c);
         model.addAttribute("account", a);
-
-
         return "client_view";
     }
 

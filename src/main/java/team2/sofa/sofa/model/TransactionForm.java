@@ -18,6 +18,7 @@ public class TransactionForm {
     String creditAccount;
     @NotBlank (message = "vul eigen IBAN in")
     String debetAccount;
+    String pin;
 
     public TransactionForm() {
         this("", null, "", "", "");
@@ -69,5 +70,13 @@ public class TransactionForm {
 
     public void setDebetAccount(String debetAccount) {
         this.debetAccount = debetAccount;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 }
