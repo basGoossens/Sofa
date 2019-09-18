@@ -32,16 +32,27 @@ public class Account {
         this.transactions = transactions;
         this.isBusinessAccount = isBusinessAccount;
     }
-    public Account(String iban, BigDecimal balance, List<Transaction> transactions){
-        this(0, iban, balance, null, transactions, false);
+
+    public Account(int id, String iban, BigDecimal balance, String pin, List<Client> owners, List<Transaction> transactions, boolean isBusinessAccount) {
+        this.id = id;
+        this.iban = iban;
+        this.balance = balance;
+        this.pin = pin;
+        this.owners = owners;
+        this.transactions = transactions;
+        this.isBusinessAccount = isBusinessAccount;
+    }
+
+    public Account(String iban, BigDecimal balance, String pin, List<Transaction> transactions){
+        this(0, iban, balance, pin, null, transactions, false);
     }
 
     public Account (String iban, BigDecimal balance){
-        this(0, iban,balance, new ArrayList<>(),new ArrayList<>(),false);
+        this(0, iban, balance, "", new ArrayList<>(),new ArrayList<>(),false);
     }
 
     public Account(){
-        this(0,"", null, new ArrayList<>(), new ArrayList<>(), false);
+        this(0,"", null, "", new ArrayList<>(), new ArrayList<>(), false);
     }
 
     public int getId() {
