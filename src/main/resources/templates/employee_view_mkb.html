@@ -57,7 +57,7 @@
     </div>
     ​
     <!--gemiddelde per sector functionaliteit!-->
-    <div th:unless="${#lists.isEmpty(averageBalancePerSector)}">
+    <div th:unless="${#lists.isEmpty(balancePerSector)}">
         <h2>Gemiddelde per sector</h2>
         <table>
             <tr>
@@ -65,9 +65,9 @@
                 <td>Gemiddeld saldo</td>
             </tr>
             ​
-            <tr th:each="sector : ${averageBalancePerSector}">
-                <td><span th:text="${sector.NAME}"></span></td>
-                <td><span th:text="${sector.averageBalance}"></span></td>
+            <tr th:each="balancePerSectorData : ${balancePerSector}">
+                <td><span th:text="${balancePerSectorData.sector}"></span></td>
+                <td><span th:text="${balancePerSectorData.averageBalance}"></span></td>
                 ​
             </tr>
         </table>
