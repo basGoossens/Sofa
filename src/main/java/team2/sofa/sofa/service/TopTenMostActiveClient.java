@@ -38,7 +38,7 @@ public class TopTenMostActiveClient {
      *
      * @param id, model, deze worden meegegeven bij het klikken op de naam.
      *@return client_view_for_employee - een nieuwe pagina wordt geladen adhv de klant die is gekoppeld aan de id.*/
-    
+
     public String mostActiveClientBuilder(int id, Model model) {
         Client chosenClient = clientDao.findClientById(id);
         Login.splitPrivateAndBusiness(chosenClient, model);
