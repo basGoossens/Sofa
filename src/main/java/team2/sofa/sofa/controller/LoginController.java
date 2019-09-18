@@ -70,16 +70,17 @@ public class LoginController {
     }
 
     @PostMapping(value = "loginEmployeeHandler")
-    public String loginEmployeeHandler(@ModelAttribute Employee employee, Model model) {
-        if (employee.getUsername().isEmpty()) {
+    public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {
+        if (result.hasErrors()) {
+            model.addAttribute("error", error);
             return "login_employee";
         }
-        if (employee.getPassword().isEmpty()) {
-            return "login_employee";
-        }
-        boolean loginOk = passwordValidator.validateEmployeePassword(employee);
-        if (loginOk) {
-            return login.employeeLogin(employee, model);
+        Employee employee1 = new Employee();
+        employee1.setUsername(employee1.getUsername());
+        employee1.setPassword(employee1.getPassword());
+        boolean loginOK = passwordValidator.validateEmployeePassword(employee1);
+        if (loginOK) {
+            return login.employeeLogin(employee1, model);
         } else return "login_employee";
     }
 }

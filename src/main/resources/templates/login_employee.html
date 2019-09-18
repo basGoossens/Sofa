@@ -2,8 +2,11 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
+    <title>Login voor medewerkers</title>
+    <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+</head>
 <body>
 <div class="nav">
     <ul>
@@ -13,26 +16,36 @@
         <li><a href="login_employee" class="link">Werknemers</a></li>
     </ul>
 </div>
+
+<div class="text-container">
 <h2>Sofa login pagina voor werknemers</h2>
+</div>
 
-<form action="#" th:action="@{loginEmployeeHandler}" th:object="${employee}" method="post">
-    <table>
-        <tr>
-            <td>Gebruikersnaam werknemer:</td>
-            <td><input type="text" th:field="*{username}"/></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type="password" th:field="*{password}"/></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Login"></td>
-        </tr>
-    </table>
-</form>
-
-<p>Ik ben een <a href="login">klant</a>.</p>
-<p>Ga <a href="index">terug</a> naar het begin...</p>
+<div class="new-client-container">
+    <div class="form-container">
+        <form class="new_client" action="#" th:action="@{loginEmployeeHandler}" th:object="${employee}" method="post">
+            <table>
+                <tr>
+                    <td><input type="text" th:field="*{username}" placeholder="Gebruikersnaam" required
+                               oninvalid="this.setCustomValidity('Geef gebruikersnaam in')"
+                               oninput="setCustomValidity('')"/>
+                    </tr>
+                <tr>
+                    <td><input type="text" th:field="*{password}" placeholder="Wachtwoord" required
+                               oninvalid="this.setCustomValidity('Geef uw wachtwoord in')"
+                               oninput="setCustomValidity('')"/>
+                </tr>
+                <tr>
+                    <td><input class="input-form" type="submit" value="Login"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="text-container">Ik ben een klant. Klik <a href="login">hier </a> om naar de inlog pagina voor klanten te gaan.</p>
+    </div>
+</div>
+<footer class="footer">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
+    Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle , Rene van der Stok  Aat Niehot </footer>
 
 </body>
 </html>
