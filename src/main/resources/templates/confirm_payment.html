@@ -8,21 +8,38 @@
 <div th:insert="/general :: header"/>
 <div class="new-client-container">
     <div class="w3-container">
-        <h1>Overzicht betaling</h1>
-        <p>Deze betaling gaat naar <span
-                th:text="${benificiary.firstName} + ' ' + ${benificiary.prefix} + ' ' + ${benificiary.lastName}"></span>
-        </p>
+        <h1 style="text-align: left">Bevestig transactie</h1>
+        <h7 style="text-align: left">Betaling aan
+            <span
+                    th:text="${benificiary.firstName} + ' ' + ${benificiary.prefix} + ' ' + ${benificiary.lastName}"></span>
+        </h7>
         <form action="#" th:action="@{confirmPayment}" th:object="${transaction}" method="post">
-            <ul>
-                <li><input readonly type="text" th:field="*{name}">naam begunstigde</li>
-                <li><input readonly type="text" th:field="*{amount}">bedrag</li>
-                <li><input readonly type="text" th:field="*{description}" omschrijving></li>
-                <li><input readonly type="text" th:field="*{creditAccount}">Iban Begunstigde</li>
-            </ul>
+        <table class="transfer-table">
+
+            <tr><td>naam begunstigde</td>
+                <td><input readonly type="text" th:field="*{name}"></td>
+            </tr>
+            <tr>
+                <td>bedrag</td>
+                <td><input readonly type="text" th:field="*{amount}"></td>
+
+            </tr>
+            <tr>
+                <td> omschrijving></td>
+                <td><input readonly type="text" th:field="*{description}"></td>
+                <tr>
+            <td>Iban Begunstigde</td>
+            <td><input readonly type="text" th:field="*{creditAccount}"></td>
+        </tr>
+        </table>
+            <div style="position:relative; top:20px; right: 200px;">
             <input type="hidden" th:field="*{debetAccount}">
             <p>voer uw Pincode in</p><input type="text" th:field="*{pin}">
             <input type="submit" value="bevestig Betaling">
+            </div>
         </form>
+
+
     </div>
 </div>
 </body>
