@@ -14,7 +14,8 @@
         <li><a href="index" class="link">Home</a></li>
         <li><a href="login" class="link">Login</a></li>
         <li><a href="new_account" class="link">Nieuwe klant</a></li>
-        <<li><a href="login_employee" class="link">Werknemers</a></li>
+        <
+        <li><a href="login_employee" class="link">Werknemers</a></li>
     </ul>
 </div>
 
@@ -54,14 +55,24 @@
 
 <div class="new-client-container">
     <div class="form-container">
-    <h2>Klik <a href="initdb">hier</a> om de database te vullen.</h2>
-<div>
-    <h2 style="text-align: center">Klik <a href="initdb">hier</a> om de database te vullen.</h2>
-</div>
+        <h2>Klik <a href="initdb">hier</a> om de database te vullen.</h2>
+    <div class="form-container">
+        <h2 float: right; Klik <a href="initdb">hier</a> om de database te vullen.</h2>
+    </div>
 </div>
 
+
 <footer class="footer">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
-Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos, Rene van der Stok & Aat Niehot </footer>
+    Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos, Rene van der Stok & Aat Niehot
+</footer>
+<div class="bottomNav">
+    <ul>
+        <li>Over Sofa</li>
+        <li>Inloggen</li>
+        <li>Nieuwe klant worden</li>
+    </ul>
+</div>
+
 
 <script>
     var slideIndex = 0;
@@ -75,12 +86,14 @@ Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos, Ren
             slides[i].style.display = "none";
         }
         slideIndex++;
-        if (slideIndex > slides.length) {slideIndex = 1}
+        if (slideIndex > slides.length) {
+            slideIndex = 1
+        }
         for (i = 0; i < dots.length; i++) {
             dots[i].className = dots[i].className.replace(" active", "");
         }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
         setTimeout(showSlides, 6000); // Change image every 6 seconds
     }
 </script>
