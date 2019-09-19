@@ -101,7 +101,7 @@
                 </tr>
                 <tr th:each="BusinessAccount : ${listBusinessAccounts}">
                     <td>
-                        <a th:href="@{BusinessAccountListHandler(id=${BusinessAccount.id})}"><span
+                        <a th:href="@{BusinessAccountListHandlerForEmployee(id=${BusinessAccount.id})}"><span
                                 th:text="${BusinessAccount.iban}"/></a>
                     </td>
                     <td><a><span th:text="${BusinessAccount.balance}"/></a></td>

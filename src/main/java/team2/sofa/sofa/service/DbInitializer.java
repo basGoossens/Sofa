@@ -229,7 +229,7 @@ public class DbInitializer {
             for (int i = 0; i < result; i++) {
                 PrivateAccount a = new PrivateAccount();
                 a.setIban(ibanStack.pop());
-                a.setBalance(new BigDecimal(r.nextInt(100)));
+                a.setBalance(new BigDecimal(r.nextInt(AMOUNT)));
                 connectAccount(c, a);
             }
         }
