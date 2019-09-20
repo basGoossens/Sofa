@@ -32,23 +32,6 @@ public class DashboardClientController {
         return fundTransfer.readyTransaction(account.getId(), model);
     }
 
-    @PostMapping(value = "ConnectAccount")
-    public String connectAccounts(@RequestParam int id, Model model){
-        Account account = accountDao.findAccountById(id);
-        model.addAttribute("account", account);
-        return "connect_accounts";
-    }
-    @PostMapping(value = "ConnectAccount/form")
-    public String connectHandeler(@RequestParam Map<String, Object> body, Model model){
-        String iban = body.get("bankaccount").toString();
-        String user = body.get("newuser").toString();
-        String accescode = body.get("accesscode").toString();
-        Connector connector = new Connector(user,accescode,iban);
-        connectorDao.save(connector);
-        model.addAttribute("account", accountDao.findAccountByIban(iban));
-        return "dashboard_client";
-    }
-
     @PostMapping(value = "backToOverview")
     public String backToOverview(Account account, Model model) {
         return login.backFromDashboard(account, model);

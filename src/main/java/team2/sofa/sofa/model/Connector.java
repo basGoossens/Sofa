@@ -55,4 +55,12 @@ public class Connector {
     public void setIban(String iban) {
         this.iban = iban;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

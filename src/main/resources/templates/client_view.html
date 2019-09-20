@@ -74,7 +74,7 @@
         </form>
         <div th:if="${connect}">
         <form action="#" th:action="@{NewConnection}" method="post">
-            <input type="hidden" value="${connect.id}" name="idConnect">
+            <input type="hidden" th:value="${connect.id}" name="id">
             <input type="submit" value="Koppel een nieuwe rekening">
         </form>
         </div>
