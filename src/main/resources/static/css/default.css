@@ -118,6 +118,12 @@ h7 {
   animation-name: fade;
   animation-duration: 2.5s;
 }
+.footer {
+    background-color: #96154030;
+    padding: 20px;
+    margin-top: auto;
+    margin-bottom: 0%;
+}
 
 
 
