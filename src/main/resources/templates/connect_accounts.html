@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Koppel Rekeninghouder</title>
+</head>
+<body>
+<h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${account.iban}">rekening</span></h1>
+<form action="#" th:action="@{ConnectAccount/form}" th:object="${account}" method="post">
+<table>
+    <tr>
+        <th>gebruikersnaam</th>
+        <th>beveiligingscode</th>
+    </tr>
+    <tr>
+       <td><input type="text" value="gebruikersnaam" name="newuser"></td>
+        <td><input type="text" value="beveiligingscode" name="accesscode"></td>
+        <input type="hidden" th:value="${account.iban}" name="bankaccount">
+    </tr>
+</table>
+    <input type="submit" value="Verzenden">
+</form>
+</body>
+</html>
