@@ -1,18 +1,15 @@
 .new_client {
-  color: #d5dfe5;
   display: flex;
   overflow-y: scroll;
   padding-bottom: 2.5rem;
   padding-top: 2.5rem;
   align: center;
   margin: auto;
-
-
 }
 
 .new_client input {
+  color:#d5dfe5;
   background-color: #961540;
-  color: #d5dfe5;
   margin: 0 .25rem;
   min-width: 200px;
   border: 1px solid #eee;
@@ -22,22 +19,20 @@
   text-align: center;
 }
 .new_client input:optional {
-  border-left-color: #999;
   color: #d5dfe5;
+  border-left-color: #999;
 }
 .new_client input:required {
-  border-left-color: lightgreen;
   color: #d5dfe5;
+  border-left-color: lightgreen;
 }
 .new_client input:invalid {
+  color: #d5dfe5;
   border-left-color: salmon;
+}
+.input-list{
   color: #d5dfe5;
 }
-
-::-webkit-input-placeholder {
-  color: #d5dfe5;
-}
-
 .input-form {
   color: #d5dfe5;
   min-width: 200px;

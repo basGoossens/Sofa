@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Nieuwe klant</title>
+
     <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+
+
 
 </head>
 <body>
@@ -13,7 +16,8 @@
     <ul>
         <li><a href="index" class="link">Home</a></li>
         <li><a href="login" class="link">Login</a></li>
-        <li><a href="new_account" class="link">Nieuwe klant</a></li>
+        <li><a href="new_account" class="link">Nieuwe Klant</a></li>
+        <li><a href="new_business" class="link">Nieuwe Zakelijke Klant</a></li>
         <li><a href="login_employee" class="link">Werknemers</a></li>
     </ul>
 </div>
@@ -34,80 +38,94 @@
 <form name="new_client" class="new_client" action="#" th:action="@{newAccountHandler}" th:object="${client}" method="post">
     <table>
         <tr>
-            <td><input type="text" th:field="*{firstName}" placeholder="Voornaam" required
+            <td><div>Voornaam</div></td>
+            <td><input type="text" th:field="*{firstName}" required
                        oninvalid="this.setCustomValidity('Geef uw voornaam op')"
                        oninput="setCustomValidity('')"/></td>
             </td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{prefix}" placeholder="Tussenvoegsel"/></td>
+            <td>Tussenvoegsel</td>
+            <td><input type="text" th:field="*{prefix}" /></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{lastName}" placeholder="Achternaam" required
+            <td>Achternaam</td>
+            <td><input type="text" th:field="*{lastName}"  required
                        oninvalid="this.setCustomValidity('Geef uw achternaam op')"
                        oninput="setCustomValidity('')"/></td>
 
         </tr>
         <tr>
-            <td><input type="text" th:field="*{Address.street}" placeholder="Straatnaam" required
+            <td>Straatnaam</td>
+            <td><input type="text" th:field="*{Address.street}" required
                        oninvalid="this.setCustomValidity('Geef uw straatnaam op')"
                        oninput="setCustomValidity('')"/></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{Address.houseNumber}" placeholder="Huisnummer" required
+            <td>Huisnummer</td>
+            <td><input type="text" th:field="*{Address.houseNumber}" required
                        oninvalid="this.setCustomValidity('Geef uw huisnummer op')"
                        oninput="setCustomValidity('')"/></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{Address.zipCode}" placeholder="Postcode" required
+            <td>Postcode</td>
+            <td><input type="text" th:field="*{Address.zipCode}" required
                        oninvalid="this.setCustomValidity('Geef uw postcode op')"
                        oninput="setCustomValidity('')"/></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{Address.city}" placeholder="Woonplaats" required
+            <td>Woonplaats</td>
+            <td><input type="text" th:field="*{Address.city}" required
                        oninvalid="this.setCustomValidity('Geef uw woonplaats op')"
                        oninput="setCustomValidity('')"/></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{ssn}" placeholder="BSN" required
+            <td>Burger Service Nummer</td>
+            <td><input type="text" th:field="*{ssn}" required
                        oninvalid="this.setCustomValidity('Geef uw BSN op')"
                        oninput="setCustomValidity('')"/></td>
 
         </tr>
         <tr>
-            <td><input type="email" th:field="*{email}" placeholder="Emailadres" required
+            <td>Emailadres</td>
+            <td><input type="email" th:field="*{email}" required
                        oninvalid="this.setCustomValidity('Geef een geldig email adres op')"
                        oninput="setCustomValidity('')"/></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{telephoneNr}" placeholder="Telefoonnummer" required
+            <td>Telefoonnummer</td>
+            <td><input type="text" th:field="*{telephoneNr}" required
                        oninvalid="this.setCustomValidity('Geef uw Telefoonnummer op')"
                        oninput="setCustomValidity('')"/></td>
         </tr>
         <tr>
+            <td>Geboortedatum</td>
             <td><input type="date" class="date" th:field="*{birthday}" required
                        oninvalid="this.setCustomValidity('Geef uw voornaam op')"
                        oninput="setCustomValidity('')"/></td>
         </tr>
         <tr>
-            <td><input type="text" th:field="*{gender}" placeholder="Geslacht" required
+            <td>Geslacht</td>
+            <td><input type="text" th:field="*{gender}" required
                        oninvalid="this.setCustomValidity('Geef uw geslacht op')"
                        oninput="setCustomValidity('')"/></td>
 
         </tr>
         <tr>
-            <td><input type="text" th:field="*{username}" placeholder="Gebruikersnaam" required
+            <td>Gebruikersnaam</td>
+            <td><input type="text" th:field="*{username}" required
                        oninvalid="this.setCustomValidity('Geef uw gebruikersnaam op')"
                        oninput="setCustomValidity('')"/></td>
 
         </tr>
         <tr>
-            <td><input type="password" th:field="*{password}" placeholder="Wachtwoord" required
+            <td>Wachtwoord</td>
+            <td><input type="password" th:field="*{password}" required
                        oninvalid="this.setCustomValidity('Geef een wachtwoord op')"
                        oninput="setCustomValidity('')"/></td>
-
         </tr>
         <tr>
+            <td></td>
             <td><input class="input-form" type="submit" value="Verzenden"></td>
         </tr>
         <tr>
@@ -126,9 +144,12 @@
 </div>
 </div>
 
-<footer class="footer">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
+<footer class="footer">
+    <div class="new-client-container">
+        <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
     Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat Niehot </footer>
-
+</div>
+</div>
 
 </body>
 </html>
