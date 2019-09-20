@@ -12,7 +12,8 @@
 <div class="new-client-container">
     <div class="w3-container">
         <h1 style="text-align: left;">Geld overmaken</h1>
-            <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transactionForm}"
+        <div th:insert="/general :: account-info-block"/>
+        <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transactionForm}"
                   method="post">
             <table class="transfer-table">
                 <tr>
