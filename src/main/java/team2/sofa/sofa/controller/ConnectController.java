@@ -11,11 +11,15 @@ import team2.sofa.sofa.model.Connector;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.ConnectorDao;
+import team2.sofa.sofa.service.ConnectingService;
 
 import java.util.Map;
 
 @Controller
 public class ConnectController {
+
+    @Autowired
+    ConnectingService cs;
 
     @Autowired
     ConnectorDao connectorDao;
@@ -26,43 +30,34 @@ public class ConnectController {
 
     @PostMapping(value = "ConnectAccount")
     public String connectAccounts(@RequestParam int id, Model model){
-        Account account = accountDao.findAccountById(id);
+        Account account = cs.getAccount(id);
         model.addAttribute("account", account);
         return "connect_accounts";
     }
-    @PostMapping(value = "ConnectAccount/form")
+    @PostMapping(value = "ConnectForm")
     public String connectHandeler(@RequestParam Map<String, Object> body, Model model){
-        String iban = body.get("bankaccount").toString();
-        String user = body.get("newuser").toString();
-        String accescode = body.get("accesscode").toString();
-        Connector connector = new Connector(user,accescode,iban);
-        connectorDao.save(connector);
-        model.addAttribute("account", accountDao.findAccountByIban(iban));
+        Account account = cs.saveCoupling(body);
+        model.addAttribute("account", account);
         return "dashboard_client";
     }
 
     @PostMapping(value = "NewConnection")
     public String matchAccounts(@RequestParam int id, Model model){
-        model.addAttribute("connection", connectorDao.findById(id).get());
+        Connector connector = cs.getConnection(id);
+        model.addAttribute("connection", connector);
         return "connect_accounts";
     }
 
-    @PostMapping(value = "ConnectAccount/validate")
+    @PostMapping(value = "ConnectValidate")
     public String checkMatch(@RequestParam Map<String, Object> body, Model model){
-        Connector connector = connectorDao.findById((Integer.valueOf(body.get("idconnect").toString()))).get();
+        int id = Integer.valueOf(body.get("idconnect").toString());
+        Connector connector = cs.getConnection(id);
         if (connector.getSecurityCode().equals(body.get("accesscode").toString())){
-            Account account = accountDao.findAccountByIban(connector.getIban());
-            Client client = clientDao.findClientByUsername(connector.getUsername());
-            account.addClient(client);
-            client.addAccount(account);
-            clientDao.save(client);
-            accountDao.save(account);
-            connectorDao.delete(connector);
-            model.addAttribute("client", client);
-            model.addAttribute("account", new Account());
+            model = cs.processCoupling(connector, model);
             return "client_view";
         }
         else {
+            model.addAttribute("connection",connector);
             model.addAttribute("wrong", "accescode is niet juist");
             return "connect_accounts";
         }

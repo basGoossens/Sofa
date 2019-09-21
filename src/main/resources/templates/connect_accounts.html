@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <div th:insert="/general :: headerfiles"/>
     <title>Koppel Rekeninghouder</title>
 </head>
 <body>
+<div th:insert="/general :: header"/>
 <div th:if="${account}">
 <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${account.iban}">rekening</span></h1>
-<form action="#" th:action="@{ConnectAccount/form}" th:object="${account}" method="post">
+<form action="#" th:action="@{ConnectForm}" th:object="${account}" method="post">
 <table>
     <tr>
         <th>gebruikersnaam</th>
         <th>beveiligingscode</th>
     </tr>
     <tr>
-       <td><input type="text" value="gebruikersnaam" name="newuser"></td>
-        <td><input type="text" value="beveiligingscode" name="accesscode"></td>
+       <td><input type="text" placeholder="voer gebruikersnaam in" name="newuser"></td>
+        <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode"></td>
         <input type="hidden" th:value="${account.iban}" name="bankaccount">
     </tr>
 </table>
@@ -24,16 +25,20 @@
 </div>
 <div th:if="${connection}">
     <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${connection.iban}">rekening</span></h1>
-    <form action="#" th:action="@{ConnectAccount/validate}" method="post">
+    <form action="#" th:action="@{ConnectValidate}" method="post">
         <table>
             <tr>
-                <th>iban</th>
-                <th>beveiligingscode</th>
+                <td>iban</td>
+                <td>beveiligingscode</td>
             </tr>
             <tr>
                 <td><input type="text" placeholder="iban" th:value="${connection.iban}" name="banknr"></td>
-                <td><input type="text" value="beveiligingscode" name="accesscode"></td>
+                <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode"></td>
                 <input type="hidden" th:value="${connection.id}" name="idconnect">
+            </tr>
+            <tr th:if="${wrong}">
+                <td></td>
+                <td th:text="${wrong}">foutmelding</td>
             </tr>
         </table>
         <input type="submit" value="Verzenden">
