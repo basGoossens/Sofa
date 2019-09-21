@@ -17,7 +17,6 @@
         <li><a href="index" class="link">Home</a></li>
         <li><a href="login" class="link">Login</a></li>
         <li><a href="new_account" class="link">Nieuwe Klant</a></li>
-        <li><a href="new_business" class="link">Nieuwe Zakelijke Klant</a></li>
         <li><a href="login_employee" class="link">Werknemers</a></li>
     </ul>
 </div>
@@ -37,6 +36,11 @@
     <div class="form-container">
 <form name="new_client" class="new_client" action="#" th:action="@{newAccountHandler}" th:object="${client}" method="post">
     <table>
+        <tr>
+            <td>Soort rekening</td>
+            <td><input type="radio" value="business" name="accounttype">Zakelijk
+            <input type="radio" value="private" name="accounttype" checked>Prive</td>
+        </tr>
         <tr>
             <td><div>Voornaam</div></td>
             <td><input type="text" th:field="*{firstName}" required
