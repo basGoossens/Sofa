@@ -12,9 +12,11 @@
 <div class="new-client-container">
     <div class="w3-container">
         <h1 style="text-align: left;">Geld overmaken</h1>
-            <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transactionForm}"
+        <div class="account-info-block" th:insert="/general :: account-info-block">
+        </div>
+        <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transactionForm}"
                   method="post">
-            <table class="transfer-table">
+            <table class="transfer-table" width="100%">
                 <tr>
                     <td>Achternaam:</td>
                     <td><input type="text" th:field="*{name}" required/></td>

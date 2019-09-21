@@ -40,7 +40,6 @@
     background-color: #96154070;
 }
 
-
 table {
     border: 2px solid #96154070;
     /*border-radius:10px;*/
@@ -51,6 +50,9 @@ table {
     border-spacing: 0;
 }
 
+table input {
+    width:100%;
+}
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
