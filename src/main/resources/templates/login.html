@@ -13,7 +13,6 @@
         <li><a href="index" class="link">Home</a></li>
         <li><a href="login" class="link">Login</a></li>
         <li><a href="new_account" class="link">Nieuwe klant</a></li>
-        <li><a href="new_business" class="link">Nieuwe Zakelijke Klant</a></li>
         <li><a href="login_employee" class="link">Werknemers</a></li>
     </ul>
 </div>
@@ -30,19 +29,22 @@
         <form class="new_client" action="#" th:action="@{loginClientHandler}" th:object="${client}" method="post">
             <table>
                 <tr>
-                    <td><input type="text" th:field="*{username}" placeholder="Gebruikersnaam" required
+                    <td>Gebruikersnaam</td>
+                    <td><input type="text" th:field="*{username}" required
                                oninvalid="this.setCustomValidity('Geef gebruikersnaam in')"
                                oninput="setCustomValidity('')"/>
 
 
                 </tr>
                 <tr>
-                    <td><input type="text" th:field="*{password}"placeholder="Wachtwoord" required
+                    <td>Wachtwoord</td>
+                    <td><input type="text" th:field="*{password}" required
                                oninvalid="this.setCustomValidity('Geef uw wachtwoord in')"
                                oninput="setCustomValidity('')"/>
 
                 </tr>
                 <tr>
+                    <td></td>
                     <td><input class="input-form" type="submit" value="Login"></td>
                 </tr>
             </table>
