@@ -13,7 +13,7 @@ import java.util.*;
 public class SSNFunctionality {
     private static final int LOW = 10000000;
     private static final int HIGH = 100000000;
-    private String bsn;
+
 
     public SSNFunctionality(){
     }
@@ -61,9 +61,5 @@ public class SSNFunctionality {
             ssnStack.push(bsn);
         }
         return ssnStack;
-    }
-
-    public String getBsn(){
-        return bsn;
     }
 }

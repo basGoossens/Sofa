@@ -66,6 +66,10 @@
                         <input type=hidden th:field="${account.id}"/>
                         <input type="submit" value="betaalopdracht"/>
                     </form>
+                <form action="#" th:action="@{ConnectAccount}" th:object="${account}" method="post">
+                    <input type="hidden" th:field="${account.id}" name="id" id="id"/>
+                    <input type="submit" value="Voeg rekeninghouder toe">
+                </form>
                 </div>
             </div>
         </div>
