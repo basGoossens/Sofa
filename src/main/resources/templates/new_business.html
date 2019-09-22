@@ -18,15 +18,25 @@
     </ul>
 </div>
 
+<div class="text-container">
+    <h1 style="text-align: left">Open een zakelijke rekening</h1>
+</div>
+
+        <div class="new-client-container">
+            <div class="form-container">
+        vul voor uw nieuwe zakelijke rekening de volgende gegevens in.
+            </div>
+        </div>
+
 <div class="new-client-container">
-    <div class="w3-container">
-        <h1 style="text-align: left">Open een zakelijke rekening</h1>
-        <p>vul in onderstaand formulier de benodigde gegevens in om een nieuwe zakelijke rekening te openen</p>
+    <div class="form-container">
         <form action="#" th:action="@{NewBusiness2}" th:object="${business}" method="post">
             <table class="new-business-account-table">
                 <tr>
                     <td>Naam bedrijf:</td>
-                    <td><input type="text" th:field="*{businessName}"></td>
+                    <td><input type="text" th:field="*{businessName}"required
+                               oninvalid="this.setCustomValidity('Geef uw bedrijfsnaam in')"
+                               oninput="setCustomValidity('')"></td>
                 </tr>
                 <tr>
                     <td>Sector:</td>
@@ -44,6 +54,14 @@
 
     </div>
 </div>
+
+<footer class="footer">
+    <div class="new-client-container">
+        <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
+            Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat Niehot </footer>
+</div>
+</div>
+
 
 </body>
 </html>

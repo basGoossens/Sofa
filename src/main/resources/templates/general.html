@@ -15,10 +15,8 @@
 
 <div class="nav" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
 
-    <ul style="position: absolute;">
-        <li style="align: left" onClick="javascript:history.go(-1)">Terug</li>
-    </ul>
     <ul>
+        <li style="align:left" onClick="javascript:history.go(-1)">Terug</li>
         <li><a href="index" class="link">Home</a></li>
         <li><a href="Uitloggen" class="link">Logout</a></li>
     </ul>
@@ -74,7 +72,15 @@
     </div>
 </div>
 
+<div th:fragment="footer" xmlns:th="http://www.w3.org/1999/xhtml">
 
+    <footer class="footer">
+        <div class="new-client-container">
+            <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
+                Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat Niehot </footer>
+</div>
+</div>
+</div>
 
 </body>
 </html>
