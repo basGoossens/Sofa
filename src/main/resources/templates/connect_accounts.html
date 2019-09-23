@@ -15,9 +15,13 @@
         <th>beveiligingscode</th>
     </tr>
     <tr>
-       <td><input type="text" placeholder="voer gebruikersnaam in" name="newuser"></td>
-        <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode"></td>
+       <td><input type="text" placeholder="voer gebruikersnaam in" name="newuser" required="required"></td>
+        <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode" required="required"></td>
         <input type="hidden" th:value="${account.iban}" name="bankaccount">
+    </tr>
+    <tr th:if="${wrong}">
+        <td></td>
+        <td th:text="${wrong}" style="color:red">foutmelding </td>
     </tr>
 </table>
     <input type="submit" value="Verzenden">
@@ -38,7 +42,7 @@
             </tr>
             <tr th:if="${wrong}">
                 <td></td>
-                <td th:text="${wrong}">foutmelding</td>
+                <td th:text="${wrong}" style="color:red">foutmelding</td>
             </tr>
         </table>
         <input type="submit" value="Verzenden">

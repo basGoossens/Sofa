@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Connector;
+import team2.sofa.sofa.model.dao.AccountDao;
+import team2.sofa.sofa.model.dao.ConnectorDao;
 import team2.sofa.sofa.service.ConnectingService;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -16,6 +19,10 @@ public class ConnectController {
 
     @Autowired
     ConnectingService cs;
+    @Autowired
+    AccountDao accountDao;
+    @Autowired
+    ConnectorDao connectorDao;
 
     /**
      * mapping vanuit clientdash board naar connect_accounts
@@ -41,9 +48,17 @@ public class ConnectController {
      */
     @PostMapping(value = "ConnectForm")
     public String connectHandeler(@RequestParam Map<String, Object> body, Model model) {
-        Account account = cs.saveCoupling(body);
-        model.addAttribute("account", account);
-        return "dashboard_client";
+        if (cs.checkUserName(body)) {
+            //check op eigen naam en op voorkomen van username in db
+            Account account = cs.saveCoupling(body);
+            model.addAttribute("account", account);
+            return "dashboard_client";
+        } else {
+            Account account = accountDao.findAccountByIban(body.get("bankaccount").toString());
+            model.addAttribute("account", account);
+            model.addAttribute("wrong", "Gebruikernaam is niet juist");
+        return "connect_accounts";
+        }
     }
 
     /**
@@ -72,14 +87,16 @@ public class ConnectController {
     @PostMapping(value = "ConnectValidate")
     public String checkMatch(@RequestParam Map<String, Object> body, Model model) {
         int id = Integer.valueOf(body.get("idconnect").toString());
-        Connector connector = cs.getConnection(id);
-        if (connector.getSecurityCode().equals(body.get("accesscode").toString())) {
-            model = cs.processCoupling(connector, model);
-            return "client_view";
-        } else {
-            model.addAttribute("connection", connector);
-            model.addAttribute("wrong", "accescode is niet juist");
-            return "connect_accounts";
+        List<Connector> connectors = connectorDao.findAllById(id);
+        for (Connector c: connectors) {
+            if (c.getSecurityCode().equals(body.get("accesscode").toString())) {
+                model = cs.processCoupling(c, model);
+                return "client_view";
+            }
         }
+        model.addAttribute("connection", connectors.get(0));
+        model.addAttribute("wrong", "accescode is niet juist");
+        return "connect_accounts";
     }
+
 }
