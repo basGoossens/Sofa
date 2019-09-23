@@ -7,7 +7,7 @@
 <body>
 
     <div th:insert="/general :: header"/>
-<h1>Hallo, <span th:text="${client.firstName}"/></h1>
+<h1>Hallo, <span th:text="${client.getFullNameUser()}"/></h1>
 
 <div class="text-container">
 <h2>Persoonlijke gegevens wijzigen</h2>
@@ -16,93 +16,38 @@
 <div class="new-client-container">
     <div class="form-container">
     <form name="Persoonlijke pagina - Client" action="#" th:action="@{verwerkUpdate}" method="post">
-    <input type="hidden" th:value="${updateClient.id}" id="id"/>
+    <input type="hidden" th:value="${client.id}" name="id"/>
     <table>
-<!--        <div th:unless="${#lists.isEmpty(errorList)}">-->
-<!--            <span th:each="error : ${errorList}">-->
-<!--                <span th:text="${error}" style="color: red"/>-->
-<!--            </span>-->
-<!--        </div>-->
         <tr>
             <td>Voornaam:</td>
-            <td><span th:text="${client.firstName}"/></td>
-            <td><input type="text" th:value="${updateClient.firstName}" name="firstName"/></td>
+            <td><input type="text" th:value="${client.firstName}" name="firstName" required/></td>
         </tr>
         <tr>
             <td>Tussenvoegsel:</td>
-            <td><span th:text="${client.prefix}"/></td>
-            <td><input type="text" th:value="${updateClient.prefix}" name="prefix"/></td>
+            <td><input type="text" th:value="${client.prefix}" name="prefix"/></td>
         </tr>
         <tr>
             <td>Achternaam:</td>
-            <td><span th:text="${client.lastName}"/></td>
-            <td><input type="text" th:value="${updateClient.lastName}" name="lastName"/></td>
-        </tr>
-        <tr>
-            <td>Straatnaam:</td>
-            <td><span th:text="${client.Address.street}"/></td>
-            <td><input type="text" th:value="${updateClient.Address.street}" name="street"/></td>
-
-        </tr>
-        <tr>
-            <td>Huisnummer:</td>
-            <td><span th:text="${client.Address.houseNumber}"/></td>
-            <td><input type="text" th:value="${updateClient.Address.houseNumber}" name="houseNumber"/></td>
-        </tr>
-        <tr>
-            <td>Postcode:</td>
-            <td><span th:text="${client.Address.zipCode}"/></td>
-            <td><input type="text" th:value="${updateClient.Address.zipCode}" name="zipCode"/></td>
-        </tr>
-        <tr>
-            <td>Stad:</td>
-            <td><span th:text="${client.Address.city}"/></td>
-            <td><input type="text" th:value="${updateClient.Address.city}" name="city"/></td>
-        </tr>
-        <tr>
-            <td>Burger service nummer:</td>
-            <td><span th:text="${client.ssn}"/></td>
-            <td><input type="text" th:value="${updateClient.ssn}" name="ssn"/></td>
+            <td><input type="text" th:value="${client.lastName}" name="lastName" required/></td>
         </tr>
         <tr>
             <td>Emailadres:</td>
-            <td><span th:text="${client.email}"/></td>
-            <td><input type="text" th:value="${updateClient.email}" name="email"/></td>
+            <td><input type="text" th:value="${client.email}" name="email"/></td>
         </tr>
         <tr>
             <td>Telefoonnummer:</td>
-            <td><span th:text="${client.telephoneNr}"/></td>
-            <td><input type="text" th:value="${updateClient.telephoneNr}" name="telephoneNr"/></td>
+            <td><input type="text" th:value="${client.telephoneNr}" name="telephoneNr"/></td>
         </tr>
-        <tr>
-            <td>Geboortedatum:</td>
-            <td><span th:text="${client.birthday}"/></td>
-            <td><input type="text" th:value="${updateClient.birthday}" name="birthday"/></td>
-        </tr>
-<!--        <tr>-->
-<!--            <td>Geslacht:</td>-->
-<!--            <td><span th:text="${client.gender}"/></td>-->
-<!--            <td><input type="radio" name="changeGender" value="male" th:value="${gender}" id="gender"> Male-->
-<!--                <input type="radio" name="changeGender" value="female" th:value="${gender}" id="gender"> Female-->
-<!--                <input type="radio" name="changeGender" value="other" th:value="${gender}" id="gender"> Other-->
-<!--            </td>-->
-<!--            <td th:errors="*{gender}" style="color: red"></td>-->
-<!--        </tr>-->
         <tr>
             <td>Gebruikersnaam:</td>
-            <td><span th:text="${client.username}"/></td>
-            <td><input type="text" th:value="${updateClient.username}" name="username"/></td>
+            <td><input type="text" th:value="${client.username}" name="username" required/></td>
         </tr>
         <tr>
             <td>Wachtwoord</td>
-            <td><span th:text="${client.password}"></span></td>
-            <td><input type="text" th:value="${updateClient.password}" name="password"/></td>
-<!--            <td th:errors="*{password}" style="color: red"></td>-->
-        </tr>
-        <tr>
-            <td><input type="submit" value="verzenden"></td>
+            <td><input type="text" th:value="${client.password}" name="password" required/></td>
         </tr>
     </table>
+    <input type="submit" value="verzenden">
     </form>
 </div>
 </div>

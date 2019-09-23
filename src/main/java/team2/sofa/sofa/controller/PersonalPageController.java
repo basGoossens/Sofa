@@ -1,24 +1,16 @@
 package team2.sofa.sofa.controller;
 
-import com.sun.net.httpserver.Headers;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.dao.AddressDao;
 import team2.sofa.sofa.model.dao.ClientDao;
-import team2.sofa.sofa.service.NewAccountChecker;
 import team2.sofa.sofa.service.UpdateClient;
 
-import javax.validation.Valid;
-import java.awt.*;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -28,30 +20,56 @@ public class PersonalPageController {
     UpdateClient updateClient;
     @Autowired
     ClientDao clientDao;
-
-    private Client currentClient;
-    private List<String> errors;
+    @Autowired
+    AddressDao addressDao;
 
     @PostMapping(value = "updateHandler")
-    public String updateHandler(Client client, Model model) {
-        currentClient = clientDao.findClientById(client.getId());
-        model.addAttribute("updateClient", currentClient);
-        model.addAttribute("client", currentClient);
+    public String updateHandler(@RequestParam int id, Model model) {
+        Client client = clientDao.findClientById(id);
+        model.addAttribute("client", client);
         return "edit_client_personalpage";
     }
+    @PostMapping(value = "changeAddressForm")
+    public String changeAddress(@RequestParam int clientId, @RequestParam int addressId, Model model){
+        Address address = addressDao.findById(addressId).get();
+        model.addAttribute("address", address);
+        model.addAttribute("clientId", clientId);
+        return "change_address";
+    }
+    @PostMapping(value = "changeAddress")
+    public String processAddress(@RequestParam Map<String,String> input, @RequestParam int clientId, Model model){
+        Client client = clientDao.findClientById(clientId);
+        Address address = client.getAddress();
+        client = updateClient.changeAddress(client, address, input);
+        model.addAttribute("client", client);
+        model.addAttribute("account", new Account());
+        return "client_view";
+
+    }
+
 
     @PostMapping(value = "verwerkUpdate")//, headers = "Accept=application/json", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE
     //@ResponseBody
-    public String verwerkUpdate (@RequestParam Map<String, Object> body, Client client){
-        errors = updateClient.processUpdate(currentClient, body);
-        if (errors.isEmpty()) {
-            clientDao.save(currentClient);
-            return "client_view";
+    public String verwerkUpdate (@RequestParam Map<String, Object> input, Model model){
+        Client client = updateClient.findClient(Integer.valueOf(input.get("id").toString()));
+        if (updateClient.newUsername(input)){
+            client.setUsername(input.get("username").toString());
         }
-        else {
-            //todo show errorlist
-            return "edit_client_personalpage";
-        }
+        client = updateClient.processChanges(client, input);
+        model.addAttribute("client", client);
+        model.addAttribute("account", new Account());
+        return "client_view";
+
+
+//        errors = updateClient.processUpdate(currentClient, body);
+//        if (errors.isEmpty()) {
+//            clientDao.save(currentClient);
+//            return "client_view";
+//        }
+//        else {
+//            //todo show errorlist
+//            return "edit_client_personalpage";
+//        }
     }
 
 }

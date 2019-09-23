@@ -15,11 +15,7 @@
         <br><br>
         <div th:unless="${#lists.isEmpty(client.accounts)}">
             <h8>Particuliere rekeningen</h8>
-            <form action="#" th:action="@{updateHandler}" th:object="${client}" method="post">
-                <p>Uw persoonlijke pagina</p>
-                <input type="hidden" th:field="${client.id}">
-                <input type="submit" value="gegevens beheren">
-            </form>
+
             <table>
                 <div class="table">
                 <tr class="form-header">
@@ -77,6 +73,16 @@
                         th:text="${privateAccount.iban}">Wireframe
                 </option>
             </select>
+        </form>
+        <form action="#" th:action="@{updateHandler}" th:object="${client}" method="post">
+            <p>Uw persoonlijke pagina</p>
+            <input type="hidden" th:field="${client.id}" name="id">
+            <input type="submit" value="gegevens beheren">
+        </form>
+        <form action="#" th:action="@{changeAddressForm}" method="post">
+            <input type="hidden" th:value="${client.id}" name="clientId">
+            <input type="hidden" th:value="${client.address.id}" name="addressId">
+            <input type="submit" value="Adresswijziging doorgeven"/>
         </form>
         <div th:if="${connect}">
         <form action="#" th:action="@{NewConnection}" method="post">
