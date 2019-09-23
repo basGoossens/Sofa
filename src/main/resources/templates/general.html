@@ -10,16 +10,19 @@
         <link rel="stylesheet" type="text/css" th:href="@{/css/loggedIn.css}">
     </th:block>
 
-    <script th:fragment="show-time-script">
+    <script th:fragment="date-time-script">
         function startTime() {
             var today = new Date();
+            var d = today.getDate();
+            var mo = today.getMonth();
+            var y = today.getFullYear();
             var h = today.getHours();
             var m = today.getMinutes();
             var s = today.getSeconds();
             m = checkTime(m);
             s = checkTime(s);
-            document.getElementById('showTime').innerHTML =
-                h + ":" + m + ":" + s;
+            document.getElementById('date-time').innerHTML =
+                d + "-" + mo + "-" + y + " " + h + ":" + m + ":" + s;
             var t = setTimeout(startTime, 500);
         }
         function checkTime(i) {
@@ -57,7 +60,7 @@
                                 Overige rekeninghouders: [nog toe te voegen]<br>
                                 Saldo: &euro; <span th:text="${account.balance}"/><br>
                                 BIC:SOFANL2U<br>
-                                Datum & Tijd:  <span id= "showTime"/><br>
+                                Datum & Tijd:  <span id= "date-time"/><br>
                             </td>
                         </tr>
                     </table>
