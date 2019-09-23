@@ -3,6 +3,7 @@ package team2.sofa.sofa.model;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,11 @@ public class BusinessAccount extends Account {
         super();
         this.coupledPdqMachines = new ArrayList<>();
         this.business = null;
+        super.setBusinessAccount(true);
+    }
+
+    public BusinessAccount(String iban, BigDecimal balance) {
+        super(iban, balance);
         super.setBusinessAccount(true);
     }
 

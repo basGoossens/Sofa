@@ -26,26 +26,29 @@
         <form class="new_client" action="#" th:action="@{loginEmployeeHandler}" th:object="${loginEmpForm}" method="post">
             <table>
                 <tr>
-                    <td><input type="text" th:field="*{username1}" placeholder="Gebruikersnaam" required
+                    <td>Gebruikersnaam</td>
+                    <td><input type="text" th:field="*{username1}" required
                                oninvalid="this.setCustomValidity('Geef gebruikersnaam in')"
                                oninput="setCustomValidity('')"/>
                     </tr>
                 <tr>
-                    <td><input type="text" th:field="*{password1}" placeholder="Wachtwoord" required
+                    <td>Wachtwoord</td>
+                    <td><input type="text" th:field="*{password1}" required
                                oninvalid="this.setCustomValidity('Geef uw wachtwoord in')"
                                oninput="setCustomValidity('')"/>
                 </tr>
                 <tr>
+                    <td></td>
                     <td><input class="input-form" type="submit" value="Login"></td>
                 </tr>
             </table>
         </form>
-    </div>
-    <div class="text-container">Ik ben een klant. Klik <a href="login">hier </a> om naar de inlog pagina voor klanten te gaan.</p>
-    </div>
 </div>
-<footer class="footer">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
-    Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle , Rene van der Stok  Aat Niehot </footer>
-
+<footer class="footer">
+    <div class="new-client-container">
+        <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
+            Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat Niehot </footer>
+</div>
+</div>
 </body>
 </html>

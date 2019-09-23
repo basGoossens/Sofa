@@ -5,13 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import team2.sofa.sofa.model.*;
-import team2.sofa.sofa.model.dao.AccountDao;
-import team2.sofa.sofa.model.dao.AddressDao;
-import team2.sofa.sofa.model.dao.ClientDao;
+import team2.sofa.sofa.model.dao.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NewAccountChecker {
@@ -25,6 +24,12 @@ public class NewAccountChecker {
     @Autowired
     AccountDao accountDao;
 
+    @Autowired
+    BusinessDao businessDao;
+
+    @Autowired
+    BusinessAccountDao businessAccountDao;
+
     public NewAccountChecker() {
         super();
     }
@@ -35,15 +40,23 @@ public class NewAccountChecker {
      * @param client op basis van ingevulde velden in formulier nieuwe klant is client object gemaakt
      * @return een String die in de NewClientController wordt gebruikt als verwijzer naar de juiste handler/vervolgscherm
      */
-    public String processApplication(Client client, Model model) {
+    public String processApplication( Model model, Client client, Map map) {
         List <String> errorList = checkData(client);
         if (AddressExistsChecker(client)) {
             Address a = AddressExists(client.getAddress());
             client.setAddress(a); }
         if (errorList.isEmpty()) {
-            makeNewAccount(client);
+            if (accountTypeChecker(map)== false){
+            makeNewPrivateAccount(makeNewAccount(client));
             model.addAttribute("client", client);
-            return "login";
+            return "login";}
+            else {
+                makeNewAccount(client);
+                Business business = new Business();
+                business.setOwner(client);
+                model.addAttribute("business", business);
+                return "new_business";
+            }
         } else {
             model.addAttribute("errorList", errorList);
             for (int i = 0; i < errorList.size() ; i++) {
@@ -52,6 +65,7 @@ public class NewAccountChecker {
             return "new_account";
         }
     }
+
 
     /**
      * checkt inhoudelijk de data die is meegegeven in formulier
@@ -83,16 +97,34 @@ public class NewAccountChecker {
      *
      * @param client
      */
-    private void makeNewAccount(Client client) {
+    private Client makeNewAccount(Client client) {
         addressDao.save(client.getAddress());
         clientDao.save(client);
         Client savedClient = clientDao.findClientByUsername(client.getUsername());
+        return savedClient;
+    }
+
+    private void makeNewPrivateAccount(Client client) {
         IBANGenerator newIBAN = new IBANGenerator();
         Account newAccount = new PrivateAccount(newIBAN.getIBAN(), new BigDecimal(0));
-        newAccount.addClient(savedClient);
-        savedClient.addAccount(newAccount);
-        clientDao.save(savedClient);
+        newAccount.addClient(client);
+        client.addAccount(newAccount);
+        clientDao.save(client);
         accountDao.save(newAccount);
+    }
+
+    public String makeNewBusinessAccount(Business business, Client client) {
+        businessDao.save(business);
+        IBANGenerator newIBAN = new IBANGenerator();
+        String tempIBAN= newIBAN.ibanGenerator();
+        BusinessAccount newBusinessAccount = new BusinessAccount(tempIBAN, new BigDecimal(0));
+        newBusinessAccount.setBusiness(business);
+        newBusinessAccount.addClient(business.getOwner());
+        Client tempClient = clientDao.findClientById(business.getOwner().getId());
+        client.addAccount(newBusinessAccount);
+        clientDao.save(tempClient);
+        businessAccountDao.save(newBusinessAccount);
+        return "login";
     }
 
     /**
@@ -148,5 +180,11 @@ public class NewAccountChecker {
         Address tempAddress;
         tempAddress = addressDao.findAddressByZipCodeAndHouseNumber(newAddress.getZipCode(), newAddress.getHouseNumber());
         return tempAddress;
+    }
+
+    public boolean accountTypeChecker(Map <String,String> map) {
+        if (map.get("accounttype").toString().equals("business")){
+        return true;}
+        else {return false;}
     }
 }

@@ -8,17 +8,16 @@
 
 <div th:insert="/general :: header"/>
 
-<h1 style="text-align:left">Hallo, <span th:text="${client.firstName}"/></h1>
-
-<div class="grid-container">
-    <div class="accounttables">
+<h1>Hallo, <span th:text="${client.firstName}"/></h1>
+<div class="text-container">
+    <div class="w3-container">
         <h7>Overzicht rekeningen</h7>
         <br><br>
         <div th:unless="${#lists.isEmpty(client.accounts)}">
-            <!--    <div th:each="Account : ${client.accounts}" th:unless="#bools.client.accounts.Or(Account.isBusinessAccount)">-->
             <h8>Particuliere rekeningen</h8>
             <table>
-                <tr>
+                <div class="table">
+                <tr class="form-header">
                     <th>Rekeningnummer</th>
                     <th>Saldo</th>
 
@@ -29,6 +28,7 @@
                         <td><span th:text="${Account.balance}"/></td>
                     </div>
                 </tr>
+                </div>
             </table>
             <br>
 
@@ -38,14 +38,14 @@
             <input type="submit" value="Open nieuwe particuliere rekening"/>
         </form>
         <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="id" th:value="${client.id}">
+            <input type="hidden" name="id" id="idbusiness" th:value="${client.id}">
             <input type="submit" value="Open nieuwe zakelijke rekening"/>
         </form>
         <br>
         <div th:unless="${#lists.isEmpty(client.accounts)}">
             <h8>Zakelijke rekeningen</h8>
             <table>
-                <tr>
+                <tr class="form-header">
                     <th>rekeningnummer</th>
                     <th>saldo</th>
                 </tr>
@@ -60,6 +60,7 @@
             <br>
         </div>
     </div>
+        <div class="w3-container">
 
     <div class="selectaccount">
         <h8>Selecteer een rekening</h8>
@@ -72,11 +73,19 @@
                 </option>
             </select>
         </form>
+        <div th:if="${connect}">
+        <form action="#" th:action="@{NewConnection}" method="post">
+            <input type="hidden" th:value="${connect.id}" name="id">
+            <input type="submit" value="Koppel een nieuwe rekening">
+        </form>
+        </div>
+    </div>
+
     </div>
 
 
+
 </div>
-<br>
 
 
 </body>

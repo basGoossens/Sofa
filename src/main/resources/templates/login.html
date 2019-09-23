@@ -29,19 +29,22 @@
         <form class="new_client" action="#" th:action="@{loginClientHandler}" th:object="${client}" method="post">
             <table>
                 <tr>
-                    <td><input type="text" th:field="*{username}" placeholder="Gebruikersnaam" required
+                    <td>Gebruikersnaam</td>
+                    <td><input type="text" th:field="*{username}" required
                                oninvalid="this.setCustomValidity('Geef gebruikersnaam in')"
                                oninput="setCustomValidity('')"/>
 
 
                 </tr>
                 <tr>
-                    <td><input type="text" th:field="*{password}"placeholder="Wachtwoord" required
+                    <td>Wachtwoord</td>
+                    <td><input type="text" th:field="*{password}" required
                                oninvalid="this.setCustomValidity('Geef uw wachtwoord in')"
                                oninput="setCustomValidity('')"/>
 
                 </tr>
                 <tr>
+                    <td></td>
                     <td><input class="input-form" type="submit" value="Login"></td>
                 </tr>
             </table>
@@ -49,8 +52,12 @@
     </div>
 </div>
 
-<footer class="footer">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
-    Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle , Rene van der Stok  Aat Niehot </footer>
-
+<footer class="footer">
+    <div class="new-client-container">
+        <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
+            Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat Niehot
+</div>
+</div>
+</footer>
 </body>
 </html>

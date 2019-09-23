@@ -42,6 +42,7 @@ public class    FundTransfer {
         Account a = accountDao.findAccountById(id);
         t.setDebetAccount(a.getIban());
         model.addAttribute("transactionForm", t);
+        model.addAttribute("account", a);
         return "money_transfer";
     }
 

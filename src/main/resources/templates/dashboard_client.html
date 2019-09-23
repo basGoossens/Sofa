@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <div th:insert="/general :: headerfiles"/>
+    <div th:insert="/general :: date-time-script"/>
     <title>Dashboard Client</title>
 </head>
-<body>
+<body onload="startTime()">
 
 <div th:insert="/general :: header"/>
 
 <div th:insert="/general :: account-overview"/>
-
 
 
 </body>

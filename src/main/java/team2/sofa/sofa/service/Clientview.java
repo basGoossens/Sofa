@@ -74,6 +74,7 @@ public class Clientview {
     public Client getClient(int id){
         return clientDao.findClientById(id);
     }
+
     public Account procesNewBusinessAccount(Business business){
         IBANGenerator ibanGenerator = new IBANGenerator();
         String iban = ibanGenerator.ibanGenerator();

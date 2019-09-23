@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import team2.sofa.sofa.model.Account;
+import team2.sofa.sofa.model.Connector;
+import team2.sofa.sofa.model.dao.AccountDao;
+import team2.sofa.sofa.model.dao.ConnectorDao;
 import team2.sofa.sofa.service.FundTransfer;
 import team2.sofa.sofa.service.Login;
+
+import java.util.Map;
 
 @Controller
 public class DashboardClientController {
@@ -17,11 +22,10 @@ public class DashboardClientController {
     FundTransfer fundTransfer;
     @Autowired
     Login login;
-
-    @GetMapping(value = "TransferHandler")
-    public String transfer(@RequestParam(name = "id") int id, Model model) {
-        return fundTransfer.readyTransaction(id, model);
-    }
+    @Autowired
+    AccountDao accountDao;
+    @Autowired
+    ConnectorDao connectorDao;
 
     @PostMapping(value = "TransferHandler")
     public String transfer(Account account, Model model) {

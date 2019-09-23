@@ -2,9 +2,10 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <div th:insert="/general :: headerfiles"/>
+    <div th:insert="/general :: date-time-script"/>
     <title>Dashboard Employee</title>
 </head>
-<body>
+<body onload="startTime()">
 <div th:insert="/general :: header"/>
 
 <div th:fragment="account-overview">
@@ -13,18 +14,7 @@
 
             <div class="transactions-table">
                 <h2>Rekeningoverzicht</h2>
-                <div class="account-info-block" th:fragment="account-info-block">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td>
-                                Rekening<br>
-                                IBAN: <span th:text="${account.iban}"/><br>
-                                Saldo: &euro; <span th:text="${account.balance}"/><br>
-                                BIC:SOFANL2U<br>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <div class th:insert="/general :: account-info-block"/>
                 <table style="width: 100%; padding: 60%;">
                     <tr>
                         <td>Datum</td>
@@ -44,11 +34,10 @@
                     </div>
                 </table>
                 <br>
-
+            </div>
             </div>
         </div>
     </div>
-</div>
 
 </body>
 </html>

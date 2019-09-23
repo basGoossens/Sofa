@@ -26,6 +26,11 @@ h7 {
     color: black;
 }
 
+footer {
+    background-color: #961540;
+    color: #d5dfe5;
+}
+
 .nav {
   background-color: #961540;
   color: #d5dfe5;
@@ -154,13 +159,10 @@ h7 {
 
 .text-container {
   max-width: 1000px;
-  max-width: 1000px;
   position: relative;
   margin: auto;
   text-align: center
 }
-
-
 
 @media screen and (min-width: 700px) {
     .nav ul {
@@ -175,7 +177,7 @@ h7 {
     }
 
     .text {
-        color: #d5dfe5;
+
         font-size: 36px;
         padding: 8px 12px;
         position: absolute;

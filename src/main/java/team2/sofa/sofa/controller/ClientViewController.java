@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.BusinessDao;
@@ -53,5 +54,6 @@ public class ClientViewController {
         model.addAttribute("account", a);
         return "client_view";
     }
+
 
 }

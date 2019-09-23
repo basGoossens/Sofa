@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
+import team2.sofa.sofa.model.dao.ConnectorDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 
 import java.sql.ResultSet;
@@ -29,6 +30,8 @@ public class Login {
     TopTenMostActiveClient topTenMostActiveClient;
     @Autowired
     SectorAnalyzer sectorAnalyzer;
+    @Autowired
+    ConnectorDao connectorDao;
 
 
     public Login() {
@@ -45,6 +48,9 @@ public class Login {
 
     public String clientLogin(Client client, Model model) {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
+        if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())){
+            model.addAttribute("connect", connectorDao.findConnectorByUsername(loggedInClient.getUsername()));
+        }
         model.addAttribute("client", loggedInClient);
         Account account = new Account();
         model.addAttribute("account", account);

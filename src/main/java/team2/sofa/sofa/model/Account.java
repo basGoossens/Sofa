@@ -125,4 +125,13 @@ public class Account {
     public boolean getIsBusinessAccount(){
         return isBusinessAccount;
     }
+
+    public String getTenaamAccount(){
+        StringBuilder tenaam = new StringBuilder();
+        for (int i = 0; i < owners.size(); i++) {
+            tenaam.append(owners.get(i).getTenaamUser());
+            if (i + 1 < owners.size()) tenaam.append(" / ");
+        }
+        return tenaam.toString();
+    }
 }

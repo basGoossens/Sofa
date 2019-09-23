@@ -1,7 +1,6 @@
 /* grid layout */
 .grid-container {
     display: grid;
-    grid-gap: 50px;
     grid-template-columns: auto auto auto;
 }
 
@@ -36,23 +35,30 @@
     margin-right: auto;
 }
 
-.transfer-table, new-business-account-table tr:nth-child(even) {
+.transfer-table, new-business-account-table  {
     background-color: #96154070;
 }
 
-
 table {
-    border: 2px solid #96154070;
-    /*border-radius:10px;*/
     border-collapse: collapse;
-    text-align: left;
     background-color: #96154070;
     color: black;
     border-spacing: 0;
 }
 
+table input {
+    width:100%;
+}
 
-tr:nth-child(even) {
+.form-header {
+    background-color: #96154070;
+}
+
+.table {
+    alignment: left;
+}
+
+tr {
     background-color: #f2f2f2;
 }
 
@@ -96,4 +102,6 @@ body {
         max-width: 700px;
 
     }
+
+}
 
