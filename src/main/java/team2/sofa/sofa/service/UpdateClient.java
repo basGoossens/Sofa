@@ -82,7 +82,7 @@ public class UpdateClient {
 
     public void checkDeleteAddress (Address adres){
         Address currentAddress = addressDao.findAddressByZipCodeAndHouseNumber(adres.getZipCode(), adres.getHouseNumber());
-        List<Client> allOccupants = clientDao.findAllByAddress_Id(currentAddress.getId());
+        List<Client> allOccupants = clientDao.findClientsByAddressId(currentAddress.getId());
         if (allOccupants.size() < 2) addressDao.delete(adres);
     }
 

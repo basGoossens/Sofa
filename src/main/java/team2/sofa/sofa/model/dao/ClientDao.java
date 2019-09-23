@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ClientDao extends CrudRepository<Client, Integer> {
 
+    List<Client> findClientsByAddressId(int id);
     Client findClientByUsername(String username);
     Client findClientBySsn(String ssn);
 

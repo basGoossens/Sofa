@@ -35,6 +35,7 @@ public class PersonalPageController {
     @PostMapping(value = "updateHandler")
     public String updateHandler(Client client, Model model) {
         currentClient = clientDao.findClientById(client.getId());
+        model.addAttribute("updateClient", currentClient);
         model.addAttribute("client", currentClient);
         return "edit_client_personalpage";
     }
