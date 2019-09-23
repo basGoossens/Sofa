@@ -76,6 +76,9 @@ public class Login {
             model.addAttribute("tenHighestBalance", topTenHighest);
             return "employee_view_particulieren";
 
+        } if (currentEmployee.getRole().equals(EmployeeRole.ACCOUNTMANAGER)){
+            return "account_manager_view";
+
         } else {
             List<Client> topTenMostActive;
             List<BusinessAccount> topTenHighest;

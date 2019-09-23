@@ -12,6 +12,7 @@ public class pdq {
     @GeneratedValue
     private int id;
     private String pdqMachineName;
+    private int uniqueNumber;
     @ManyToOne
     private Account coupledAccount;
 
@@ -48,5 +49,13 @@ public class pdq {
 
     public void setCoupledAccount(Account coupledAccount) {
         this.coupledAccount = coupledAccount;
+    }
+
+    public int getUniqueNumber() {
+        return uniqueNumber;
+    }
+
+    public void setUniqueNumber(int uniqueNumber) {
+        this.uniqueNumber = uniqueNumber;
     }
 }
