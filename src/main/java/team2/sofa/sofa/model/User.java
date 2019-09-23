@@ -131,7 +131,7 @@ public abstract class User {
 
     public abstract void setPassword(String s);
 
-    public String getTenaamstelling(){
+    public String getTenaamUser(){
         StringBuilder tenaamstelling = new StringBuilder();
 
         //Add firstname initials to stringbuilder
@@ -143,7 +143,7 @@ public abstract class User {
         tenaamstelling.append(" ");
 
         //Add prefix to stringbuilder if applicable
-        if (!prefix.isEmpty()) tenaamstelling.append(getPrefix() + " ");
+        if (prefix != null && !prefix.isEmpty()) tenaamstelling.append(getPrefix() + " ");
 
         tenaamstelling.append(lastName);
 
