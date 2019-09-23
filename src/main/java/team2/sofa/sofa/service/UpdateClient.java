@@ -37,15 +37,9 @@ public class UpdateClient {
         return clientDao.findClientById(id);
     }
 
-    public boolean newUsername(Map<String,Object> body){
-        Client client = clientDao.findClientById(Integer.valueOf(body.get("id").toString()));
-        String username = client.getUsername();
-        String newUsername = body.get("username").toString();
-        if (!username.equals(newUsername) && clientDao.findClientByUsername(newUsername) == null){
-                return true;
-            }
-        return false;
-    }
+    public boolean usernameExists(String newUsername){
+        return clientDao.existsClientByUsername(newUsername);
+        }
 
     public Client processChanges(Client client, Map<String,Object> input){
         client.setFirstName(input.get("firstName").toString());

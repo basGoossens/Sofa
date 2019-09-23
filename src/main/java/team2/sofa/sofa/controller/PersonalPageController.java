@@ -48,28 +48,21 @@ public class PersonalPageController {
     }
 
 
-    @PostMapping(value = "verwerkUpdate")//, headers = "Accept=application/json", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE
-    //@ResponseBody
+    @PostMapping(value = "updateClient")
     public String verwerkUpdate (@RequestParam Map<String, Object> input, Model model){
         Client client = updateClient.findClient(Integer.valueOf(input.get("id").toString()));
-        if (updateClient.newUsername(input)){
-            client.setUsername(input.get("username").toString());
+        String newUsername = input.get("username").toString();
+        if (updateClient.usernameExists(newUsername)){
+            client = updateClient.processChanges(client, input);
+            model.addAttribute("username", "uw gebruikersnaam is niet gewijzigd");
+            model.addAttribute("client", client);
+            model.addAttribute("account", new Account());
+            return "client_view";
         }
-        client = updateClient.processChanges(client, input);
+        client.setUsername(input.get("username").toString());
         model.addAttribute("client", client);
         model.addAttribute("account", new Account());
         return "client_view";
-
-
-//        errors = updateClient.processUpdate(currentClient, body);
-//        if (errors.isEmpty()) {
-//            clientDao.save(currentClient);
-//            return "client_view";
-//        }
-//        else {
-//            //todo show errorlist
-//            return "edit_client_personalpage";
-//        }
     }
 
 }

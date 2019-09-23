@@ -9,6 +9,9 @@
 <div th:insert="/general :: header"/>
 
 <h1>Hallo, <span th:text="${client.firstName}"/></h1>
+<div th:if="${username}">
+    <p th:text="${username}"></p>
+</div>
 <div class="text-container">
     <div class="w3-container">
         <h7>Overzicht rekeningen</h7>
