@@ -3,6 +3,7 @@ package team2.sofa.sofa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
@@ -16,6 +17,7 @@ import java.util.List;
 
 
 @Service
+@SessionAttributes("clientID")
 public class Login {
 
     @Autowired
@@ -34,6 +36,7 @@ public class Login {
     ConnectorDao connectorDao;
 
 
+
     public Login() {
         super();
     }
@@ -48,10 +51,12 @@ public class Login {
 
     public String clientLogin(Client client, Model model) {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
+        //als er een connector is aangemaakt in de database die overeenkomt met de gebruikersnaam van de ingelogde klant
         if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())){
             model.addAttribute("connect", connectorDao.findConnectorByUsername(loggedInClient.getUsername()));
         }
         model.addAttribute("client", loggedInClient);
+        model.addAttribute("clientID", loggedInClient.getId());
         Account account = new Account();
         model.addAttribute("account", account);
         return "client_view";

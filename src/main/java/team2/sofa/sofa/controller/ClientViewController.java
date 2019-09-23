@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.BusinessDao;
@@ -16,6 +17,7 @@ import team2.sofa.sofa.service.IBANGenerator;
 import java.math.BigDecimal;
 
 @Controller
+@SessionAttributes("clientID")
 public class ClientViewController {
 
     @Autowired
