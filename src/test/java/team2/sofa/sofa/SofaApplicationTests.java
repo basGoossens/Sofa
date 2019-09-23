@@ -18,7 +18,7 @@ import java.util.List;
 public class SofaApplicationTests {
 
     @Test
-    public void tenaamstelling() {
+    public void testGetFullNameAccountOwner() {
 
         Client testClient = new Client(0, "Billy Bob", "van de", "Febo",
                 null, null, null, null, null, null);
@@ -31,7 +31,7 @@ public class SofaApplicationTests {
 
         testAccount.setOwners(owners);
         String expected = "BB VAN DE FEBO / P LANGKOUS";
-        String actual = testAccount.getTenaamAccount();
+        String actual = testAccount.getFullNameAccountOwner();
         Assert.assertEquals(expected, actual);
     }
 
