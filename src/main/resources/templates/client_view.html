@@ -15,6 +15,11 @@
         <br><br>
         <div th:unless="${#lists.isEmpty(client.accounts)}">
             <h8>Particuliere rekeningen</h8>
+            <form action="#" th:action="@{updateHandler}" th:object="${client}" method="post">
+                <p>Uw persoonlijke pagina</p>
+                <input type="hidden" th:field="${client.id}">
+                <input type="submit" value="gegevens beheren">
+            </form>
             <table>
                 <div class="table">
                 <tr class="form-header">
