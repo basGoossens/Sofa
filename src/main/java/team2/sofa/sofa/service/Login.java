@@ -17,7 +17,6 @@ import java.util.List;
 
 
 @Service
-@SessionAttributes("clientID")
 public class Login {
 
     @Autowired
