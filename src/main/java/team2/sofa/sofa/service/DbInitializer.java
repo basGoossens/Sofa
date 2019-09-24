@@ -10,6 +10,7 @@ import team2.sofa.sofa.model.dao.*;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -32,6 +33,10 @@ public class DbInitializer {
     EmployeeDao employeeDao;
     @Autowired
     BusinessDao businessDao;
+    @Autowired
+    TransactionDao transactionDao;
+    @Autowired
+    FundTransfer fundTransfer;
 
     private List<String[]> rawData;
     private Stack<String> ssnStack;
@@ -247,6 +252,24 @@ public class DbInitializer {
         account.addClient(client);
         clientDao.save(client);
         accountDao.save(account);
+    }
+    public void fillTransactions(){
+        long maxId = accountDao.count();
+        Random random = new Random();
+        for (int i = 0; i < maxId*4 ; i++) {
+            int credit = random.nextInt(Math.toIntExact(maxId))+1;
+            int debit = random.nextInt((int) maxId)+1;
+            while (debit == credit){
+                debit = random.nextInt((int) maxId)+1;
+            }
+            Account cr = accountDao.findAccountById(credit);
+            Account db = accountDao.findAccountById(debit);
+            Transaction t = new Transaction(new BigDecimal(2.5),"vulsel", LocalDate.now(),cr,db);
+            fundTransfer.storeTransaction(db,cr,t);
+        }
+
+
+
     }
 }
 
