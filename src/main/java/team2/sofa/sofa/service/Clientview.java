@@ -26,6 +26,8 @@ public class Clientview {
     ClientDao clientDao;
     @Autowired
     BusinessDao businessDao;
+    @Autowired
+    Login login;
 
     public Clientview() { super();
     }
@@ -60,7 +62,8 @@ public class Clientview {
         clientDao.save(c);
         accountDao.save(a);
         model.addAttribute("client", c);
-        model.addAttribute("account", a);
+        model.addAttribute("nrBusiness", login.countBusinessAccounts(c));
+        model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
         return "client_view";
     }
 

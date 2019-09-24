@@ -12,6 +12,7 @@ import team2.sofa.sofa.model.dao.BusinessDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.service.Clientview;
 import team2.sofa.sofa.service.IBANGenerator;
+import team2.sofa.sofa.service.Login;
 
 import java.math.BigDecimal;
 
@@ -21,11 +22,7 @@ public class ClientViewController {
     @Autowired
     Clientview clientview;
     @Autowired
-    ClientDao clientDao;
-    @Autowired
-    BusinessDao businessDao;
-    @Autowired
-    AccountDao accountDao;
+    Login login;
 
     @PostMapping(value = "AccountListHandler")
     public String clientView(Account account, Model model) {
@@ -48,10 +45,11 @@ public class ClientViewController {
 
     @PostMapping(value = "NewBusiness")
     public String newBAccount(Business business, Model model){
-        Account a = clientview.procesNewBusinessAccount(business);
+        clientview.procesNewBusinessAccount(business);
         Client c = business.getOwner();
         model.addAttribute("client", c);
-        model.addAttribute("account", a);
+        model.addAttribute("nrBusiness", login.countBusinessAccounts(c));
+        model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
         return "client_view";
     }
 
