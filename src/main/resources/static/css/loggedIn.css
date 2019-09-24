@@ -4,7 +4,7 @@
     grid-template-columns: auto auto auto;
 }
 
-.grid-container > div {
+.grid-container {
     margin-left: auto;
     margin-right: auto;
 }
@@ -35,31 +35,26 @@
     margin-right: auto;
 }
 
-.transfer-table, new-business-account-table  {
+table tr:nth-child(even) {
     background-color: #96154070;
 }
 
+table tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
 table {
+    border: 2px solid #96154070;
     border-collapse: collapse;
+    text-align: left;
     background-color: #96154070;
     color: black;
     border-spacing: 0;
+
 }
 
 table input {
     width:100%;
-}
-
-.form-header {
-    background-color: #96154070;
-}
-
-.table {
-    alignment: left;
-}
-
-tr {
-    background-color: #f2f2f2;
 }
 
 
