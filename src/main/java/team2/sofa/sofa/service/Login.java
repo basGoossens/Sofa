@@ -48,14 +48,15 @@ public class Login {
         return "client_view";
     }
 
+    //model.addAttribute uitgecomment
     public String clientLogin(Client client, Model model) {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
         //als er een connector is aangemaakt in de database die overeenkomt met de gebruikersnaam van de ingelogde klant
         if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())){
             model.addAttribute("connect", connectorDao.findConnectorByUsername(loggedInClient.getUsername()));
         }
-        model.addAttribute("client", loggedInClient);
-        model.addAttribute("clientID", loggedInClient.getId());
+//        model.addAttribute("client", loggedInClient);
+        model.addAttribute("sessionclient", loggedInClient);
         Account account = new Account();
         model.addAttribute("account", account);
         return "client_view";

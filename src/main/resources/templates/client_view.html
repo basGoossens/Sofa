@@ -8,12 +8,12 @@
 
 <div th:insert="/general :: header"/>
 
-<h1>Hallo, <span th:text="${client.firstName}"/></h1>
+<h1>Hallo, <span th:text="${sessionclient.firstName}"/></h1>
 <div class="text-container">
     <div class="w3-container">
         <h7>Overzicht rekeningen</h7>
         <br><br>
-        <div th:unless="${#lists.isEmpty(client.accounts)}">
+        <div th:unless="${#lists.isEmpty(sessionclient.accounts)}">
             <h8>Particuliere rekeningen</h8>
             <table>
                 <div class="table">
@@ -22,7 +22,7 @@
                     <th>Saldo</th>
 
                 </tr>
-                <tr th:each="Account : ${client.accounts} ">
+                <tr th:each="Account : ${sessionclient.accounts} ">
                     <div th:unless="${Account.isBusinessAccount}">
                         <td><span th:text="${Account.iban}"/></td>
                         <td><span th:text="${Account.balance}"/></td>
@@ -33,23 +33,23 @@
             <br>
 
         </div>
-        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="id" th:value="${client.id}">
+        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${sessionclient}" method="post">
+            <input type="hidden" name="id" id="id" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe particuliere rekening"/>
         </form>
-        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="idbusiness" th:value="${client.id}">
+        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${sessionclient}" method="post">
+            <input type="hidden" name="id" id="idbusiness" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe zakelijke rekening"/>
         </form>
         <br>
-        <div th:unless="${#lists.isEmpty(client.accounts)}">
+        <div th:unless="${#lists.isEmpty(sessionclient.accounts)}">
             <h8>Zakelijke rekeningen</h8>
             <table>
                 <tr class="form-header">
                     <th>rekeningnummer</th>
                     <th>saldo</th>
                 </tr>
-                <tr th:each="Account : ${client.accounts}">
+                <tr th:each="Account : ${sessionclient.accounts}">
                     <div th:if="${Account.isBusinessAccount}">
                         <td><span th:text="${Account.iban}"/></td>
                         <td><span th:text="${Account.balance}"/></td>
@@ -67,7 +67,7 @@
         <form action="#" th:action="@{AccountListHandler}" th:object="${account}" method="post">
             <input type="submit" value="Ga naar rekening">
             <select th:field="*{id}">
-                <option th:each="privateAccount : ${client.accounts}"
+                <option th:each="privateAccount : ${sessionclient.accounts}"
                         th:value="${privateAccount.id}"
                         th:text="${privateAccount.iban}">Wireframe
                 </option>

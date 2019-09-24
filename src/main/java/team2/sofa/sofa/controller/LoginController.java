@@ -15,7 +15,7 @@ import team2.sofa.sofa.service.PasswordValidator;
 import javax.validation.Valid;
 
 @Controller
-@SessionAttributes("clientID")
+@SessionAttributes("sessionclient")
 public class LoginController {
     @Autowired
     Login login;
@@ -27,6 +27,15 @@ public class LoginController {
         model.addAttribute("client", new Client());
         return "login";
     }
+
+
+    //logoutHandler toegevoegd
+    @GetMapping(value = "logout")
+    public String logoutHandler(Model model) {
+        model.addAttribute("clientID", "");
+        return "login";
+    }
+
 
     @GetMapping(value = "login_employee")
     public String goTologinEmployeeHandler(Model model) {

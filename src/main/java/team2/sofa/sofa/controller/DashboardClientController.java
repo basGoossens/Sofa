@@ -17,6 +17,7 @@ import team2.sofa.sofa.service.Login;
 import java.util.Map;
 
 @Controller
+@SessionAttributes("sessionclient")
 public class DashboardClientController {
 
     @Autowired
