@@ -131,12 +131,14 @@ public class Account {
         for (int i = 0; i < owners.size(); i++) {
             name.append(owners.get(i).getFullNameUser());
             if (i + 1 < owners.size()) name.append(" / ");
-        }
+            }
         return name.toString();
     }
 
     public String getFullNameAccountOwnersExceptFirst() {
         StringBuilder name = new StringBuilder();
+        if (getIsBusinessAccount()) name.append(owners.get(0).getFullNameUser() + " / ");
+
         for (int i = 1; i < owners.size(); i++) {
             name.append(owners.get(i).getFullNameUser());
             if (i + 1 < owners.size()) name.append(" / ");
@@ -148,5 +150,7 @@ public class Account {
     }
 
     public String getNameOwner() {
-    return owners.get(0).getFullNameUser();}
+        if (getIsBusinessAccount()) return ((BusinessAccount) this).getBusiness().getBusinessName();
+        return owners.get(0).getFullNameUser();
+    }
 }
