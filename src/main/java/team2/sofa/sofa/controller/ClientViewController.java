@@ -18,7 +18,7 @@ import team2.sofa.sofa.service.Login;
 import java.math.BigDecimal;
 
 @Controller
-@SessionAttributes({"sessionclient", "connect"})
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate"})
 public class ClientViewController {
 
     @Autowired

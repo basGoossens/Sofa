@@ -16,7 +16,7 @@ import team2.sofa.sofa.service.PasswordValidator;
 import javax.validation.Valid;
 
 @Controller
-@SessionAttributes({"sessionclient", "connect"})
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate"})
 public class LoginController {
     @Autowired
     Login login;
@@ -56,8 +56,10 @@ public class LoginController {
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
             Client loggedInClient = login.clientLogin(client, model);
-            login.checkAndLoadConnector(loggedInClient, model);
             model.addAttribute("sessionclient", loggedInClient);
+            login.checkAndLoadConnector(loggedInClient, model);
+            model.addAttribute("nrBusiness", login.countPrivateAccounts(loggedInClient));
+            model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
             Hibernate.initialize(loggedInClient.getAccounts());
             return "redirect:/clientLoginSuccess";
     } else {

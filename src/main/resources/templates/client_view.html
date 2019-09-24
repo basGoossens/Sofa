@@ -39,14 +39,6 @@
             <br>
 
         </div>
-        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="id" th:value="${sessionclient.id}">
-            <input type="submit" value="Open nieuwe particuliere rekening"/>
-        </form>
-        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="idbusiness" th:value="${sessionclient.id}">
-            <input type="submit" value="Open nieuwe zakelijke rekening"/>
-        </form>
         <br>
         <h8>Zakelijke rekeningen</h8>
         <div th:unless="${nrBusiness} > 0">
@@ -86,22 +78,22 @@
             </select>
         </form>
         <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="id" th:value="${client.id}">
+            <input type="hidden" name="id" id="id" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe particuliere rekening"/>
         </form>
         <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="idbusiness" th:value="${client.id}">
+            <input type="hidden" name="id" id="idbusiness" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe zakelijke rekening"/>
         </form>
         <form action="#" th:action="@{updateHandler}" th:object="${client}" method="post">
             <p>Uw persoonlijke pagina</p>
-            <input type="hidden" th:field="${client.id}" name="id">
+            <input type="hidden" th:field="${sessionclient.id}" name="id">
             <input type="submit" value="gegevens beheren">
         </form>
         <form action="#" th:action="@{changeAddressForm}" method="post">
-            <input type="hidden" th:value="${client.id}" name="clientId">
-            <input type="hidden" th:value="${client.address.id}" name="addressId">
-            <input type="submit" value="Adresswijziging doorgeven"/>
+            <input type="hidden" th:value="${sessionclient.id}" name="clientId">
+            <input type="hidden" th:value="${sessionclient.address.id}" name="addressId">
+            <input type="submit" value="Adreswijziging doorgeven"/>
         </form>
         <div th:if="${connect}">
         <form action="#" th:action="@{NewConnection}" method="post">
