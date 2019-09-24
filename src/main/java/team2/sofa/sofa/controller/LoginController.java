@@ -1,6 +1,7 @@
 package team2.sofa.sofa.controller;
 
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +60,16 @@ public class LoginController {
             return "login";
         }
     }
+
+
+    @GetMapping(value="clientLoginSuccess")
+    public String clientLoginSuccess(Model model) {
+        Account account = new Account();
+        model.addAttribute("account", account);
+        return "client_view";
+    }
+
+
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {

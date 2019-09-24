@@ -1,5 +1,6 @@
 package team2.sofa.sofa.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -57,10 +58,9 @@ public class Login {
         }
 //        model.addAttribute("client", loggedInClient);
         model.addAttribute("sessionclient", loggedInClient);
-        Account account = new Account();
-        model.addAttribute("account", account);
-        return "client_view";
-    }
+        Hibernate.initialize(loggedInClient.getAccounts());
+        return "redirect:/clientLoginSuccess";
+    
 
     static void splitPrivateAndBusiness(Client loggedInClient, Model model) {
         ArrayList<Account> listPrivateAccounts = new ArrayList<>();
