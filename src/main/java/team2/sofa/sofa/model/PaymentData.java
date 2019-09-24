@@ -1,11 +1,9 @@
-package team2.sofa.sofa.service;
-
-import org.springframework.stereotype.Service;
+package team2.sofa.sofa.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Service
+
 public class PaymentData {
     private BigDecimal amount;
     private String description;

@@ -116,7 +116,7 @@ public class FundTransfer {
      * @param account het debitAccount dat gebruikt is in het formulier money_transfer
      * @return
      */
-    private boolean checkBalance(BigDecimal amount, Account account) {
+    public boolean checkBalance(BigDecimal amount, Account account) {
         BigDecimal balance = account.getBalance();
         BigDecimal change = balance.subtract(amount);
         double check = change.doubleValue();
