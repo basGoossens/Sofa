@@ -1,8 +1,10 @@
 package team2.sofa.sofa.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
@@ -16,6 +18,7 @@ import java.util.List;
 
 
 @Service
+@SessionAttributes("connect")
 public class Login {
 
     @Autowired
@@ -34,6 +37,7 @@ public class Login {
     ConnectorDao connectorDao;
 
 
+
     public Login() {
         super();
     }
@@ -46,15 +50,15 @@ public class Login {
         return "client_view";
     }
 
-    public String clientLogin(Client client, Model model) {
+    public Client clientLogin(Client client, Model model) {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
-        if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())){
+        return loggedInClient;
+    }
+
+    public void checkAndLoadConnector(Client loggedInClient, Model model){
+        if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())) {
             model.addAttribute("connect", connectorDao.findConnectorByUsername(loggedInClient.getUsername()));
         }
-        model.addAttribute("client", loggedInClient);
-        model.addAttribute("nrBusiness", countBusinessAccounts(loggedInClient));
-        model.addAttribute("nrPrivate", countPrivateAccounts(loggedInClient));
-        return "client_view";
     }
 
     public int countPrivateAccounts(Client client){

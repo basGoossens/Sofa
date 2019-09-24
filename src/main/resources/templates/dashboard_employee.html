@@ -8,36 +8,17 @@
 <body onload="startTime()">
 <div th:insert="/general :: header"/>
 
-<div th:fragment="account-overview">
     <div class="new-client-container">
         <div class="w3-container">
 
             <div class="transactions-table">
                 <h2>Rekeningoverzicht</h2>
                 <div class th:insert="/general :: account-info-block"/>
-                <table style="width: 100%; padding: 60%;">
-                    <tr>
-                        <td>Datum</td>
-                        <td>Tegenrekening</td>
-                        <td>Omschrijving</td>
-                        <td>Bedrag</td>
-                    </tr>
-                    <div th:unless="${#lists.isEmpty(account.transactions)}">
-                        <tr th:each="transaction : ${account.transactions}">
-                            <td><span th:text="${transaction.date}"/></td>
-                            <td> <span th:text="${transaction.debitAccount.iban == account.iban} ? ${transaction.creditAccount.iban} : ${transaction.debitAccount.iban}"/> </td>
-                            <td> <span th:text="${transaction.description}"/>
-                            <td><span
-                                    th:text="${transaction.debitAccount.iban == account.iban} ? '- &euro; ' + ${transaction.amount} : '&euro; ' + ${transaction.amount}"/>
-                            </td>
-                        </tr>
-                    </div>
-                </table>
+                <div class th:insert="/general :: transactions-table"/>
                 <br>
             </div>
             </div>
         </div>
-    </div>
 
 </body>
 </html>

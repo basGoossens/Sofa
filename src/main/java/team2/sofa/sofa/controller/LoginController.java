@@ -1,15 +1,13 @@
 package team2.sofa.sofa.controller;
 
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.service.Login;
 import team2.sofa.sofa.service.PasswordValidator;
@@ -18,6 +16,7 @@ import team2.sofa.sofa.service.PasswordValidator;
 import javax.validation.Valid;
 
 @Controller
+@SessionAttributes({"sessionclient", "connect"})
 public class LoginController {
     @Autowired
     Login login;
@@ -29,6 +28,16 @@ public class LoginController {
         model.addAttribute("client", new Client());
         return "login";
     }
+
+
+    //logoutHandler toegevoegd
+    @GetMapping(value = "logout")
+    public String logoutHandler(Model model) {
+        model.addAttribute("sessionclient", "");
+        model.addAttribute("client", new Client());
+        return "login";
+    }
+
 
     @GetMapping(value = "login_employee")
     public String goTologinEmployeeHandler(Model model) {
@@ -46,12 +55,25 @@ public class LoginController {
     public String loginClientHandler(Client client, Model model) {
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
-            return login.clientLogin(client, model);
-        } else {
+            Client loggedInClient = login.clientLogin(client, model);
+            login.checkAndLoadConnector(loggedInClient, model);
+            model.addAttribute("sessionclient", loggedInClient);
+            Hibernate.initialize(loggedInClient.getAccounts());
+            return "redirect:/clientLoginSuccess";
+    } else {
             model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");
             return "login";
         }
     }
+
+    @GetMapping(value="clientLoginSuccess")
+    public String clientLoginSuccess(Model model) {
+        Account account = new Account();
+        model.addAttribute("account", account);
+        return "client_view";
+    }
+
+
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {

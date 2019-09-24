@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.BusinessDao;
@@ -17,12 +18,15 @@ import team2.sofa.sofa.service.Login;
 import java.math.BigDecimal;
 
 @Controller
+@SessionAttributes({"sessionclient", "connect"})
 public class ClientViewController {
 
     @Autowired
     Clientview clientview;
     @Autowired
     Login login;
+    @Autowired
+    ClientDao clientDao;
 
     @PostMapping(value = "AccountListHandler")
     public String clientView(Account account, Model model) {
@@ -30,13 +34,14 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "AddNewAccountHandler")
-    public String addNewAccount(Client client, Model model){
+    public String addNewAccount(@RequestParam int id, Model model){
+    Client client = clientDao.findClientById(id);
         return clientview.createNewPrivate(client, model);
     }
 
     @PostMapping(value = "AddNewBusinessAccountHandler")
-    public String addNewBusinessAccountHandler(Client client,Model model){
-        Client client2 = clientview.getClient(client.getId());
+    public String addNewBusinessAccountHandler(@RequestParam int id, Model model){
+        Client client2 = clientDao.findClientById(id);
         Business business = new Business();
         business.setOwner(client2);
         model.addAttribute("business", business);
@@ -47,7 +52,7 @@ public class ClientViewController {
     public String newBAccount(Business business, Model model){
         clientview.procesNewBusinessAccount(business);
         Client c = business.getOwner();
-        model.addAttribute("client", c);
+        model.addAttribute("sessionclient", c);
         model.addAttribute("nrBusiness", login.countBusinessAccounts(c));
         model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
         return "client_view";
