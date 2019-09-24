@@ -9,6 +9,7 @@ public interface ConnectorDao extends CrudRepository<Connector, Integer> {
 
     boolean existsConnectorByUsername(String username);
 
-    Connector findConnectorByUsername(String usernam);
+    Connector findConnectorByUsername(String username);
+
     List<Connector> findAllById(int id);
 }

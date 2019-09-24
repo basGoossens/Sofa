@@ -79,17 +79,22 @@ public class ConnectController {
 
     /**
      * nadat de toekomstig mede rekeninghouder het IBAN en juiste beveiligingscode heeft ingevoerd.
-     * wordt de ingelogde gebruiker gekoppeld als mede eigenaar van de rekening
+     * wordt de ingelogde gebruiker gekoppeld als mede eigenaar van de rekening.
      * @param body ingevoerde gegevens in het formulier
      * @param model
      * @return
      */
     @PostMapping(value = "ConnectValidate")
     public String checkMatch(@RequestParam Map<String, Object> body, Model model) {
+        //Onderstaande methode stopt alle instanties waarbij de username voorkomt in een list
+        //en checkt op IBAN en security code
         int id = Integer.valueOf(body.get("idconnect").toString());
         List<Connector> connectors = connectorDao.findAllById(id);
         for (Connector c: connectors) {
-            if (c.getSecurityCode().equals(body.get("accesscode").toString())) {
+            if (c.getSecurityCode().equals(body.get("accesscode").toString())
+                && c.getIban().equals(body.get("banknr").toString())) {
+
+                //call service method to update client, account en connector
                 model = cs.processCoupling(c, model);
                 return "client_view";
             }
