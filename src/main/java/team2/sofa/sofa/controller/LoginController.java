@@ -33,7 +33,8 @@ public class LoginController {
     //logoutHandler toegevoegd
     @GetMapping(value = "logout")
     public String logoutHandler(Model model) {
-        model.addAttribute("clientID", "");
+        model.addAttribute("sessionclient", "");
+        model.addAttribute("client", new Client());
         return "login";
     }
 
@@ -54,13 +55,16 @@ public class LoginController {
     public String loginClientHandler(Client client, Model model) {
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
-            return login.clientLogin(client, model);
-        } else {
+            Client loggedInClient = login.clientLogin(client, model);
+            login.checkAndLoadConnector(loggedInClient, model);
+            model.addAttribute("sessionclient", loggedInClient);
+            Hibernate.initialize(loggedInClient.getAccounts());
+            return "redirect:/clientLoginSuccess";
+    } else {
             model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");
             return "login";
         }
     }
-
 
     @GetMapping(value="clientLoginSuccess")
     public String clientLoginSuccess(Model model) {

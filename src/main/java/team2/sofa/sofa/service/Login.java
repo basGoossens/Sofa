@@ -49,18 +49,17 @@ public class Login {
         return "client_view";
     }
 
-    //model.addAttribute uitgecomment
-    public String clientLogin(Client client, Model model) {
+    public Client clientLogin(Client client, Model model) {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
-        //als er een connector is aangemaakt in de database die overeenkomt met de gebruikersnaam van de ingelogde klant
-        if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())){
+
+        return loggedInClient;
+    }
+
+    public void checkAndLoadConnector(Client loggedInClient, Model model){
+        if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())) {
             model.addAttribute("connect", connectorDao.findConnectorByUsername(loggedInClient.getUsername()));
         }
-//        model.addAttribute("client", loggedInClient);
-        model.addAttribute("sessionclient", loggedInClient);
-        Hibernate.initialize(loggedInClient.getAccounts());
-        return "redirect:/clientLoginSuccess";
-    
+    }
 
     static void splitPrivateAndBusiness(Client loggedInClient, Model model) {
         ArrayList<Account> listPrivateAccounts = new ArrayList<>();
