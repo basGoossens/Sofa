@@ -155,9 +155,22 @@ public class NewAccountChecker {
      * @param newClient
      * @return
      */
-    private boolean AddressExistsChecker(Client newClient) {
+    protected boolean AddressExistsChecker(Client newClient) {
         String Zip = newClient.getAddress().getZipCode();
         int number = newClient.getAddress().getHouseNumber();
+        boolean zipcheck = false;
+        boolean numbercheck = false;
+        if (addressDao.findAddressByZipCode(Zip) != null) {
+            zipcheck = addressDao.findAddressByZipCode(Zip).getZipCode().equals(Zip);
+        }
+        if (addressDao.findAddressByHouseNumber(number) != null) {
+            numbercheck = addressDao.findAddressByHouseNumber(number).getHouseNumber() == number;
+        }
+        return zipcheck && numbercheck;
+    }
+    protected boolean AddressExistsChecker(Address address) {
+        String Zip = address.getZipCode();
+        int number = address.getHouseNumber();
         boolean zipcheck = false;
         boolean numbercheck = false;
         if (addressDao.findAddressByZipCode(Zip) != null) {
@@ -176,7 +189,7 @@ public class NewAccountChecker {
      * @param newAddress adresgegevens zoals ingevuld op site zonder id.
      * @return Adress object inclusief id zoals reeds bekend in DB
      */
-    private Address AddressExists(Address newAddress) {
+    protected Address AddressExists(Address newAddress) {
         Address tempAddress;
         tempAddress = addressDao.findAddressByZipCodeAndHouseNumber(newAddress.getZipCode(), newAddress.getHouseNumber());
         return tempAddress;
