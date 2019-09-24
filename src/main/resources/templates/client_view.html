@@ -8,7 +8,7 @@
 
 <div th:insert="/general :: header"/>
 
-<h1>Hallo, <span th:text="${client.firstName}"/></h1>
+<h1>Hallo, <span th:text="${client.fullNameUser}"/></h1>
 <div th:if="${username}">
     <p th:text="${username}"></p>
 </div>
@@ -16,9 +16,11 @@
     <div class="w3-container">
         <h7>Overzicht rekeningen</h7>
         <br><br>
-        <div th:unless="${#lists.isEmpty(client.accounts)}">
-            <h8>Particuliere rekeningen</h8>
-
+        <h8>Particuliere rekeningen</h8>
+        <div th:unless="${nrPrivate} > 0">
+            <p>U heeft nog geen particuliere rekeningen bij ons</p>
+        </div>
+        <div th:if="${nrPrivate} > 0" ? >
             <table>
                 <div class="table">
                 <tr class="form-header">
@@ -37,17 +39,13 @@
             <br>
 
         </div>
-        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="id" th:value="${client.id}">
-            <input type="submit" value="Open nieuwe particuliere rekening"/>
-        </form>
-        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="idbusiness" th:value="${client.id}">
-            <input type="submit" value="Open nieuwe zakelijke rekening"/>
-        </form>
         <br>
-        <div th:unless="${#lists.isEmpty(client.accounts)}">
-            <h8>Zakelijke rekeningen</h8>
+        <h8>Zakelijke rekeningen</h8>
+        <div th:unless="${nrBusiness} > 0">
+        <p>U heeft nog geen zakelijke rekeningen bij ons</p>
+        </div>
+        <div th:if="${nrBusiness} > 0">
+
             <table>
                 <tr class="form-header">
                     <th>rekeningnummer</th>
@@ -68,14 +66,22 @@
 
     <div class="selectaccount">
         <h8>Selecteer een rekening</h8>
-        <form action="#" th:action="@{AccountListHandler}" th:object="${account}" method="post">
+        <form action="#" th:action="@{AccountListHandler}" method="post">
             <input type="submit" value="Ga naar rekening">
-            <select th:field="*{id}">
-                <option th:each="privateAccount : ${client.accounts}"
-                        th:value="${privateAccount.id}"
-                        th:text="${privateAccount.iban}">Wireframe
+            <select th:value="${id}" name="id">
+                <option th:each="account : ${client.accounts}"
+                        th:value="${account.id}"
+                        th:text="${account.iban}">Wireframe
                 </option>
             </select>
+        </form>
+        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
+            <input type="hidden" name="id" id="id" th:value="${client.id}">
+            <input type="submit" value="Open nieuwe particuliere rekening"/>
+        </form>
+        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
+            <input type="hidden" name="id" id="idbusiness" th:value="${client.id}">
+            <input type="submit" value="Open nieuwe zakelijke rekening"/>
         </form>
         <form action="#" th:action="@{updateHandler}" th:object="${client}" method="post">
             <p>Uw persoonlijke pagina</p>

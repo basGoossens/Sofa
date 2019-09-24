@@ -52,9 +52,29 @@ public class Login {
             model.addAttribute("connect", connectorDao.findConnectorByUsername(loggedInClient.getUsername()));
         }
         model.addAttribute("client", loggedInClient);
-        Account account = new Account();
-        model.addAttribute("account", account);
+        model.addAttribute("nrBusiness", countBusinessAccounts(loggedInClient));
+        model.addAttribute("nrPrivate", countPrivateAccounts(loggedInClient));
         return "client_view";
+    }
+
+    public int countPrivateAccounts(Client client){
+        int count = 0;
+        for (Account account: client.getAccounts()) {
+            if (!account.isBusinessAccount()){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countBusinessAccounts(Client client){
+        int count = 0;
+        for (Account account: client.getAccounts()) {
+            if (account.isBusinessAccount()){
+                count++;
+            }
+        }
+        return count;
     }
 
     static void splitPrivateAndBusiness(Client loggedInClient, Model model) {

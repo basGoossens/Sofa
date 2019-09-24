@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.service.Login;
 import team2.sofa.sofa.service.UpdateClient;
 
 import java.util.Map;
@@ -17,6 +18,8 @@ public class PersonalPageController {
 
     @Autowired
     UpdateClient updateClient;
+    @Autowired
+    Login login;
 
     @PostMapping(value = "updateHandler")
     public String updateHandler(@RequestParam int id, Model model) {
@@ -39,7 +42,8 @@ public class PersonalPageController {
         Address address = client.getAddress();
         client = updateClient.changeAddress(client, address, input);
         model.addAttribute("client", client);
-        model.addAttribute("account", new Account());
+        model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
+        model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
         return "client_view";
     }
 
@@ -51,12 +55,14 @@ public class PersonalPageController {
             client = updateClient.processChanges(client, input);
             model.addAttribute("username", "uw gebruikersnaam is niet gewijzigd");
             model.addAttribute("client", client);
-            model.addAttribute("account", new Account());
+            model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
+            model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
             return "client_view";
         }
         client.setUsername(input.get("username").toString());
         model.addAttribute("client", client);
-        model.addAttribute("account", new Account());
+        model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
+        model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
         return "client_view";
     }
 }
