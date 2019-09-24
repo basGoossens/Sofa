@@ -59,7 +59,7 @@ public class Clientview {
         c.addAccount(a);
         clientDao.save(c);
         accountDao.save(a);
-        model.addAttribute("client", c);
+        model.addAttribute("sessionclient", c);
         model.addAttribute("account", a);
         return "client_view";
     }

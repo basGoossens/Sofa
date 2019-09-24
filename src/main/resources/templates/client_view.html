@@ -33,11 +33,11 @@
             <br>
 
         </div>
-        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${sessionclient}" method="post">
+        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
             <input type="hidden" name="id" id="id" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe particuliere rekening"/>
         </form>
-        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${sessionclient}" method="post">
+        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
             <input type="hidden" name="id" id="idbusiness" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe zakelijke rekening"/>
         </form>
@@ -47,11 +47,13 @@
             <table>
                 <tr class="form-header">
                     <th>rekeningnummer</th>
+                    <th>bedrijfsnaam</th>
                     <th>saldo</th>
                 </tr>
                 <tr th:each="Account : ${sessionclient.accounts}">
                     <div th:if="${Account.isBusinessAccount}">
                         <td><span th:text="${Account.iban}"/></td>
+                        <td><span th:text="${Account.getNameOwner()}"/></td>
                         <td><span th:text="${Account.balance}"/></td>
                     </div>
 

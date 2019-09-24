@@ -35,13 +35,14 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "AddNewAccountHandler")
-    public String addNewAccount(Client client, Model model){
+    public String addNewAccount(@RequestParam int id, Model model){
+    Client client = clientDao.findClientById(id);
         return clientview.createNewPrivate(client, model);
     }
 
     @PostMapping(value = "AddNewBusinessAccountHandler")
-    public String addNewBusinessAccountHandler(Client client,Model model){
-        Client client2 = clientview.getClient(client.getId());
+    public String addNewBusinessAccountHandler(@RequestParam int id, Model model){
+        Client client2 = clientDao.findClientById(id);
         Business business = new Business();
         business.setOwner(client2);
         model.addAttribute("business", business);
@@ -52,7 +53,7 @@ public class ClientViewController {
     public String newBAccount(Business business, Model model){
         Account a = clientview.procesNewBusinessAccount(business);
         Client c = business.getOwner();
-        model.addAttribute("client", c);
+        model.addAttribute("sessionclient", c);
         model.addAttribute("account", a);
         return "client_view";
     }
