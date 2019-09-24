@@ -16,9 +16,11 @@
     <div class="w3-container">
         <h7>Overzicht rekeningen</h7>
         <br><br>
-        <div th:if="${nrPrivate} > 0">
-            <h8>Particuliere rekeningen</h8>
-
+        <h8>Particuliere rekeningen</h8>
+        <div th:unless="${nrPrivate} > 0">
+            <p>U heeft nog geen particuliere rekeningen bij ons</p>
+        </div>
+        <div th:if="${nrPrivate} > 0" ? >
             <table>
                 <div class="table">
                 <tr class="form-header">
@@ -38,8 +40,12 @@
 
         </div>
         <br>
-        <div th:if="${nrBusiness} != 0">
-            <h8>Zakelijke rekeningen</h8>
+        <h8>Zakelijke rekeningen</h8>
+        <div th:unless="${nrBusiness} > 0">
+        <p>U heeft nog geen zakelijke rekeningen bij ons</p>
+        </div>
+        <div th:if="${nrBusiness} > 0">
+
             <table>
                 <tr class="form-header">
                     <th>rekeningnummer</th>
@@ -60,12 +66,12 @@
 
     <div class="selectaccount">
         <h8>Selecteer een rekening</h8>
-        <form action="#" th:action="@{AccountListHandler}" th:object="${account}" method="post">
+        <form action="#" th:action="@{AccountListHandler}" method="post">
             <input type="submit" value="Ga naar rekening">
-            <select th:field="*{id}">
-                <option th:each="privateAccount : ${client.accounts}"
-                        th:value="${privateAccount.id}"
-                        th:text="${privateAccount.iban}">Wireframe
+            <select th:value="${id}" name="id">
+                <option th:each="account : ${client.accounts}"
+                        th:value="${account.id}"
+                        th:text="${account.iban}">Wireframe
                 </option>
             </select>
         </form>

@@ -54,12 +54,10 @@ public class Login {
         model.addAttribute("client", loggedInClient);
         model.addAttribute("nrBusiness", countBusinessAccounts(loggedInClient));
         model.addAttribute("nrPrivate", countPrivateAccounts(loggedInClient));
-        Account account = new Account();
-        model.addAttribute("account", account);
         return "client_view";
     }
 
-    private int countPrivateAccounts(Client client){
+    public int countPrivateAccounts(Client client){
         int count = 0;
         for (Account account: client.getAccounts()) {
             if (!account.isBusinessAccount()){
@@ -69,7 +67,7 @@ public class Login {
         return count;
     }
 
-    private int countBusinessAccounts(Client client){
+    public int countBusinessAccounts(Client client){
         int count = 0;
         for (Account account: client.getAccounts()) {
             if (account.isBusinessAccount()){
