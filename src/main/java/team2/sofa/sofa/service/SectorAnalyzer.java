@@ -22,7 +22,7 @@ public class SectorAnalyzer {
         List<BalancePerSectorData> balancePerSectorList = new ArrayList<>();
         for (String item : balancePerSectorStrings){
             String[]parts = item.split(",");
-            double averageBalance = Math.round(Double.valueOf(parts[1])*100)/100;
+            double averageBalance = (double)((int)(Double.valueOf(parts[1])*100))/100;
             BalancePerSectorData balancePerSector = new BalancePerSectorData(parts[0],averageBalance);
             balancePerSectorList.add(balancePerSector);
         }
