@@ -18,20 +18,23 @@ import java.util.List;
 public class SofaApplicationTests {
 
     @Test
-    public void tenaamstelling() {
+    public void testGetFullNameAccountOwners() {
 
         Client testClient = new Client(0, "Billy Bob", "van de", "Febo",
                 null, null, null, null, null, null);
         Client testPartner = new Client(0, "Pipi", null, "Langkous",
                 null, null, null, null, null, null);
+        Client testPartnerTwee = new Client(0, "Pipi", null, "Langkous",
+                null, null, null, null, null, null);
         Account testAccount = new Account("12345", (BigDecimal.valueOf(100.0)), "1234", null );
         List<Client> owners = new ArrayList<>();
         owners.add(testClient);
         owners.add(testPartner);
+        owners.add(testPartnerTwee);
 
         testAccount.setOwners(owners);
         String expected = "BB VAN DE FEBO / P LANGKOUS";
-        String actual = testAccount.getTenaamAccount();
+        String actual = testAccount.getFullNameAccountOwners();
         Assert.assertEquals(expected, actual);
     }
 
