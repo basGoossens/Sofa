@@ -76,7 +76,6 @@ public class LoginController {
     }
 
 
-
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {
         if (result.hasErrors()) {

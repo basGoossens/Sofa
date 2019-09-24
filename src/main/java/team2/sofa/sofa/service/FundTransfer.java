@@ -89,7 +89,7 @@ public class    FundTransfer {
      * @param credit
      * @param transaction
      */
-    private void storeTransaction(Account debit, Account credit, Transaction transaction) {
+    public void storeTransaction(Account debit, Account credit, Transaction transaction) {
         debit.addTransaction(transaction);
         credit.addTransaction(transaction);
         debit.lowerBalance(transaction.getAmount());

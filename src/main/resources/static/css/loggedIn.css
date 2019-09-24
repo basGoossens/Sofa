@@ -2,6 +2,7 @@
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
+    grid-gap: 50px;
 }
 
 .grid-container {
@@ -35,11 +36,11 @@
     margin-right: auto;
 }
 
-table tr:nth-child(even) {
+table tr:nth-child(odd) {
     background-color: #96154070;
 }
 
-table tr:nth-child(odd) {
+table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
