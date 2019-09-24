@@ -8,7 +8,7 @@
 
 <div th:insert="/general :: header"/>
 
-<h1>Hallo, <span th:text="${client.firstName}"/></h1>
+<h1>Hallo, <span th:text="${client.fullNameUser}"/></h1>
 <div th:if="${username}">
     <p th:text="${username}"></p>
 </div>
@@ -16,7 +16,7 @@
     <div class="w3-container">
         <h7>Overzicht rekeningen</h7>
         <br><br>
-        <div th:unless="${#lists.isEmpty(client.accounts)}">
+        <div th:if="${nrPrivate} > 0">
             <h8>Particuliere rekeningen</h8>
 
             <table>
@@ -37,16 +37,8 @@
             <br>
 
         </div>
-        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="id" th:value="${client.id}">
-            <input type="submit" value="Open nieuwe particuliere rekening"/>
-        </form>
-        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
-            <input type="hidden" name="id" id="idbusiness" th:value="${client.id}">
-            <input type="submit" value="Open nieuwe zakelijke rekening"/>
-        </form>
         <br>
-        <div th:unless="${#lists.isEmpty(client.accounts)}">
+        <div th:if="${nrBusiness} != 0">
             <h8>Zakelijke rekeningen</h8>
             <table>
                 <tr class="form-header">
@@ -76,6 +68,14 @@
                         th:text="${privateAccount.iban}">Wireframe
                 </option>
             </select>
+        </form>
+        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
+            <input type="hidden" name="id" id="id" th:value="${client.id}">
+            <input type="submit" value="Open nieuwe particuliere rekening"/>
+        </form>
+        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
+            <input type="hidden" name="id" id="idbusiness" th:value="${client.id}">
+            <input type="submit" value="Open nieuwe zakelijke rekening"/>
         </form>
         <form action="#" th:action="@{updateHandler}" th:object="${client}" method="post">
             <p>Uw persoonlijke pagina</p>
