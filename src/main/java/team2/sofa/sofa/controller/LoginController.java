@@ -16,7 +16,7 @@ import team2.sofa.sofa.service.PasswordValidator;
 import javax.validation.Valid;
 
 @Controller
-@SessionAttributes("sessionclient")
+@SessionAttributes({"sessionclient", "connect"})
 public class LoginController {
     @Autowired
     Login login;

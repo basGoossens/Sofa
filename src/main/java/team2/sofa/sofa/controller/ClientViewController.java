@@ -17,7 +17,7 @@ import team2.sofa.sofa.service.IBANGenerator;
 import java.math.BigDecimal;
 
 @Controller
-@SessionAttributes("sessionclient")
+@SessionAttributes({"sessionclient", "connect"})
 public class ClientViewController {
 
     @Autowired

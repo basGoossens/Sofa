@@ -18,6 +18,7 @@ import java.util.List;
 
 
 @Service
+@SessionAttributes("connect")
 public class Login {
 
     @Autowired
@@ -51,7 +52,6 @@ public class Login {
 
     public Client clientLogin(Client client, Model model) {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
-
         return loggedInClient;
     }
 
