@@ -30,6 +30,7 @@ public class DatabaseController {
         dbInitializer.makeClient(CLIENTS);
         dbInitializer.fillPrivateAccounts();
         dbInitializer.makeEmployees(EMPLOYEES);
+        dbInitializer.assignEmployeeRoles();
         dbInitializer.makeBusiness(BUSINESS, CLIENTS);
         dbInitializer.fillTransactions();
         return "index";
