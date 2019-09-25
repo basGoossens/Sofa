@@ -24,27 +24,22 @@ public class PDQController {
     AccountDao accountDao;
 
 
-    @GetMapping(value = "/paymentmachine/payment")
-    public void checkTransaction(@PathVariable String json) {
+    @GetMapping(value = "/paymentmachine/payment/{json}")
+    public String checkTransactionHandler(@PathVariable String json) {
         PaymentData paymentData = serializationService.deserializePaymentData(json);
         Account creditAccount = accountDao.findAccountByIban(paymentData.getCreditAccount());
         Account debitAccount = accountDao.findAccountByIban(paymentData.getDebitAccount());
-        fundTransfer.checkBalance(paymentData.getAmount(), debitAccount);
-        Transaction transaction = new Transaction(paymentData.getAmount(), paymentData.getDescription(),
-                paymentData.getDateTime().toLocalDate(), creditAccount, debitAccount);
-
+        String returnJson;
+        if (fundTransfer.insufficientBalance(paymentData.getAmount(), debitAccount)){
+            returnJson = "Failed";
+        } else {
+            Transaction transaction = new Transaction(paymentData.getAmount(), paymentData.getDescription(),
+                    paymentData.getDateTime().toLocalDate(), creditAccount, debitAccount);
+            fundTransfer.storeTransaction(debitAccount, creditAccount, transaction);
+            returnJson = "Approved";
+        }
+        return returnJson;
     }
-
-
-
-/*
-    @GetMapping(value = "/members/{id}")
-    public String getMember(@PathVariable int id) {
-        Member member = memberService.findById(id);
-        String json = memberService.serialize(member);
-        return json;
-    }
-*/
 
 
 }

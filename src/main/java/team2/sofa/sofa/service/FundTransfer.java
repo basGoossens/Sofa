@@ -79,7 +79,7 @@ public class FundTransfer {
      * @param credit
      * @param transaction
      */
-    private void storeTransaction(Account debit, Account credit, Transaction transaction) {
+    public void storeTransaction(Account debit, Account credit, Transaction transaction) {
         debit.addTransaction(transaction);
         credit.addTransaction(transaction);
         debit.lowerBalance(transaction.getAmount());
@@ -103,10 +103,10 @@ public class FundTransfer {
      * @param transactionForm afkomstig vanuit controller PaymentController
      * @return
      */
-    public boolean checkBalance(TransactionForm transactionForm) {
+    public boolean insufficientBalance(TransactionForm transactionForm) {
         BigDecimal amount = transactionForm.getAmount();
         Account account = accountDao.findAccountByIban(transactionForm.getDebetAccount());
-        return checkBalance(amount, account);
+        return insufficientBalance(amount, account);
     }
 
     /**
@@ -116,7 +116,7 @@ public class FundTransfer {
      * @param account het debitAccount dat gebruikt is in het formulier money_transfer
      * @return
      */
-    public boolean checkBalance(BigDecimal amount, Account account) {
+    public boolean insufficientBalance(BigDecimal amount, Account account) {
         BigDecimal balance = account.getBalance();
         BigDecimal change = balance.subtract(amount);
         double check = change.doubleValue();

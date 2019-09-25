@@ -7,10 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.TransactionForm;
-import team2.sofa.sofa.model.dao.AccountDao;
-import team2.sofa.sofa.model.dao.PrivateAccountDao;
 import team2.sofa.sofa.service.FundTransfer;
 
 import javax.validation.Valid;
@@ -27,7 +24,7 @@ public class PaymentController {
             model.addAttribute("error", error);
             return "money_transfer";
         }
-        if (fundTransfer.checkBalance(transactionForm)){
+        if (fundTransfer.insufficientBalance(transactionForm)){
             String saldo = "onvoldoende Saldo";
             model.addAttribute("saldo", saldo);
             return "money_transfer";
