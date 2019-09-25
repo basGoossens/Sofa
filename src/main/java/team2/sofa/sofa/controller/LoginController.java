@@ -58,7 +58,7 @@ public class LoginController {
             Client loggedInClient = login.clientLogin(client, model);
             model.addAttribute("sessionclient", loggedInClient);
             login.checkAndLoadConnector(loggedInClient, model);
-            model.addAttribute("nrBusiness", login.countPrivateAccounts(loggedInClient));
+            model.addAttribute("nrBusiness", login.countBusinessAccounts(loggedInClient));
             model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
             Hibernate.initialize(loggedInClient.getAccounts());
             return "redirect:/clientLoginSuccess";

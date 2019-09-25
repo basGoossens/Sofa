@@ -150,23 +150,26 @@ public class DbInitializer {
     /**
      * maakt Employees en slaat deze op in DB
      *
-     * @param role de rol van de te maken Employee zoals vermeld in Enum EmployeeRole
      */
-    public void makeEmployee(EmployeeRole role, int index) {
-        Employee employee = new Employee();
-        String[] emp = rawData.get(index);
-        setName(employee, emp);
-        employee.setAddress(makeAddress(emp));
-        employee.setRole(role);
-        employee.setEmail(emp[5]);
-        employee.setTelephoneNr(emp[6]);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-        employee.setBirthday(emp[7]);
-        employee.setGender(emp[8]);
-        employee.setUsername(emp[9]);
-        employee.setPassword(emp[10]);
-        employee.setSsn(ssnStack.pop());
-        employeeDao.save(employee);
+    public void makeEmployees(int count) {
+        int index = rawData.size();
+        for (int i = count; i > 0; i--) {
+            Employee employee = new Employee();
+            String[] emp = rawData.get(index - i);
+            setName(employee, emp);
+            employee.setAddress(makeAddress(emp));
+            employee.setRole(null);
+            employee.setEmail(emp[5]);
+            employee.setTelephoneNr(emp[6]);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+            employee.setBirthday(emp[7]);
+            employee.setGender(emp[8]);
+            employee.setUsername(emp[9]);
+            employee.setPassword(emp[10]);
+            employee.setSsn(ssnStack.pop());
+            employeeDao.save(employee);
+        }
+
     }
 
     /**

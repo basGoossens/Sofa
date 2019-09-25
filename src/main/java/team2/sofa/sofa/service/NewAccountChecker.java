@@ -169,17 +169,9 @@ public class NewAccountChecker {
         return zipcheck && numbercheck;
     }
     protected boolean AddressExistsChecker(Address address) {
-        String Zip = address.getZipCode();
+        String zipCode = address.getZipCode();
         int number = address.getHouseNumber();
-        boolean zipcheck = false;
-        boolean numbercheck = false;
-        if (addressDao.findAddressByZipCode(Zip) != null) {
-            zipcheck = addressDao.findAddressByZipCode(Zip).getZipCode().equals(Zip);
-        }
-        if (addressDao.findAddressByHouseNumber(number) != null) {
-            numbercheck = addressDao.findAddressByHouseNumber(number).getHouseNumber() == number;
-        }
-        return zipcheck && numbercheck;
+        return addressDao.existsAddressByZipCodeAndHouseNumber(zipCode,number);
     }
 
     /**
