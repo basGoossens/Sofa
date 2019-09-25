@@ -8,13 +8,13 @@
 <div th:insert="/general :: header"/>
 ​
 
-<h1 style="text-align: left;">Welkom <span th:text="${employee.firstName}"/></h1>
+<h1 style="text-align: left;">Welkom <span th:text="${sessionemployee.firstName}"/></h1>
 
 <div class="grid-container">
     <div class="top-ten-highest-tables">
 
         ​
-        <form action="#" th:action="@{AccountOverviewHandler}" th:object="${employee}" method="post"
+        <form action="#" th:action="@{AccountOverviewHandler}" method="post"
               onsubmit="return validateForm();">
 
             <div th:unless="${#lists.isEmpty(tenHighestBalance)}">

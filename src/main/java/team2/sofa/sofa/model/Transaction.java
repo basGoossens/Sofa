@@ -28,14 +28,17 @@ public class Transaction {
         this.date = date;
         this.creditAccount = creditAccount;
         this.debitAccount = debitAccount;
+        addToTotalTransactions();
     }
 
     public Transaction(BigDecimal amount, String description, @Nullable Account creditAccount, @Nullable Account debitAccount) {
         this (amount,description, LocalDate.now(), creditAccount, debitAccount);
+        addToTotalTransactions();
     }
 
     public Transaction(){
         this(null,"",LocalDate.now(),null,null);
+        addToTotalTransactions();
     }
 
     public int getId() {
@@ -85,4 +88,20 @@ public class Transaction {
     public void setDebitAccount(Account debitAccount) {
         this.debitAccount = debitAccount;
     }
+
+    public void addToTotalTransactions() {
+        if (creditAccount != null && debitAccount != null) {
+            for (Client c : creditAccount.getOwners()
+            ) {
+                c.setTotalNumberOfTransactions(c.getTotalNumberOfTransactions() + 1);
+            }
+            for (Client cl : debitAccount.getOwners()
+            ) {
+                cl.setTotalNumberOfTransactions(cl.getTotalNumberOfTransactions() + 1);
+
+            }
+        }
+
+    }
+
 }

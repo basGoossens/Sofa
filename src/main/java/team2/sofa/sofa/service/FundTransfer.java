@@ -89,7 +89,7 @@ public class    FundTransfer {
      * @param credit
      * @param transaction
      */
-    private void storeTransaction(Account debit, Account credit, Transaction transaction) {
+    public void storeTransaction(Account debit, Account credit, Transaction transaction) {
         debit.addTransaction(transaction);
         credit.addTransaction(transaction);
         debit.lowerBalance(transaction.getAmount());
@@ -98,11 +98,11 @@ public class    FundTransfer {
         accountDao.save(debit);
         accountDao.save(credit);
         for (Client c: debit.getOwners()
-             ) {c.setTotalNumberOfTransactions();
+             ) {c.setTotalNumberOfTransactions(c.getTotalNumberOfTransactions() + 1);
              clientDao.save(c);
         }
         for (Client c: credit.getOwners()
-             ) {c.setTotalNumberOfTransactions();
+             ) {c.setTotalNumberOfTransactions(c.getTotalNumberOfTransactions() + 1);
             clientDao.save(credit.getOwners().get(0));
         }
     }

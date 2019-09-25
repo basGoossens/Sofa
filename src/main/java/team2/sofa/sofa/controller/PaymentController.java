@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.TransactionForm;
 import team2.sofa.sofa.model.dao.AccountDao;
@@ -16,6 +17,7 @@ import team2.sofa.sofa.service.FundTransfer;
 import javax.validation.Valid;
 
 @Controller
+@SessionAttributes("sessionclient")
 public class PaymentController {
 
     @Autowired

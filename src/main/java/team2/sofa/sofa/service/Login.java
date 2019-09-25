@@ -1,8 +1,10 @@
 package team2.sofa.sofa.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
@@ -16,6 +18,7 @@ import java.util.List;
 
 
 @Service
+@SessionAttributes({"connect", "nrBusiness", "nrPrivate", "sessionemployee"})
 public class Login {
 
     @Autowired
@@ -34,6 +37,7 @@ public class Login {
     ConnectorDao connectorDao;
 
 
+
     public Login() {
         super();
     }
@@ -46,15 +50,36 @@ public class Login {
         return "client_view";
     }
 
-    public String clientLogin(Client client, Model model) {
+    public Client clientLogin(Client client, Model model) {
         Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
-        if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())){
+        model.addAttribute("sessionclient", loggedInClient);
+        return loggedInClient;
+    }
+
+    public void checkAndLoadConnector(Client loggedInClient, Model model){
+        if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())) {
             model.addAttribute("connect", connectorDao.findConnectorByUsername(loggedInClient.getUsername()));
         }
-        model.addAttribute("client", loggedInClient);
-        Account account = new Account();
-        model.addAttribute("account", account);
-        return "client_view";
+    }
+
+    public int countPrivateAccounts(Client client){
+        int count = 0;
+        for (Account account: client.getAccounts()) {
+            if (!account.isBusinessAccount()){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int countBusinessAccounts(Client client){
+        int count = 0;
+        for (Account account: client.getAccounts()) {
+            if (account.isBusinessAccount()){
+                count++;
+            }
+        }
+        return count;
     }
 
     static void splitPrivateAndBusiness(Client loggedInClient, Model model) {
@@ -72,30 +97,9 @@ public class Login {
         model.addAttribute("listBusinessAccounts", listBusinessAccounts);
     }
 
-    public String employeeLogin(Employee employee, Model model) {
+    public Employee employeeLogin(Employee employee, Model model) {
         Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
-        model.addAttribute("employee", currentEmployee);
-
-        if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
-            List<PrivateAccount> topTenHighest;
-            topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
-            model.addAttribute("tenHighestBalance", topTenHighest);
-            return "employee_view_particulieren";
-
-        } if (currentEmployee.getRole().equals(EmployeeRole.ACCOUNTMANAGER)){
-            return "account_manager_view";
-
-        } else {
-            List<Client> topTenMostActive;
-            List<BusinessAccount> topTenHighest;
-            List<BalancePerSectorData> balancePerSector;
-            topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
-            topTenMostActive = topTenMostActiveClient.getTopTenMostActiveClients();
-            balancePerSector = sectorAnalyzer.getAverageBalancePerSector();
-            model.addAttribute("tenMostActive", topTenMostActive);
-            model.addAttribute("tenHighestBalance", topTenHighest);
-            model.addAttribute("balancePerSector", balancePerSector);
-            return "employee_view_mkb";
-        }
+        model.addAttribute("sessionemployee", currentEmployee);
+        return currentEmployee;
     }
 }

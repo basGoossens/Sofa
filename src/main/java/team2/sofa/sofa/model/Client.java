@@ -74,9 +74,10 @@ public class Client extends User {
         return totalNumberOfTransactions;
     }
 
-    public void setTotalNumberOfTransactions() {
-        this.totalNumberOfTransactions = calculateTotalNumberOfTransactions();
+    public void setTotalNumberOfTransactions(int totalNumberOfTransactions) {
+        this.totalNumberOfTransactions = totalNumberOfTransactions;
     }
+
 
     /** Methode om het totaal aantal transacties van alle rekeningen van een klant te berekenen */
     private int calculateTotalNumberOfTransactions(){

@@ -18,6 +18,7 @@ public class DatabaseController {
     // Medium tot 5000
     // Large tot 7000
     private final int CLIENTS = 50;
+    private final int EMPLOYEES = 5;
     private final int BUSINESS = 20;
 
 
@@ -28,10 +29,10 @@ public class DatabaseController {
     public String indexInitdbHandler(Model model) {
         dbInitializer.makeClient(CLIENTS);
         dbInitializer.fillPrivateAccounts();
-        dbInitializer.makeEmployee(EmployeeRole.HOOFD_PARTICULIEREN, 1);
-        dbInitializer.makeEmployee(EmployeeRole.HOOFD_MKB,2);
-        dbInitializer.makeEmployee(EmployeeRole.ACCOUNTMANAGER, 3);
+        dbInitializer.makeEmployees(EMPLOYEES);
+        dbInitializer.assignEmployeeRoles();
         dbInitializer.makeBusiness(BUSINESS, CLIENTS);
+        dbInitializer.fillTransactions();
         return "index";
     }
 }

@@ -9,7 +9,27 @@
 
 <div th:insert="/general :: header"/>
 
-<div th:insert="/general :: account-overview"/>
+<div th:fragment="account-overview">
+    <div class="new-client-container">
+        <div class="w3-container">
+
+            <div class="transactions-table">
+                <h2>Rekeningoverzicht: de ingelogde klant heeft nummer <span th:text="${sessionclient.id}"/></h2>
+                <div class th:insert="/general :: account-info-block"/>
+                <div class th:insert="/general :: transactions-table"/>
+
+                <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
+                    <input type=hidden th:field="${account.id}"/>
+                    <input type="submit" value="betaalopdracht"/>
+                </form>
+                <form action="#" th:action="@{ConnectAccount}" th:object="${account}" method="post">
+                    <input type="hidden" th:field="${account.id}" name="id" id="id"/>
+                    <input type="submit" value="Voeg rekeninghouder toe">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 </body>

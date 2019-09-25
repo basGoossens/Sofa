@@ -10,6 +10,8 @@ import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.ConnectorDao;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -47,5 +49,17 @@ public class ConnectingService {
         model.addAttribute("client", client);
         model.addAttribute("account", new Account());
         return model;
+    }
+
+    public boolean checkUserName(Map<String, Object> body){
+        //check of user bestaat
+        if (clientDao.findClientByUsername(body.get("newuser").toString()) == null) return false;
+
+        //check op eigen usernaam
+        List<Client> owners = accountDao.findAccountByIban(body.get("bankaccount").toString()).getOwners();
+        for (Client client: owners){
+            if (client.getUsername().equals(body.get("newuser"))) return false;
+        }
+        return true;
     }
 }

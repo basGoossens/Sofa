@@ -1,34 +1,49 @@
 package team2.sofa.sofa.controller;
 
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.*;
-import team2.sofa.sofa.service.Login;
-import team2.sofa.sofa.service.PasswordValidator;
+import team2.sofa.sofa.service.*;
 
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "sessionemployee"})
 public class LoginController {
     @Autowired
     Login login;
     @Autowired
     PasswordValidator passwordValidator;
+    @Autowired
+    TopTenHighestBalanceFinder topTenHighestBalanceFinder;
+    @Autowired
+    TopTenMostActiveClient topTenMostActiveClient;
+    @Autowired
+    SectorAnalyzer sectorAnalyzer;
 
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
         model.addAttribute("client", new Client());
         return "login";
     }
+
+
+    //logoutHandler toegevoegd
+    @GetMapping(value = "logout")
+    public String logoutHandler(Model model) {
+        model.addAttribute("sessionclient", "");
+        model.addAttribute("client", new Client());
+        return "login";
+    }
+
 
     @GetMapping(value = "login_employee")
     public String goTologinEmployeeHandler(Model model) {
@@ -46,12 +61,19 @@ public class LoginController {
     public String loginClientHandler(Client client, Model model) {
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
-            return login.clientLogin(client, model);
-        } else {
+            Client loggedInClient = login.clientLogin(client, model);
+            model.addAttribute("sessionclient", loggedInClient);
+            login.checkAndLoadConnector(loggedInClient, model);
+            model.addAttribute("nrBusiness", login.countBusinessAccounts(loggedInClient));
+            model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
+            Hibernate.initialize(loggedInClient.getAccounts());
+            return "redirect:/loadClientView";
+    } else {
             model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");
             return "login";
         }
     }
+
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {
@@ -59,12 +81,23 @@ public class LoginController {
             model.addAttribute("error", error);
             return "login_employee";
         }
-        Employee employee1 = new Employee();
-        employee1.setUsername(loginEmpForm.getUsername1());
-        employee1.setPassword(loginEmpForm.getPassword1());
-        boolean loginOK = passwordValidator.validateEmployeePassword(employee1);
+        Employee currentEmployee = new Employee();
+        currentEmployee.setUsername(loginEmpForm.getUsername1());
+        currentEmployee.setPassword(loginEmpForm.getPassword1());
+        boolean loginOK = passwordValidator.validateEmployeePassword(currentEmployee);
         if (loginOK) {
-            return login.employeeLogin(employee1, model);
+            currentEmployee = login.employeeLogin(currentEmployee, model);
+
+        if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
+            return "redirect:/loadEmployeeViewPrivate";
+
+        } else {
+            return "redirect:/loadEmployeeViewBusiness";
+        }
+
         } else return "login_employee";
     }
+
+
+
 }

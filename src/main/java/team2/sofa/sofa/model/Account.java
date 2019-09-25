@@ -126,12 +126,31 @@ public class Account {
         return isBusinessAccount;
     }
 
-    public String getTenaamAccount(){
-        StringBuilder tenaam = new StringBuilder();
+    public String getFullNameAccountOwners(){
+        StringBuilder name = new StringBuilder();
         for (int i = 0; i < owners.size(); i++) {
-            tenaam.append(owners.get(i).getTenaamUser());
-            if (i + 1 < owners.size()) tenaam.append(" / ");
+            name.append(owners.get(i).getFullNameUser());
+            if (i + 1 < owners.size()) name.append(" / ");
+            }
+        return name.toString();
+    }
+
+    public String getFullNameAccountOwnersExceptFirst() {
+        StringBuilder name = new StringBuilder();
+        if (getIsBusinessAccount()) name.append(owners.get(0).getFullNameUser() + " / ");
+
+        for (int i = 1; i < owners.size(); i++) {
+            name.append(owners.get(i).getFullNameUser());
+            if (i + 1 < owners.size()) name.append(" / ");
         }
-        return tenaam.toString();
+        if (name.toString().isEmpty()) {
+            return "geen";
+        }
+        else {return name.toString();}
+    }
+
+    public String getNameOwner() {
+        if (getIsBusinessAccount()) return ((BusinessAccount) this).getBusiness().getBusinessName();
+        return owners.get(0).getFullNameUser();
     }
 }
