@@ -9,19 +9,25 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.*;
-import team2.sofa.sofa.service.Login;
-import team2.sofa.sofa.service.PasswordValidator;
+import team2.sofa.sofa.service.*;
 
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
-@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate"})
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "sessionemployee"})
 public class LoginController {
     @Autowired
     Login login;
     @Autowired
     PasswordValidator passwordValidator;
+    @Autowired
+    TopTenHighestBalanceFinder topTenHighestBalanceFinder;
+    @Autowired
+    TopTenMostActiveClient topTenMostActiveClient;
+    @Autowired
+    SectorAnalyzer sectorAnalyzer;
 
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
@@ -75,6 +81,30 @@ public class LoginController {
         return "client_view";
     }
 
+    @GetMapping(value="loginEmployeePrivateSuccess")
+    public String employeePrivateLoginSuccess(Model model) {
+        //onderstaande methodes nog in aparte handler zetten in EmployeeViewController
+        List<PrivateAccount> topTenHighest;
+        topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
+        model.addAttribute("tenHighestBalance", topTenHighest);
+        return "employee_view_particulieren";
+    }
+
+    @GetMapping(value="loginEmployeeBusinessSuccess")
+    public String employeeBusinessLoginSuccess(Model model) {
+        //onderstaande methodes nog in aparte handler zetten in EmployeeViewController
+        List<Client> topTenMostActive;
+        List<BusinessAccount> topTenHighest;
+        List<BalancePerSectorData> balancePerSector;
+        topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
+        topTenMostActive = topTenMostActiveClient.getTopTenMostActiveClients();
+        balancePerSector = sectorAnalyzer.getAverageBalancePerSector();
+        model.addAttribute("tenMostActive", topTenMostActive);
+        model.addAttribute("tenHighestBalance", topTenHighest);
+        model.addAttribute("balancePerSector", balancePerSector);
+        return "employee_view_mkb";
+    }
+
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {
@@ -82,12 +112,20 @@ public class LoginController {
             model.addAttribute("error", error);
             return "login_employee";
         }
-        Employee employee1 = new Employee();
-        employee1.setUsername(loginEmpForm.getUsername1());
-        employee1.setPassword(loginEmpForm.getPassword1());
-        boolean loginOK = passwordValidator.validateEmployeePassword(employee1);
+        Employee currentEmployee = new Employee();
+        currentEmployee.setUsername(loginEmpForm.getUsername1());
+        currentEmployee.setPassword(loginEmpForm.getPassword1());
+        boolean loginOK = passwordValidator.validateEmployeePassword(currentEmployee);
         if (loginOK) {
-            return login.employeeLogin(employee1, model);
+            currentEmployee = login.employeeLogin(currentEmployee, model);
+
+        if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
+            return "redirect:/loginEmployeePrivateSuccess";
+
+        } else {
+            return "redirect:/loginEmployeeBusinessSuccess";
+        }
+
         } else return "login_employee";
     }
 }

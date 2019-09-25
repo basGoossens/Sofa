@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Service
-@SessionAttributes({"connect", "nrBusiness", "nrPrivate"})
+@SessionAttributes({"connect", "nrBusiness", "nrPrivate", "sessionemployee"})
 public class Login {
 
     @Autowired
@@ -97,27 +97,9 @@ public class Login {
         model.addAttribute("listBusinessAccounts", listBusinessAccounts);
     }
 
-    public String employeeLogin(Employee employee, Model model) {
+    public Employee employeeLogin(Employee employee, Model model) {
         Employee currentEmployee = employeeDao.findEmployeeByUsername(employee.getUsername());
-        model.addAttribute("employee", currentEmployee);
-
-        if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
-            List<PrivateAccount> topTenHighest;
-            topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
-            model.addAttribute("tenHighestBalance", topTenHighest);
-            return "employee_view_particulieren";
-
-        } else {
-            List<Client> topTenMostActive;
-            List<BusinessAccount> topTenHighest;
-            List<BalancePerSectorData> balancePerSector;
-            topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
-            topTenMostActive = topTenMostActiveClient.getTopTenMostActiveClients();
-            balancePerSector = sectorAnalyzer.getAverageBalancePerSector();
-            model.addAttribute("tenMostActive", topTenMostActive);
-            model.addAttribute("tenHighestBalance", topTenHighest);
-            model.addAttribute("balancePerSector", balancePerSector);
-            return "employee_view_mkb";
-        }
+        model.addAttribute("sessionemployee", currentEmployee);
+        return currentEmployee;
     }
 }

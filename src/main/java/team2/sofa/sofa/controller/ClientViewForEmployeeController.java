@@ -10,12 +10,13 @@ import team2.sofa.sofa.service.Clientview;
 
 
 @Controller
+
 public class ClientViewForEmployeeController {
 
     @Autowired
     Clientview clientview;
 
-
+//hoort eigenlijk in EmployeeViewController?
     @GetMapping(value = "AccountOverviewHandler")
     public String AccountOverviewHandler(@RequestParam(name = "id") int id, Model model){
         return clientview.accountOverview(id, model);
