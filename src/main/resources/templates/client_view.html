@@ -21,8 +21,7 @@
             <p>U heeft nog geen particuliere rekeningen bij ons</p>
         </div>
         <div th:if="${nrPrivate} > 0" ? >
-            <table>
-                <div class="table">
+                <table class="table">
                 <tr class="form-header">
                     <th>Rekeningnummer</th>
                     <th>Saldo</th>
@@ -34,7 +33,6 @@
                         <td><span th:text="${Account.balance}"/></td>
                     </div>
                 </tr>
-                </div>
             </table>
             <br>
 
@@ -46,7 +44,7 @@
         </div>
         <div th:if="${nrBusiness} > 0">
 
-            <table>
+            <table class="table">
                 <tr class="form-header">
                     <th>rekeningnummer</th>
                     <th>bedrijfsnaam</th>

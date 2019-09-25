@@ -55,8 +55,8 @@ public class Clientview {
         model.addAttribute("account", chosenAccount);
         return "dashboard_employee";
     }
-    public String createNewPrivate(Client client, Model model){
-        Client c = clientDao.findClientById(client.getId());
+    public void createNewPrivate(int id, Model model){
+        Client c = clientDao.findClientById(id);
         Account a = makeAccount(c);
         c.addAccount(a);
         clientDao.save(c);
@@ -64,8 +64,8 @@ public class Clientview {
         model.addAttribute("sessionclient", c);
         model.addAttribute("nrBusiness", login.countBusinessAccounts(c));
         model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
-        return "client_view";
     }
+
 
     public Account makeAccount(Client client){
         IBANGenerator ibanGenerator = new IBANGenerator();
@@ -92,5 +92,9 @@ public class Clientview {
         clientDao.save(c);
         accountDao.save(a);
         return a;
+    }
+
+    public Client findClientById(int id){
+        return clientDao.findClientById(id);
     }
 }

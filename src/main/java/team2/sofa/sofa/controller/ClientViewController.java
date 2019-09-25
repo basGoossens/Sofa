@@ -15,7 +15,7 @@ import team2.sofa.sofa.service.Login;
 import java.math.BigDecimal;
 
 @Controller
-@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate"})
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "newaccountid"})
 public class ClientViewController {
 
     @Autowired
@@ -25,6 +25,13 @@ public class ClientViewController {
     @Autowired
     ClientDao clientDao;
 
+    @GetMapping(value="loadClientView")
+    public String loadClientView(Model model) {
+        Account account = new Account();
+        model.addAttribute("account", account);
+        return "client_view";
+    }
+
     @PostMapping(value = "AccountListHandler")
     public String clientView(Account account, Model model) {
         return clientview.accountFinderClient(account.getId(), model);
@@ -32,15 +39,15 @@ public class ClientViewController {
 
     @PostMapping(value = "AddNewAccountHandler")
     public String addNewAccount(@RequestParam int id, Model model){
-    Client client = clientDao.findClientById(id);
-        return clientview.createNewPrivate(client, model);
+        clientview.createNewPrivate(id, model);
+        return "redirect:/loadClientView";
     }
 
     @PostMapping(value = "AddNewBusinessAccountHandler")
     public String addNewBusinessAccountHandler(@RequestParam int id, Model model){
-        Client client2 = clientDao.findClientById(id);
+        Client client = clientview.findClientById(id);
         Business business = new Business();
-        business.setOwner(client2);
+        business.setOwner(client);
         model.addAttribute("business", business);
         return "add_business_account";
     }
@@ -52,14 +59,9 @@ public class ClientViewController {
         model.addAttribute("sessionclient", c);
         model.addAttribute("nrBusiness", login.countBusinessAccounts(c));
         model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
-        return "client_view";
+        return "redirect:/loadClientView";
     }
 
-    @GetMapping(value="loadClientView")
-    public String loadClientView(Model model) {
-        Account account = new Account();
-        model.addAttribute("account", account);
-        return "client_view";
-    }
+
 
 }
