@@ -47,13 +47,12 @@ public class LoginController {
 
     @GetMapping(value = "login_employee")
     public String goTologinEmployeeHandler(Model model) {
-        LoginForm loginEmpForm = new LoginForm();
-        model.addAttribute("loginEmpForm", loginEmpForm);
+        model.addAttribute("employee", new Employee());
         return "login_employee";
     }
 
     @RequestMapping(value = "logoutClientHandler")
-    public String logOutClientHandler(){
+    public String logOutClientHandler() {
         return "login";
     }
 
@@ -68,7 +67,7 @@ public class LoginController {
             model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
             Hibernate.initialize(loggedInClient.getAccounts());
             return "redirect:/loadClientView";
-    } else {
+        } else {
             model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");
             return "login";
         }
@@ -76,28 +75,29 @@ public class LoginController {
 
 
     @PostMapping(value = "loginEmployeeHandler")
-    public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {
-        if (result.hasErrors()) {
-            model.addAttribute("error", error);
-            return "login_employee";
-        }
+    public String loginEmployeeHandler(Employee employee, Model model) {
+
         Employee currentEmployee = new Employee();
-        currentEmployee.setUsername(loginEmpForm.getUsername1());
-        currentEmployee.setPassword(loginEmpForm.getPassword1());
+        currentEmployee.setUsername(employee.getUsername());
+        currentEmployee.setPassword(employee.getPassword());
         boolean loginOK = passwordValidator.validateEmployeePassword(currentEmployee);
         if (loginOK) {
             currentEmployee = login.employeeLogin(currentEmployee, model);
 
-        if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
-            return "redirect:/loadEmployeeViewPrivate";
+            if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
+                return "redirect:/loginEmployeePrivateSuccess";
+
+            } if (currentEmployee.getRole().equals(EmployeeRole.ACCOUNTMANAGER)){
+                return "account_manager_view";
+            }
+
+            else {
+                return "redirect:/loginEmployeeBusinessSuccess";
+            }
 
         } else {
-            return "redirect:/loadEmployeeViewBusiness";
+            model.addAttribute("Fout", "Gebruikersnaam en/of wachtword zijn niet juist");
+            return "login_employee";
         }
-
-        } else return "login_employee";
     }
-
-
-
 }
