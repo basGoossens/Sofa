@@ -29,24 +29,30 @@ public class Clientview {
     @Autowired
     Login login;
 
-    public Clientview() { super();
+    public Clientview() {
+        super();
     }
+
+    public Client findClientById(int id) {
+        return clientDao.findClientById(id);
+    }
+
 
     public Account FindAccountById(int id) {
         Account chosenAccount = accountDao.findAccountById(id);
         return chosenAccount;
     }
 
-    public String accountFinderEmployee(int id,  Model model, boolean business) {
-        if (business == false){
-            PrivateAccount chosenAccount = privateAccountDao.findAccountById(id);
-            model.addAttribute("account", chosenAccount);
-            return "dashboard_employee";}
-        else {
-            BusinessAccount chosenAccount = businessAccountDao.findAccountById(id);
-            model.addAttribute("account", chosenAccount);
-            return "dashboard_employee";
+    //evt exception inbouwen voor als we nog andersoortige rekeningen krijgen.
+    public Account FindPrivateOrBusinessAccountById(int id, boolean isBusiness) {
+        Account chosenAccount = new Account();
+        if (isBusiness) {
+            chosenAccount = businessAccountDao.findAccountById(id);
         }
+        if (!isBusiness) {
+            chosenAccount = privateAccountDao.findAccountById(id);
+        }
+        return chosenAccount;
     }
 
     public String accountOverview(int id, Model model) {
@@ -54,7 +60,8 @@ public class Clientview {
         model.addAttribute("account", chosenAccount);
         return "dashboard_employee";
     }
-    public void createNewPrivate(int id, Model model){
+
+    public void createNewPrivate(int id, Model model) {
         Client c = clientDao.findClientById(id);
         Account a = makeAccount(c);
         c.addAccount(a);
@@ -66,18 +73,15 @@ public class Clientview {
     }
 
 
-    public Account makeAccount(Client client){
+    public Account makeAccount(Client client) {
         IBANGenerator ibanGenerator = new IBANGenerator();
         String iban = ibanGenerator.ibanGenerator();
         Account a = new PrivateAccount(iban, new BigDecimal(0));
         a.addClient(client);
         return a;
     }
-    public Client getClient(int id){
-        return clientDao.findClientById(id);
-    }
 
-    public Account procesNewBusinessAccount(Business business){
+    public Account procesNewBusinessAccount(Business business) {
         IBANGenerator ibanGenerator = new IBANGenerator();
         String iban = ibanGenerator.ibanGenerator();
         businessDao.save(business);
@@ -93,7 +97,6 @@ public class Clientview {
         return a;
     }
 
-    public Client findClientById(int id){
-        return clientDao.findClientById(id);
-    }
 }
+
+
