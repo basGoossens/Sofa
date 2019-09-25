@@ -1,13 +1,12 @@
 package team2.sofa.sofa.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 
 public class PaymentData {
     private BigDecimal amount;
     private String description;
-    private LocalDateTime dateTime;
+    private String date;
     private String creditAccount;
     private String debitAccount;
 
@@ -31,12 +30,12 @@ public class PaymentData {
         this.description = description;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getCreditAccount() {
