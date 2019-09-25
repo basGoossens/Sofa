@@ -25,8 +25,12 @@
                 d + "-" + mo + "-" + y + " " + h + ":" + m + ":" + s;
             var t = setTimeout(startTime, 500);
         }
+
         function checkTime(i) {
-            if (i < 10) {i = "0" + i};
+            if (i < 10) {
+                i = "0" + i
+            }
+            ;
             return i;
         }
     </script>
@@ -43,7 +47,6 @@
 </div>
 
 
-
 <div th:fragment="account-overview">
     <div class="new-client-container">
         <div class="w3-container">
@@ -57,10 +60,11 @@
                                 Rekening<br>
                                 IBAN: <span th:text="${account.iban}"/><br>
                                 Op naam van: <span th:text="${account.getNameOwner()}"/><br>
-                                Overige rekeninghouders: <span th:text="${account.getFullNameAccountOwnersExceptFirst()}"/><br>
+                                Overige rekeninghouders: <span
+                                    th:text="${account.getFullNameAccountOwnersExceptFirst()}"/><br>
                                 Saldo: &euro; <span th:text="${account.balance}"/><br>
                                 BIC:SOFANL2U<br>
-                                Datum & tijd:  <span id= "date-time"/><br>
+                                Datum & tijd: <span id="date-time"/><br>
                             </td>
                         </tr>
                     </table>
@@ -73,38 +77,43 @@
                         <td>Bedrag</td>
                     </tr>
                     <div th:unless="${#lists.isEmpty(account.transactions)}">
-                        <tr th:each="transaction : ${account.transactions}">
+                        <tr th:each="transaction,transactionStat : ${account.TransactionsbyDateAsc}" th:unless="${transactionStat.index > 9}">
                             <td><span th:text="${transaction.date}"/></td>
-                            <td> <span th:text="${transaction.debitAccount.iban == account.iban} ? ${transaction.creditAccount.iban} : ${transaction.debitAccount.iban}"/> </td>
-                            <td> <span th:text="${transaction.description}"/>
+                            <td><span
+                                    th:text="${transaction.debitAccount.iban == account.iban} ? ${transaction.creditAccount.iban} : ${transaction.debitAccount.iban}"/>
+                            </td>
+                            <td><span th:text="${transaction.description}"/>
                             <td><span
                                     th:text="${transaction.debitAccount.iban == account.iban} ? '- &euro; ' + ${transaction.amount} : '&euro; ' + ${transaction.amount}"/>
                             </td>
                         </tr>
                     </div>
                 </table>
-                    <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
-                        <input type=hidden th:field="${account.id}"/>
-                        <input type="submit" value="betaalopdracht"/>
-                    </form>
+                <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
+                    <input type=hidden th:field="${account.id}"/>
+                    <input type="submit" value="betaalopdracht"/>
+                </form>
                 <form action="#" th:action="@{ConnectAccount}" th:object="${account}" method="post">
                     <input type="hidden" th:field="${account.id}" name="id" id="id"/>
                     <input type="submit" value="Voeg rekeninghouder toe">
                 </form>
-                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <div th:fragment="footer" xmlns:th="http://www.w3.org/1999/xhtml">
 
     <footer class="footer">
         <div class="new-client-container">
-            <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
-                Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat Niehot </footer>
-</div>
-</div>
+            <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT
+                Work.
+                Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat
+                Niehot
+            </div>
+        </div>
+    </footer>
 </div>
 
 </body>
