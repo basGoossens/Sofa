@@ -34,7 +34,9 @@ public class ClientViewController {
 
     @PostMapping(value = "AccountListHandler")
     public String clientView(Account account, Model model) {
-        return clientview.accountFinderClient(account.getId(), model);
+        account = clientview.FindAccountById(account.getId());
+        model.addAttribute("account", account);
+        return "dashboard_client";
     }
 
     @PostMapping(value = "AddNewAccountHandler")

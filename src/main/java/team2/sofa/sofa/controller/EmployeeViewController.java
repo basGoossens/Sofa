@@ -17,7 +17,7 @@ import team2.sofa.sofa.service.TopTenMostActiveClient;
 import java.util.List;
 
 @Controller
-@SessionAttributes("sessionemployee")
+@SessionAttributes({"sessionemployee", "sessionclient"})
 public class EmployeeViewController {
 
 
