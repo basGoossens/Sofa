@@ -32,8 +32,7 @@ public class LoginController {
 
     @GetMapping(value = "login_employee")
     public String goTologinEmployeeHandler(Model model) {
-        LoginForm loginEmpForm = new LoginForm();
-        model.addAttribute("loginEmpForm", loginEmpForm);
+        model.addAttribute("employee", new Employee());
         return "login_employee";
     }
 
@@ -54,17 +53,16 @@ public class LoginController {
     }
 
     @PostMapping(value = "loginEmployeeHandler")
-    public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {
-        if (result.hasErrors()) {
-            model.addAttribute("error", error);
-            return "login_employee";
-        }
+    public String loginEmployeeHandler(Employee employee, Model model) {
         Employee employee1 = new Employee();
-        employee1.setUsername(loginEmpForm.getUsername1());
-        employee1.setPassword(loginEmpForm.getPassword1());
+        employee1.setUsername(employee.getUsername());
+        employee1.setPassword(employee.getPassword());
         boolean loginOK = passwordValidator.validateEmployeePassword(employee1);
         if (loginOK) {
             return login.employeeLogin(employee1, model);
-        } else return "login_employee";
+        }else {
+            model.addAttribute("Fout", "Gebruikersnaam en/of wachtword zijn niet juist");
+            return "login_employee";
+        }
     }
 }
