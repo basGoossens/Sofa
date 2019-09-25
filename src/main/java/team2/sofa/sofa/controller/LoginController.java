@@ -67,18 +67,11 @@ public class LoginController {
             model.addAttribute("nrBusiness", login.countPrivateAccounts(loggedInClient));
             model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
             Hibernate.initialize(loggedInClient.getAccounts());
-            return "redirect:/clientLoginSuccess";
+            return "redirect:/loadClientView";
     } else {
             model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");
             return "login";
         }
-    }
-
-    @GetMapping(value="clientLoginSuccess")
-    public String clientLoginSuccess(Model model) {
-        Account account = new Account();
-        model.addAttribute("account", account);
-        return "client_view";
     }
 
 

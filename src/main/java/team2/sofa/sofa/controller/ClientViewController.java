@@ -3,10 +3,7 @@ package team2.sofa.sofa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.BusinessDao;
@@ -58,5 +55,11 @@ public class ClientViewController {
         return "client_view";
     }
 
+    @GetMapping(value="loadClientView")
+    public String loadClientView(Model model) {
+        Account account = new Account();
+        model.addAttribute("account", account);
+        return "client_view";
+    }
 
 }
