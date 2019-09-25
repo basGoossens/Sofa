@@ -81,30 +81,6 @@ public class LoginController {
         return "client_view";
     }
 
-    @GetMapping(value="loginEmployeePrivateSuccess")
-    public String employeePrivateLoginSuccess(Model model) {
-        //onderstaande methodes nog in aparte handler zetten in EmployeeViewController
-        List<PrivateAccount> topTenHighest;
-        topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
-        model.addAttribute("tenHighestBalance", topTenHighest);
-        return "employee_view_particulieren";
-    }
-
-    @GetMapping(value="loginEmployeeBusinessSuccess")
-    public String employeeBusinessLoginSuccess(Model model) {
-        //onderstaande methodes nog in aparte handler zetten in EmployeeViewController
-        List<Client> topTenMostActive;
-        List<BusinessAccount> topTenHighest;
-        List<BalancePerSectorData> balancePerSector;
-        topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalanceBusiness();
-        topTenMostActive = topTenMostActiveClient.getTopTenMostActiveClients();
-        balancePerSector = sectorAnalyzer.getAverageBalancePerSector();
-        model.addAttribute("tenMostActive", topTenMostActive);
-        model.addAttribute("tenHighestBalance", topTenHighest);
-        model.addAttribute("balancePerSector", balancePerSector);
-        return "employee_view_mkb";
-    }
-
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(@ModelAttribute @Valid LoginForm loginEmpForm, Model model, Errors error, BindingResult result) {
@@ -120,12 +96,15 @@ public class LoginController {
             currentEmployee = login.employeeLogin(currentEmployee, model);
 
         if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
-            return "redirect:/loginEmployeePrivateSuccess";
+            return "redirect:/loadEmployeeViewPrivate";
 
         } else {
-            return "redirect:/loginEmployeeBusinessSuccess";
+            return "redirect:/loadEmployeeViewBusiness";
         }
 
         } else return "login_employee";
     }
+
+
+
 }
