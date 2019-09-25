@@ -21,7 +21,8 @@ public class DbInitializer {
     private final String BIG = "Data7000.csv";
     private final String MEDIUM = "Data5000.csv";
     private final String SMALL = "Data99.csv";
-    private final int AMOUNT = 1000;
+    private final int MAX_AMOUNT = 1000;
+    private final int MIN_AMOUNT = 100;
 
     @Autowired
     ClientDao clientDao;
@@ -82,7 +83,8 @@ public class DbInitializer {
             BusinessAccount ba = new BusinessAccount();
             Random r = new Random();
             ba.setIban(ibanStack.pop());
-            ba.setBalance(new BigDecimal(r.nextInt(AMOUNT)));
+            BigDecimal balance = new BigDecimal(r.nextInt(MAX_AMOUNT)+MIN_AMOUNT);
+            ba.setBalance(balance);
             ba.setBusiness(business);
             connectAccount(client, ba);
     }
@@ -134,7 +136,9 @@ public class DbInitializer {
             Client client = new Client();
             String[] data = rawData.get(i);
             setName(client, data);
-            client.setAddress(makeAddress(data));
+            Address address = makeAddress(data);
+            addressDao.save(address);
+            client.setAddress(address);
             client.setEmail(data[5]);
             client.setTelephoneNr(data[6]);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
@@ -150,23 +154,40 @@ public class DbInitializer {
     /**
      * maakt Employees en slaat deze op in DB
      *
-     * @param role de rol van de te maken Employee zoals vermeld in Enum EmployeeRole
      */
-    public void makeEmployee(EmployeeRole role, int index) {
-        Employee employee = new Employee();
-        String[] emp = rawData.get(index);
-        setName(employee, emp);
-        employee.setAddress(makeAddress(emp));
-        employee.setRole(role);
-        employee.setEmail(emp[5]);
-        employee.setTelephoneNr(emp[6]);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-        employee.setBirthday(emp[7]);
-        employee.setGender(emp[8]);
-        employee.setUsername(emp[9]);
-        employee.setPassword(emp[10]);
-        employee.setSsn(ssnStack.pop());
-        employeeDao.save(employee);
+    public void makeEmployees(int count) {
+        Random random = new Random();
+        for (int i = count; i > 0; i--) {
+            int index = random.nextInt(rawData.size());
+            Employee employee = new Employee();
+            String[] emp = rawData.get(index);
+            setName(employee, emp);
+            Address address = makeAddress(emp);
+            if (addressDao.existsAddressByZipCodeAndHouseNumber(address.getZipCode(),address.getHouseNumber())){
+                address = addressDao.findAddressByZipCodeAndHouseNumber(address.getZipCode(),address.getHouseNumber());
+            }
+            addressDao.save(address);
+            employee.setAddress(address);
+            employee.setRole(null);
+            employee.setEmail(emp[5]);
+            employee.setTelephoneNr(emp[6]);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+            employee.setBirthday(emp[7]);
+            employee.setGender(emp[8]);
+            employee.setUsername(emp[9]);
+            employee.setPassword(emp[10]);
+            employee.setSsn(ssnStack.pop());
+            employeeDao.save(employee);
+        }
+    }
+    public void assignEmployeeRoles(){
+        EmployeeRole[] roles = EmployeeRole.values();
+        List<Employee> list = (List<Employee>) employeeDao.findAll();
+        list.get(0).setRole(roles[0]);
+        list.get(1).setRole(roles[1]);
+        for (int i = 2; i < list.size(); i++) {
+            list.get(i).setRole(roles[2]);
+        }
     }
 
     /**
@@ -216,7 +237,6 @@ public class DbInitializer {
         address.setHouseNumber(Integer.parseInt(splits[splits.length - 1]));
         address.setZipCode(split[3].replace("\"", ""));
         address.setCity(split[4].replace("\"", ""));
-        addressDao.save(address);
         return address;
     }
 
@@ -234,7 +254,8 @@ public class DbInitializer {
             for (int i = 0; i < result; i++) {
                 PrivateAccount a = new PrivateAccount();
                 a.setIban(ibanStack.pop());
-                a.setBalance(new BigDecimal(r.nextInt(AMOUNT)));
+                BigDecimal balance = new BigDecimal(r.nextInt(MAX_AMOUNT)+MIN_AMOUNT);
+                a.setBalance(balance);
                 connectAccount(c, a);
             }
         }
@@ -264,7 +285,7 @@ public class DbInitializer {
             }
             Account cr = accountDao.findAccountById(credit);
             Account db = accountDao.findAccountById(debit);
-            Transaction t = new Transaction(new BigDecimal(2.5),"IKEA", LocalDate.now(),cr,db);
+            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)),"IKEA", LocalDate.now(),cr,db);
             fundTransfer.storeTransaction(db,cr,t);
         }
 

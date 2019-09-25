@@ -39,12 +39,18 @@ public class PersonalPageController {
     @PostMapping(value = "changeAddress")
     public String processAddress(@RequestParam Map<String, String> input, @RequestParam int clientId, Model model) {
         Client client = updateClient.findClient(clientId);
-        Address address = client.getAddress();
-        client = updateClient.changeAddress(client, address, input);
-        model.addAttribute("client", client);
-        model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
-        model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
-        return "client_view";
+        Address checkedAddress = updateClient.checkAddress(input);
+        if (checkedAddress.getId() == 0){
+            client = updateClient.changeAddress(client, checkedAddress);
+            model.addAttribute("sessionclient", client);
+            model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
+            model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
+            return "client_view";
+        }
+        model.addAttribute("address", checkedAddress);
+        model.addAttribute("clientId", clientId);
+        model.addAttribute("error", "bedoelde u misschien dit adres?");
+        return "change_address";
     }
 
     @PostMapping(value = "updateClient")
@@ -54,13 +60,13 @@ public class PersonalPageController {
         if (updateClient.usernameExists(newUsername)) {
             client = updateClient.processChanges(client, input);
             model.addAttribute("username", "uw gebruikersnaam is niet gewijzigd");
-            model.addAttribute("client", client);
+            model.addAttribute("sessionclient", client);
             model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
             model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
             return "client_view";
         }
         client.setUsername(input.get("username").toString());
-        model.addAttribute("client", client);
+        model.addAttribute("sessionclient", client);
         model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
         model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
         return "client_view";
