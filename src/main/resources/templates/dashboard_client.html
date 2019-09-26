@@ -18,7 +18,7 @@
                 <div class th:insert="/general :: account-info-block"/>
                 <div class th:insert="/general :: transactions-table"/>
 
-                <form action="#" th:action="@{TransferHandler}" th:object="${account}" method="post">
+                <form action="#" th:action="@{TransferHandler}" method="post">
                     <input type=hidden th:field="${account.id}"/>
                     <input type="submit" value="betaalopdracht"/>
                 </form>

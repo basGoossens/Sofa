@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-public class Transaction {
+public class Transaction implements Comparable<Transaction>{
 
     @Id
     @GeneratedValue(generator = "TRANS_SEQ")
@@ -104,4 +104,8 @@ public class Transaction {
 
     }
 
+    @Override
+    public int compareTo(Transaction t) {
+        return Integer.valueOf(this.id).compareTo(Integer.valueOf(t.id));
+    }
 }

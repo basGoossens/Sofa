@@ -9,41 +9,44 @@
 <div th:insert="/general :: header"/>
 
 
-
 <div class="new-client-container">
     <div class="w3-container">
         <h1 style="text-align: left;">Geld overmaken</h1>
         <div class="account-info-block" th:insert="/general :: account-info-block">
         </div>
         <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transactionForm}"
-                  method="post">
+              method="post">
             <table class="transfer-table" width="100%">
                 <tr>
                     <td>Achternaam:</td>
-                    <td><input type="text" th:field="*{name}" required/></td>
-                    <td th:errors="*{name}" style="color: red"></td>
+                    <td><input type="text" th:field="*{name}" required
+                               oninvalid="this.setCustomValidity('Geef achternaam begunstigde')"
+                               oninput="setCustomValidity('')"/></td>
                     <div th:unless="${mismatch == null}">
                         <td th:text="${mismatch }"></td>
                     </div>
                 </tr>
                 <tr>
                     <td>Bedrag:</td>
-                    <td><input type="number" th:field="*{amount}" required placeholder="5.85" step="0.01" min="0.0"/>
+                    <td><input type="number" th:field="*{amount}" required placeholder="5.85" step="0.01" min="0.0"
+                               oninvalid="this.setCustomValidity('vul een positief bedrag in')"
+                               oninput="setCustomValidity('')"/>
                     </td>
-                    <td th:errors="*{amount}" style="color: red"></td>
                     <div th:unless="${saldo == null}">
                         <td th:text="${saldo}"></td>
                     </div>
                 </tr>
                 <tr>
                     <td>Omschrijving:</td>
-                    <td><input type="text" th:field="*{description}" required/></td>
-                    <td th:errors="*{description}" style="color: red"></td>
+                    <td><input type="text" th:field="*{description}" required
+                               oninvalid="this.setCustomValidity('Geef een beschrijving aan de betaling')"
+                               oninput="setCustomValidity('')"/></td>
                 </tr>
                 <tr>
                     <td>Tegenrekening:</td>
-                    <td><input type="text" th:field="*{creditAccount}" placeholder="NL00SOFA0123456789" required/></td>
-                    <td th:errors="*{creditAccount}" style="color: red"></td>
+                    <td><input type="text" th:field="*{creditAccount}" placeholder="NL00SOFA0123456789" required
+                               oninvalid="this.setCustomValidity('Geef IBAN op van begunstigde')"
+                               oninput="setCustomValidity('')"/></td>
                     <div th:unless="${fout == null}">
                         <td th:text="${fout}"></td>
                     </div>
@@ -51,13 +54,9 @@
                         <td th:text="${foei}"></td>
                     </div>
                 </tr>
-                <tr>
-                    <td>IBAN debitrekening:</td>
-                    <td><input type="text" th:field="*{debetAccount}" readonly/></td>
-                    <td th:errors="*{debetAccount}" style="color: red"></td>
-                </tr>
+                <input type="hidden" th:field="*{debetAccount}"/></td>
             </table>
-                    <input type="submit" value="Bevestigen" style="position:relative; top:20px; right: 280px;"/>
+            <input type="submit" value="Bevestigen" style="position:relative; top:20px; right: 280px;"/>
         </form>
     </div>
 </div>

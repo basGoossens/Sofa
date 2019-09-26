@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Service
-@SessionAttributes({"connect", "nrBusiness", "nrPrivate", "sessionemployee"})
+@SessionAttributes({"nrBusiness", "nrPrivate", "sessionemployee"})
 public class Login {
 
     @Autowired
@@ -58,7 +58,9 @@ public class Login {
 
     public void checkAndLoadConnector(Client loggedInClient, Model model){
         if (connectorDao.existsConnectorByUsername(loggedInClient.getUsername())) {
-            model.addAttribute("connect", connectorDao.findConnectorByUsername(loggedInClient.getUsername()));
+            model.addAttribute("connect", connectorDao.findConnectorsByUsername(loggedInClient.getUsername()));
+        } else{
+            model.addAttribute("connect", new ArrayList<>());
         }
     }
 
