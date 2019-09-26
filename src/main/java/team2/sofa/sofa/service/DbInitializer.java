@@ -274,6 +274,7 @@ public class DbInitializer {
         clientDao.save(client);
         accountDao.save(account);
     }
+
     public void fillTransactions(){
         long maxId = accountDao.count();
         Random random = new Random();
@@ -285,7 +286,12 @@ public class DbInitializer {
             }
             Account cr = accountDao.findAccountById(credit);
             Account db = accountDao.findAccountById(debit);
-            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)),"IKEA", LocalDate.now(),cr,db);
+
+            String[] arr={"ASKEBY", "ASARUM", "LANDSKRONA", "KLIPPAN", "HERNES", "FRIHETEN", "EKTORP"};
+            Random r=new Random();
+            int randomNumber=r.nextInt(arr.length);
+
+            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)),arr[randomNumber], LocalDate.now(),cr,db);
             fundTransfer.storeTransaction(db,cr,t);
         }
 
