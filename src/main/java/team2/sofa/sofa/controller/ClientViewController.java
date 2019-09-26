@@ -26,8 +26,14 @@ public class ClientViewController {
     @Autowired
     ClientDao clientDao;
 
+
+    /** methode om elementen voor client_view.html te vullen.
+     *
+     * @param client
+     * @param model
+     */
     public void fillClientView(Client client, Model model){
-        Client loggedInClient = client.;
+        Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
         model.addAttribute("sessionclient", loggedInClient);
         login.checkAndLoadConnector(loggedInClient, model);
         model.addAttribute("nrBusiness", login.countBusinessAccounts(loggedInClient));
