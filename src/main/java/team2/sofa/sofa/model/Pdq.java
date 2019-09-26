@@ -17,13 +17,13 @@ public class Pdq {
 
 
     private String fiveDigitcode;
-    private int eightDigitcode;
+    private String eightDigitcode;
 
 
     @ManyToOne
     private Account coupledAccount;
 
-    public Pdq(String fiveDigitcode, int eightDigitcode, Account coupledAccount) {
+    public Pdq(String fiveDigitcode, String eightDigitcode, Account coupledAccount) {
         this();
         this.fiveDigitcode = fiveDigitcode;
         this.eightDigitcode = eightDigitcode;
@@ -51,11 +51,11 @@ public class Pdq {
         this.fiveDigitcode = fiveDigitcode;
     }
 
-    public int getEightDigitcode() {
+    public String  getEightDigitcode() {
         return eightDigitcode;
     }
 
-    public void setEightDigitcode(int eightDigitcode) {
+    public void setEightDigitcode(String eightDigitcode) {
         this.eightDigitcode = eightDigitcode;
     }
 

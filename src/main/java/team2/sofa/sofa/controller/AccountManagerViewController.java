@@ -22,10 +22,18 @@ public class AccountManagerViewController {
     PdqDao pdqDao;
 
 
+
+
     @PostMapping(value = "ConnectPDQ")
     public String requestPDQ(@RequestParam String iban, Model model) {
         Account account = rp.getAccount(iban);
         String code = rp.generateFiveDigit();
+        String eightcode = rp.generateEightDigit();
+        Pdq temp = new Pdq();
+        temp.setFiveDigitcode(code);
+        temp.setEightDigitcode(eightcode);
+        temp.setCoupledAccount(account);
+        pdqDao.save(temp);
         model.addAttribute("fiveDigits", code);
         model.addAttribute("account", account);
         return "receive_connecting_code";

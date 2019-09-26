@@ -22,13 +22,14 @@ public class RequestPDQ {
         Random random = new Random();
         int num = random.nextInt(100000);
         String fiveDigitcode = String.format("%05d", num);
+
         return fiveDigitcode;
     }
 
     public String generateEightDigit() {
         Random random = new Random();
         int num = random.nextInt(100000000);
-        String eightDigitcode = String.format("%05d", num);
+        String eightDigitcode = String.format("%08d", num);
         return eightDigitcode;
 
     }
