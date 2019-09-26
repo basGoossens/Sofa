@@ -14,7 +14,7 @@
         <div class="w3-container">
 
             <div class="transactions-table">
-                <h2>Rekeningoverzicht: de ingelogde klant heeft nummer <span th:text="${sessionclient.id}"/></h2>
+                <h2>Rekeningoverzicht</h2>
                 <div class th:insert="/general :: account-info-block"/>
                 <div class th:insert="/general :: transactions-table"/>
 
@@ -24,8 +24,11 @@
                 </form>
                 <form action="#" th:action="@{ConnectAccount}" th:object="${account}" method="post">
                     <input type="hidden" th:field="${account.id}" name="id" id="id"/>
-                    <input type="submit" value="Voeg rekeninghouder toe">
+                    <input type="submit" value="Voeg rekeninghouder toe"/>
                 </form>
+                <form action="#" th:action="@{backToClientView}" method="post">
+                    <input type="hidden" th:field="${sessionclient.id}" name="id" />
+                <input type="submit" value="Terug naar dashboard"/></form>
             </div>
         </div>
     </div>
