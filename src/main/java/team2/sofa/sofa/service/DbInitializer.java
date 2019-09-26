@@ -285,7 +285,7 @@ public class DbInitializer {
             }
             Account cr = accountDao.findAccountById(credit);
             Account db = accountDao.findAccountById(debit);
-            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)),"IKEA", LocalDate.now(),cr,db);
+            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)),"IKEA", String.valueOf(LocalDate.now()),cr,db);
             fundTransfer.storeTransaction(db,cr,t);
         }
 
