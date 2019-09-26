@@ -292,6 +292,13 @@ public class DbInitializer {
     public void makeDoubleAccounts(){
         List<Client> list = clientDao.findClientsByAccountsNull();
         List<Account> accounts = (List<Account>) accountDao.findAll();
+        Random random = new Random();
+        for (Client client :
+                list) {
+            int index = random.nextInt(accounts.size());
+            Account account = accounts.get(index);
+            connectAccount(client, account);
+        }
 
     }
 }
