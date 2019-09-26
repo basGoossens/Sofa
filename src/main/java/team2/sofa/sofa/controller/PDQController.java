@@ -8,6 +8,7 @@ import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.PaymentData;
 import team2.sofa.sofa.model.Transaction;
 import team2.sofa.sofa.model.dao.AccountDao;
+import team2.sofa.sofa.model.dao.BusinessAccountDao;
 import team2.sofa.sofa.service.FundTransfer;
 import team2.sofa.sofa.service.SerializationService;
 
@@ -23,10 +24,13 @@ public class PDQController {
     @Autowired
     AccountDao accountDao;
 
+    @Autowired
+    BusinessAccountDao businessAccountDao;
+
     @PostMapping("/paymentmachine/payment/")
     public String TransactionPostController(@RequestBody PaymentData paymentData){
         String returnJson;
-        Account creditAccount = accountDao.findAccountByIban(paymentData.getCreditAccount());
+        Account creditAccount = businessAccountDao.findBusinessAccountByIban(paymentData.getCreditAccount());
         Account debitAccount = accountDao.findAccountByIban(paymentData.getDebitAccount());
         if (fundTransfer.insufficientBalance(paymentData.getAmount(), debitAccount)){
             returnJson = "Failed";
