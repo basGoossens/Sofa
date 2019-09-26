@@ -32,6 +32,7 @@ public class DatabaseController {
         dbInitializer.makeEmployees(EMPLOYEES);
         dbInitializer.assignEmployeeRoles();
         dbInitializer.makeBusiness(BUSINESS, CLIENTS);
+        dbInitializer.makeDoubleAccounts();
         dbInitializer.fillTransactions();
         return "index";
     }

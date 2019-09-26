@@ -1,22 +1,13 @@
 package team2.sofa.sofa.model;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public class TransactionForm {
 
-    @NotBlank (message = "vul naam rekeninghouder in")
     String name;
-    @Positive (message = "vul een positief bedrag in")
-    @Digits(integer=10, fraction=2, message = "voer een bedrag in met 2 cijfers achter de comma")
     BigDecimal amount;
-    @NotBlank (message = "vul een omschrijving in")
     String description;
-    @NotBlank (message = "vul een geldig IBAN in behorend bij naam rekeninghouder")
     String creditAccount;
-    @NotBlank (message = "vul eigen IBAN in")
     String debetAccount;
     String pin;
 

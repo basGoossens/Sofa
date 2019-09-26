@@ -3,6 +3,7 @@ package team2.sofa.sofa.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -153,5 +154,10 @@ public class Account {
     public String getNameOwner() {
         if (getIsBusinessAccount()) return ((BusinessAccount) this).getBusiness().getBusinessName();
         return owners.get(0).getFullNameUser();
+    }
+    public List<Transaction> getTransactionsbyDateAsc(){
+        Collections.sort(transactions);
+        Collections.reverse(transactions);
+        return transactions;
     }
 }

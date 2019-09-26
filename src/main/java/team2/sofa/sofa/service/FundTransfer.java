@@ -37,22 +37,30 @@ public class    FundTransfer {
      * @param model
      * @return
      */
-    public String readyTransaction(int id, Model model) {
+    public Model readyTransaction(int id, Model model) {
         TransactionForm t = new TransactionForm();
         Account a = accountDao.findAccountById(id);
         t.setDebetAccount(a.getIban());
         model.addAttribute("transactionForm", t);
         model.addAttribute("account", a);
-        return "money_transfer";
+        return model;
+    }
+    public Model returnToTransaction(TransactionForm transactionForm, Model model) {
+        String iban = transactionForm.getDebetAccount();
+        Account a = accountDao.findAccountByIban(iban);
+        transactionForm.setDebetAccount(a.getIban());
+        model.addAttribute("transactionForm", transactionForm);
+        model.addAttribute("account", a);
+        return model;
     }
 
-    public String prepareConfirmation(TransactionForm transactionForm, Model model){
+    public Model prepareConfirmation(TransactionForm transactionForm, Model model){
         Account account = accountDao.findAccountByIban(transactionForm.getDebetAccount());
         Client benificiary = accountDao.findAccountByIban(transactionForm.getCreditAccount()).getOwners().get(0);
         model.addAttribute("benificiary", benificiary);
         model.addAttribute("account", account);
         model.addAttribute("transaction", transactionForm);
-        return "confirm_payment";
+        return model;
     }
 
     /**
@@ -62,10 +70,10 @@ public class    FundTransfer {
      * @param model
      * @return
      */
-    public String readyDashboard(TransactionForm transactionForm, Model model) {
+    public Model readyDashboard(TransactionForm transactionForm, Model model) {
         Account a = accountDao.findAccountByIban(transactionForm.getDebetAccount());
         model.addAttribute("account", a);
-        return "dashboard_client";
+        return model;
     }
 
     /**
@@ -113,10 +121,10 @@ public class    FundTransfer {
      * @param transactionForm afkomstig vanuit controller PaymentController
      * @return
      */
-    public boolean checkBalance(TransactionForm transactionForm) {
+    public boolean insufficientBalance(TransactionForm transactionForm) {
         BigDecimal amount = transactionForm.getAmount();
         Account account = accountDao.findAccountByIban(transactionForm.getDebetAccount());
-        return checkBalance(amount, account);
+        return insufficientBalance(amount, account);
     }
 
     /**
@@ -126,7 +134,7 @@ public class    FundTransfer {
      * @param account het debitAccount dat gebruikt is in het formulier money_transfer
      * @return
      */
-    private boolean checkBalance(BigDecimal amount, Account account) {
+    public boolean insufficientBalance(BigDecimal amount, Account account) {
         BigDecimal balance = account.getBalance();
         BigDecimal change = balance.subtract(amount);
         double check = change.doubleValue();

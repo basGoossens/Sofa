@@ -278,7 +278,7 @@ public class DbInitializer {
     public void fillTransactions(){
         long maxId = accountDao.count();
         Random random = new Random();
-        for (int i = 0; i < maxId*4 ; i++) {
+        for (int i = 0; i < maxId ; i++) {
             int credit = random.nextInt(Math.toIntExact(maxId))+1;
             int debit = random.nextInt((int) maxId)+1;
             while (debit == credit){
@@ -288,14 +288,21 @@ public class DbInitializer {
             Account db = accountDao.findAccountById(debit);
 
             String[] arr={"ASKEBY", "ASARUM", "LANDSKRONA", "KLIPPAN", "HERNES", "FRIHETEN", "EKTORP"};
-            Random r=new Random();
-            int randomNumber=r.nextInt(arr.length);
-
-            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)),arr[randomNumber], LocalDate.now(),cr,db);
+            int randomNumber=random.nextInt(arr.length);
+            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)+1),arr[randomNumber], String.valueOf(LocalDate.now()),cr,db);
             fundTransfer.storeTransaction(db,cr,t);
         }
-
-
+    }
+    public void makeDoubleAccounts(){
+        List<Client> list = clientDao.findClientsByAccountsNull();
+        List<Account> accounts = (List<Account>) accountDao.findAll();
+        Random random = new Random();
+        for (Client client :
+                list) {
+            int index = random.nextInt(accounts.size());
+            Account account = accounts.get(index);
+            connectAccount(client, account);
+        }
 
     }
 }

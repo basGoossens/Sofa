@@ -1,8 +1,6 @@
 package team2.sofa.sofa.model.dao;
 
 import org.springframework.data.repository.CrudRepository;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Business;
 import team2.sofa.sofa.model.BusinessAccount;
 
 import java.util.List;
@@ -12,4 +10,8 @@ public interface BusinessAccountDao extends CrudRepository <BusinessAccount, Int
         List<BusinessAccount> findTop10ByBusinessIsNotNullOrderByBalanceDesc();
 
         BusinessAccount findAccountById(int id);
+
+        BusinessAccount findBusinessAccountByIban(String iban);
+
+        boolean existsBusinessAccountByIban(String string);
 }
