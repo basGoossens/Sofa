@@ -98,14 +98,12 @@ public class Transaction implements Comparable<Transaction>{
             for (Client cl : debitAccount.getOwners()
             ) {
                 cl.setTotalNumberOfTransactions(cl.getTotalNumberOfTransactions() + 1);
-
             }
         }
-
     }
 
     @Override
     public int compareTo(Transaction t) {
-        return Integer.valueOf(this.id).compareTo(Integer.valueOf(t.id));
+        return getDate().compareTo(t.getDate());
     }
 }

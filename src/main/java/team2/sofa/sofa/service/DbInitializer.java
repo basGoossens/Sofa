@@ -141,7 +141,6 @@ public class DbInitializer {
             client.setAddress(address);
             client.setEmail(data[5]);
             client.setTelephoneNr(data[6]);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
             client.setBirthday(data[7]);
             client.setGender(data[8]);
             client.setUsername(data[9]);
@@ -157,6 +156,7 @@ public class DbInitializer {
      */
     public void makeEmployees(int count) {
         Random random = new Random();
+        String[] username = {"", "Aat", "Joost", "Danielle", "Bas", "Kirsten", "Rene"};
         for (int i = count; i > 0; i--) {
             int index = random.nextInt(rawData.size());
             Employee employee = new Employee();
@@ -171,11 +171,10 @@ public class DbInitializer {
             employee.setRole(null);
             employee.setEmail(emp[5]);
             employee.setTelephoneNr(emp[6]);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
             employee.setBirthday(emp[7]);
             employee.setGender(emp[8]);
-            employee.setUsername(emp[9]);
-            employee.setPassword(emp[10]);
+            employee.setUsername(username[i]);
+            employee.setPassword(username[i]);
             employee.setSsn(ssnStack.pop());
             employeeDao.save(employee);
         }
@@ -289,7 +288,8 @@ public class DbInitializer {
 
             String[] arr={"ASKEBY", "ASARUM", "LANDSKRONA", "KLIPPAN", "HERNES", "FRIHETEN", "EKTORP"};
             int randomNumber=random.nextInt(arr.length);
-            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)+1),arr[randomNumber], String.valueOf(LocalDate.now()),cr,db);
+            String date = createRandomDate(2016,2018);
+            Transaction t = new Transaction(new BigDecimal(random.nextInt(10)+1),arr[randomNumber],date,cr,db);
             fundTransfer.storeTransaction(db,cr,t);
         }
     }
@@ -303,7 +303,17 @@ public class DbInitializer {
             Account account = accounts.get(index);
             connectAccount(client, account);
         }
-
+    }
+    private String createRandomDate(int startYear, int endYear) {
+        int day = createRandomIntBetween(1, 28);
+        int month = createRandomIntBetween(1, 12);
+        int year = createRandomIntBetween(startYear, endYear);
+        return String.valueOf(LocalDate.of(year, month, day));
+    }
+    private int createRandomIntBetween(int low, int high){
+        Random r = new Random();
+        int random = r.nextInt(high-low)+low;
+        return random;
     }
 }
 

@@ -18,7 +18,7 @@ public class DatabaseController {
     // Medium tot 5000
     // Large tot 7000
     private final int CLIENTS = 50;
-    private final int EMPLOYEES = 5;
+    private final int EMPLOYEES = 6;
     private final int BUSINESS = 20;
 
 
