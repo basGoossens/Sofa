@@ -138,12 +138,13 @@ public class Account {
 
     public String getFullNameAccountOwnersExceptFirst() {
         StringBuilder name = new StringBuilder();
-        if (getIsBusinessAccount()) name.append(owners.get(0).getFullNameUser() + " / ");
-
-        for (int i = 1; i < owners.size(); i++) {
+        if (getIsBusinessAccount()) name.append(owners.get(0).getFullNameUser());
+        if (owners.size() > 1)  {
+            name.append(" / ");
+            for (int i = 1; i < owners.size(); i++) {
             name.append(owners.get(i).getFullNameUser());
             if (i + 1 < owners.size()) name.append(" / ");
-        }
+        }}
         if (name.toString().isEmpty()) {
             return "geen";
         }
