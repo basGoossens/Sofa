@@ -3,20 +3,23 @@ package team2.sofa.sofa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.Account;
+import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Connector;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ConnectorDao;
 import team2.sofa.sofa.service.ConnectingService;
+import team2.sofa.sofa.service.Login;
 
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@SessionAttributes("sessionclient")
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate"})
 public class ConnectController {
 
     @Autowired
@@ -25,6 +28,8 @@ public class ConnectController {
     AccountDao accountDao;
     @Autowired
     ConnectorDao connectorDao;
+    @Autowired
+    Login login;
 
     /**
      * mapping vanuit clientdash board naar connect_accounts
@@ -91,17 +96,15 @@ public class ConnectController {
         //Onderstaande methode stopt alle instanties waarbij de username voorkomt in een list
         //en checkt op IBAN en security code
         int id = Integer.valueOf(body.get("idconnect").toString());
-        List<Connector> connectors = connectorDao.findAllById(id);
-        for (Connector c: connectors) {
-            if (c.getSecurityCode().equals(body.get("accesscode").toString())
+        Connector c = connectorDao.findById(id).get();
+        if (c.getSecurityCode().equals(body.get("accesscode").toString())
                 && c.getIban().equals(body.get("banknr").toString())) {
-
                 //call service method to update client, account en connector
                 model = cs.processCoupling(c, model);
+                model.addAttribute("connect", connectorDao.findConnectorsByUsername(c.getUsername()));
                 return "client_view";
-            }
         }
-        model.addAttribute("connection", connectors.get(0));
+        model.addAttribute("connection", c);
         model.addAttribute("wrong", "accescode is niet juist");
         return "connect_accounts";
     }

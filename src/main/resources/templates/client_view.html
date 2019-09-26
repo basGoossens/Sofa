@@ -93,9 +93,9 @@
             <input type="hidden" th:value="${sessionclient.address.id}" name="addressId">
             <input type="submit" value="Adreswijziging doorgeven"/>
         </form>
-        <div th:if="${connect}">
+        <div th:if="${connect.size()} > 0">
         <form action="#" th:action="@{NewConnection}" method="post">
-            <input type="hidden" th:value="${connect.id}" name="id">
+            <input type="hidden" th:value="${connect.get(0).id}" name="id">
             <input type="submit" value="Koppel een nieuwe rekening">
         </form>
         </div>

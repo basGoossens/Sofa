@@ -40,6 +40,7 @@ public class LoginController {
     @GetMapping(value = "logout")
     public String logoutHandler(Model model) {
         model.addAttribute("sessionclient", "");
+        model.addAttribute("connect", "");
         model.addAttribute("client", new Client());
         return "login";
     }
