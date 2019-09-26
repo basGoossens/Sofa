@@ -147,7 +147,7 @@ public abstract class User {
 
         tenaamstelling.append(lastName);
 
-        return tenaamstelling.toString().toUpperCase();
+        return tenaamstelling.toString();
     }
 
 }

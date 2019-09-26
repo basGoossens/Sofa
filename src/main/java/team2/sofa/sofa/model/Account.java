@@ -154,6 +154,7 @@ public class Account {
         if (getIsBusinessAccount()) return ((BusinessAccount) this).getBusiness().getBusinessName();
         return owners.get(0).getFullNameUser();
     }
+
     public List<Transaction> getTransactionsbyDateAsc(){
         Collections.sort(transactions);
         Collections.reverse(transactions);
