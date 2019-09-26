@@ -83,17 +83,17 @@ public class LoginController {
         currentEmployee.setPassword(employee.getPassword());
         boolean loginOK = passwordValidator.validateEmployeePassword(currentEmployee);
         if (loginOK) {
-            currentEmployee = login.employeeLogin(currentEmployee, model);
+            Employee fullemployee = login.employeeLogin(currentEmployee, model);
 
-            if (currentEmployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
-                return "redirect:/loginEmployeePrivateSuccess";
+            if (fullemployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
+                return "redirect:/loadEmployeeViewPrivate";
 
-            } if (currentEmployee.getRole().equals(EmployeeRole.ACCOUNTMANAGER)){
+            } if (fullemployee.getRole().equals(EmployeeRole.ACCOUNTMANAGER)){
                 return "account_manager_view";
             }
 
             else {
-                return "redirect:/loginEmployeeBusinessSuccess";
+                return "redirect:/loadEmployeeViewBusiness";
             }
 
         } else {

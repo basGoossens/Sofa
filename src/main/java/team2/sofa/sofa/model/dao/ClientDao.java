@@ -17,4 +17,6 @@ public interface ClientDao extends CrudRepository<Client, Integer> {
 
     List<Client> findTop10ByOrderByTotalNumberOfTransactionsDesc();
 
+    List<Client> findClientsByAccountsNull();
+
 }
