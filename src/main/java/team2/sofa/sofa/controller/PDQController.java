@@ -37,7 +37,7 @@ public class PDQController {
         } else {
             try {
                 Transaction transaction = new Transaction(paymentData.getAmount(), paymentData.getDescription(),
-                        paymentData.getDate(), creditAccount, debitAccount);
+                        String.valueOf(paymentData.getDate()), creditAccount, debitAccount);
                 fundTransfer.storeTransaction(debitAccount, creditAccount, transaction);
                 returnJson = "Approved";
             } catch (Exception e) {

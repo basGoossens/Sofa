@@ -14,7 +14,7 @@ public class Transaction implements Comparable<Transaction>{
     private int id;
     private BigDecimal amount;
     private String description;
-    private LocalDate date;
+    private String date;
     @ManyToOne
     @Nullable
     private Account creditAccount;
@@ -22,7 +22,7 @@ public class Transaction implements Comparable<Transaction>{
     @Nullable
     private Account debitAccount;
 
-    public Transaction(BigDecimal amount, String description, LocalDate date, Account creditAccount, Account debitAccount){
+    public Transaction(BigDecimal amount, String description, String date, Account creditAccount, Account debitAccount){
         this.amount = amount;
         this.description = description;
         this.date = date;
@@ -32,12 +32,12 @@ public class Transaction implements Comparable<Transaction>{
     }
 
     public Transaction(BigDecimal amount, String description, @Nullable Account creditAccount, @Nullable Account debitAccount) {
-        this (amount,description, LocalDate.now(), creditAccount, debitAccount);
+        this (amount,description, String.valueOf(LocalDate.now()), creditAccount, debitAccount);
         addToTotalTransactions();
     }
 
     public Transaction(){
-        this(null,"",LocalDate.now(),null,null);
+        this(null,"", String.valueOf(LocalDate.now()),null,null);
         addToTotalTransactions();
     }
 
@@ -66,11 +66,11 @@ public class Transaction implements Comparable<Transaction>{
     }
 
     public LocalDate getDate() {
-        return date;
+        return LocalDate.parse(date);
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.date = String.valueOf(date);
     }
 
     public Account getCreditAccount() {
