@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `sofa` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
+CREATE DATABASE  IF NOT EXISTS `sofa` /*!40100 DEFAULT CHARACTER SET utf8mb4*/;
 USE `sofa`;
 -- MySQL dump 10.13  Distrib 8.0.15, for Win64 (x86_64)
 --
@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `acc_seq`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `acc_seq` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,7 +58,7 @@ CREATE TABLE `account` (
   UNIQUE KEY `UK_cuc1pxk2ofct9xra2nm0oon` (`iban`),
   KEY `FKnp5ie650lqv2rv7wmp177ig8a` (`business_id`),
   CONSTRAINT `FKnp5ie650lqv2rv7wmp177ig8a` FOREIGN KEY (`business_id`) REFERENCES `business` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +85,7 @@ CREATE TABLE `account_coupled_pdq_machines` (
   KEY `FK71y153pd9uyqiecwft1lx4615` (`business_account_id`),
   CONSTRAINT `FK71y153pd9uyqiecwft1lx4615` FOREIGN KEY (`business_account_id`) REFERENCES `account` (`id`),
   CONSTRAINT `FKleytgiw6946lcut3u6sdwx9bq` FOREIGN KEY (`coupled_pdq_machines_id`) REFERENCES `pdq` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +111,7 @@ CREATE TABLE `account_owners` (
   KEY `FKogm2nlotxvuxl1asjneto0y2u` (`accounts_id`),
   CONSTRAINT `FKiaonnp253a5buumx3secax0cr` FOREIGN KEY (`owners_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKogm2nlotxvuxl1asjneto0y2u` FOREIGN KEY (`accounts_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +138,7 @@ CREATE TABLE `account_transactions` (
   KEY `FKbrn3bd376gr5d364db3tn3rx9` (`account_id`),
   CONSTRAINT `FKbo9ocnxyf4qmchbuu7nwgfw90` FOREIGN KEY (`transactions_id`) REFERENCES `transaction` (`id`),
   CONSTRAINT `FKbrn3bd376gr5d364db3tn3rx9` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +165,7 @@ CREATE TABLE `address` (
   `street` varchar(255) DEFAULT NULL,
   `zip_code` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ DROP TABLE IF EXISTS `adr_seq`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `adr_seq` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +209,7 @@ DROP TABLE IF EXISTS `bus_seq`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `bus_seq` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +237,7 @@ CREATE TABLE `business` (
   PRIMARY KEY (`id`),
   KEY `FKb4maq7rjfml4gm6ydg4djjyb6` (`owner_id`),
   CONSTRAINT `FKb4maq7rjfml4gm6ydg4djjyb6` FOREIGN KEY (`owner_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,7 +259,7 @@ DROP TABLE IF EXISTS `con_seq`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `con_seq` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,7 +285,7 @@ CREATE TABLE `connector` (
   `security_code` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -306,7 +306,7 @@ DROP TABLE IF EXISTS `hibernate_sequence`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `hibernate_sequence` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,7 +334,7 @@ CREATE TABLE `pdq` (
   PRIMARY KEY (`id`),
   KEY `FKkaorsseww7jpcq1vy4ooo7l68` (`coupled_account_id`),
   CONSTRAINT `FKkaorsseww7jpcq1vy4ooo7l68` FOREIGN KEY (`coupled_account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -356,7 +356,7 @@ DROP TABLE IF EXISTS `trans_seq`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `trans_seq` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -388,7 +388,7 @@ CREATE TABLE `transaction` (
   KEY `FKymgip1b572bwfjdelv9l6t9h` (`debit_account_id`),
   CONSTRAINT `FKkhfcwwreov5oonj4aok765fa0` FOREIGN KEY (`credit_account_id`) REFERENCES `account` (`id`),
   CONSTRAINT `FKymgip1b572bwfjdelv9l6t9h` FOREIGN KEY (`debit_account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -427,7 +427,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   KEY `FKddefmvbrws3hvl5t0hnnsv8ox` (`address_id`),
   CONSTRAINT `FKddefmvbrws3hvl5t0hnnsv8ox` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -449,7 +449,7 @@ DROP TABLE IF EXISTS `user_seq`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `user_seq` (
   `next_val` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
