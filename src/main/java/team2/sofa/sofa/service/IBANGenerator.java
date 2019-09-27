@@ -1,6 +1,8 @@
 package team2.sofa.sofa.service;
 
 import java.math.BigInteger;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Random;
 import java.util.Stack;
 
@@ -62,10 +64,14 @@ public class IBANGenerator {
         return IBAN;
     }
 
-    public Stack<String> ibanStack(int count) {
-        Stack<String> ibanStack = new Stack<>();
+    public Deque<String> ibanStack(int count) {
+        Deque<String> ibanStack = new ArrayDeque<>();
         for (int i = 0; i < count; i++) {
-            ibanStack.push(ibanGenerator());
+            String iban = ibanGenerator();
+            if (!ibanStack.contains(iban)){
+                ibanStack.push(ibanGenerator());
+            }
+
         }
         return ibanStack;
     }

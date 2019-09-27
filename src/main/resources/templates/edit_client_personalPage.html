@@ -6,52 +6,50 @@
 </head>
 <body>
 
-    <div th:insert="/general :: header"/>
+<div th:insert="/general :: header"/>
 <h1>Hallo, <span th:text="${client.getFullNameUser()}"/></h1>
 
 <div class="text-container">
-<h2>Persoonlijke gegevens wijzigen</h2>
+    <h2>Persoonlijke gegevens wijzigen</h2>
 </div>
 
 <div class="new-client-container">
     <div class="form-container">
-    <form name="Persoonlijke pagina - Client" action="#" th:action="@{updateClient}" method="post">
-    <input type="hidden" th:value="${client.id}" name="id"/>
-    <table>
-        <tr>
-            <td>Voornaam:</td>
-            <td><input type="text" th:value="${client.firstName}" name="firstName" required/></td>
-        </tr>
-        <tr>
-            <td>Tussenvoegsel:</td>
-            <td><input type="text" th:value="${client.prefix}" name="prefix"/></td>
-        </tr>
-        <tr>
-            <td>Achternaam:</td>
-            <td><input type="text" th:value="${client.lastName}" name="lastName" required/></td>
-        </tr>
-        <tr>
-            <td>Emailadres:</td>
-            <td><input type="text" th:value="${client.email}" name="email"/></td>
-        </tr>
-        <tr>
-            <td>Telefoonnummer:</td>
-            <td><input type="text" th:value="${client.telephoneNr}" name="telephoneNr"/></td>
-        </tr>
-        <tr>
-            <td>Gebruikersnaam:</td>
-            <td><input type="text" th:value="${client.username}" name="username" required/></td>
-        </tr>
-        <tr>
-            <td>Wachtwoord</td>
-            <td><input type="text" th:value="${client.password}" name="password" required/></td>
-        </tr>
-    </table>
-    <input type="submit" value="verzenden">
-    </form>
+        <form name="Persoonlijke pagina - Client" action="#" th:action="@{updateClient}" method="post">
+            <input type="hidden" th:value="${client.id}" name="id"/>
+            <table>
+                <tr>
+                    <td>Voornaam:</td>
+                    <td><input type="text" th:value="${client.firstName}" name="firstName" required/></td>
+                </tr>
+                <tr>
+                    <td>Tussenvoegsel:</td>
+                    <td><input type="text" th:value="${client.prefix}" name="prefix"/></td>
+                </tr>
+                <tr>
+                    <td>Achternaam:</td>
+                    <td><input type="text" th:value="${client.lastName}" name="lastName" required/></td>
+                </tr>
+                <tr>
+                    <td>Emailadres:</td>
+                    <td><input type="text" th:value="${client.email}" name="email"/></td>
+                </tr>
+                <tr>
+                    <td>Telefoonnummer:</td>
+                    <td><input type="text" th:value="${client.telephoneNr}" name="telephoneNr"/></td>
+                </tr>
+                <tr>
+                    <td>Gebruikersnaam:</td>
+                    <td><input type="text" th:value="${client.username}" name="username" required/></td>
+                </tr>
+                <tr>
+                    <td>Wachtwoord</td>
+                    <td><input type="text" th:value="${client.password}" name="password" required/></td>
+                </tr>
+            </table>
+            <input type="submit" value="verzenden">
+        </form>
+    </div>
 </div>
-</div>
-
-<p>Ga <a href="index">terug</a> naar het begin...</p>
 </body>
 </html>
