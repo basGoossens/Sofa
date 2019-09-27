@@ -14,7 +14,7 @@ import team2.sofa.sofa.service.FundTransfer;
 import team2.sofa.sofa.service.Login;
 
 @Controller
-@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate"})
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "account"})
 public class DashboardClientController {
 
     @Autowired

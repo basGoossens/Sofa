@@ -16,7 +16,7 @@ import team2.sofa.sofa.service.Login;
 import java.math.BigDecimal;
 
 @Controller
-@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "newaccountid"})
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "newaccountid", "account"})
 public class ClientViewController {
 
     @Autowired
@@ -49,9 +49,16 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "AccountListHandler")
-    public String clientView(Account account, Model model) {
+    public String AccountListHandler(Account account, Model model) {
         account = clientview.FindAccountById(account.getId());
         model.addAttribute("account", account);
+        Hibernate.initialize(account.getOwners());
+        Hibernate.initialize(account.getTransactions());
+        return "redirect:/loadDashboardClient";
+    }
+
+    @GetMapping(value = "loadDashboardClient")
+    public String loadDashboardClient(){
         return "dashboard_client";
     }
 
