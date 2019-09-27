@@ -17,9 +17,9 @@ public class DatabaseController {
     // Small tot 99
     // Medium tot 5000
     // Large tot 7000
-    private final int CLIENTS = 50;
+    private final int CLIENTS = 4000;
     private final int EMPLOYEES = 6;
-    private final int BUSINESS = 20;
+    private final int BUSINESS = 1000;
 
 
     @Autowired
