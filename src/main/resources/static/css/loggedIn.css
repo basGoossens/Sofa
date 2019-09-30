@@ -92,7 +92,7 @@ body {
     }
 
     .w3-container {
-        margin: center;
+        margin: auto;
         float: left;
         width: 50%;
         max-width: 700px;

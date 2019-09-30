@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -21,8 +20,8 @@ public class DbInitializer {
     private final String BIG = "Data7000.csv";
     private final String MEDIUM = "Data5000.csv";
     private final String SMALL = "Data99.csv";
-    private final int MAX_AMOUNT = 1000;
-    private final int MIN_AMOUNT = 100;
+    private final int MAX_AMOUNT_BALANCE = 1000;
+    private final int MIN_AMOUNT_BALANCE = 100;
 
     @Autowired
     ClientDao clientDao;
@@ -39,70 +38,20 @@ public class DbInitializer {
     @Autowired
     FundTransfer fundTransfer;
 
-    private List<String[]> rawData;
-    private Stack<String> ssnStack;
-    private Stack<String> ibanStack;
-    private Stack<String> companyList;
+    private final List<String[]> rawData;
+    private final Deque<String> ssnStack;
+    private final Deque<String> ibanStack;
+    private final Deque<String> companyList;
+    private final Random random;
 
     public DbInitializer() {
         super();
-        rawData = makeDataList(SMALL);
+        rawData = makeDataList(BIG);
         ssnStack = SSNFunctionality.bsnStack(rawData.size());
         this.ibanStack = new IBANGenerator().ibanStack(rawData.size()*2);
         this.companyList = makeCompanyList();
+        this.random = new Random();
     }
-
-    /**
-     * Genereert business objects om op te slaan in de DB
-     *
-     * @param countb aantal te creëren businesses
-     */
-    public void makeBusiness(int countb, int countC) {
-        for (int i = 0; i < countb; i++) {
-            Random r = new Random();
-            Business b = new Business();
-            b.setBusinessName(companyList.pop());
-            BusinessSector[] businessSectors = (BusinessSector.values());
-            b.setSector(businessSectors[i%11]);
-            int randomClient = r.nextInt(countC);
-            if (randomClient == 0){
-                randomClient = 1;
-            }
-            Client c = clientDao.findClientById(randomClient);
-            b.setOwner(c);
-            businessDao.save(b);
-            makeBusinessAccount(b,c);
-        }
-    }
-
-    /**
-     * maakt businessaccounts aan en koppelt deze aan clients
-     *
-     */
-    private void makeBusinessAccount(Business business, Client client) {
-            BusinessAccount ba = new BusinessAccount();
-            Random r = new Random();
-            ba.setIban(ibanStack.pop());
-            BigDecimal balance = new BigDecimal(r.nextInt(MAX_AMOUNT)+MIN_AMOUNT);
-            ba.setBalance(balance);
-            ba.setBusiness(business);
-            connectAccount(client, ba);
-    }
-
-    /**
-     * Helper methode genereert bedijfsnamen uit data.csv bestand.
-     *
-     * @return lijst bedrijfsnamen om in het model Business te gebruiken
-     */
-    private Stack<String> makeCompanyList() {
-        Stack<String> comp = new Stack<>();
-        for (int i = 0; i < rawData.size(); i++) {
-            if (!(rawData.get(i).length == 11))
-            comp.push(rawData.get(i)[11].replace("\"", ""));
-        }
-        return comp;
-    }
-
     /**
      * helper methode om data in CSV bestand in te laden en in lijst te plaatsen
      *
@@ -126,6 +75,51 @@ public class DbInitializer {
         return data;
     }
 
+    /**
+     * Helper methode genereert bedijfsnamen uit data.csv bestand.
+     *
+     * @return lijst bedrijfsnamen om in het model Business te gebruiken
+     */
+    private Deque<String> makeCompanyList() {
+        Deque<String> company = new ArrayDeque<>();
+        for (String[] raw : rawData) {
+            if (!(raw.length == 11))
+                company.push(raw[11].replace("\"", ""));
+        }
+        return company;
+    }
+
+    /**
+     * Genereert business objects om op te slaan in de DB
+     *
+     * @param nrOfBussiness aantal te creëren businesses
+     */
+    public void makeBusiness(int nrOfBussiness, int nrOfClients) {
+        for (int i = 0; i < nrOfBussiness; i++) {
+            Business business = new Business();
+            business.setBusinessName(companyList.pop());
+            BusinessSector[] businessSectors = (BusinessSector.values());
+            business.setSector(businessSectors[i%11]);
+            int randomClient = random.nextInt(nrOfClients) + 1;
+            Client client = clientDao.findClientById(randomClient);
+            business.setOwner(client);
+            businessDao.save(business);
+            makeBusinessAccount(business,client);
+        }
+    }
+
+    /**
+     * maakt businessaccounts aan en koppelt deze aan clients
+     *
+     */
+    private void makeBusinessAccount(Business business, Client client) {
+            BusinessAccount ba = new BusinessAccount();
+            ba.setIban(ibanStack.pop());
+            BigDecimal balance = new BigDecimal(random.nextInt(MAX_AMOUNT_BALANCE)+ MIN_AMOUNT_BALANCE);
+            ba.setBalance(balance);
+            ba.setBusiness(business);
+            connectAccount(client, ba);
+    }
     /**
      * maakt clients en slaat deze op in DB
      *
@@ -155,7 +149,6 @@ public class DbInitializer {
      *
      */
     public void makeEmployees(int count) {
-        Random random = new Random();
         String[] username = {"", "Aat", "Joost", "Danielle", "Bas", "Kirsten", "Rene"};
         for (int i = count; i > 0; i--) {
             int index = random.nextInt(rawData.size());
@@ -197,21 +190,26 @@ public class DbInitializer {
      */
     private void setName(User user, String[] split) {
         user.setFirstName(split[0].replace("\"", ""));
+        //in CSV bestand zijn de voorvoegsels opgenomen in dezelfde kolom als de achternaam, vandaar onderstaande IF
         if (split[1].startsWith("\"")) {
-            String opgeschoond = split[1].replace("\"", "");
-            String[] splits = opgeschoond.split(" ");
-            StringBuilder prefix = new StringBuilder();
-            for (int i = 0; i < splits.length - 1; i++) {
-                prefix.append(splits[i]);
-                if (i < splits.length - 2) {
-                    prefix.append(" ");
-                }
-            }
-            user.setPrefix(prefix.toString());
+            String cleanString = split[1].replace("\"", "");
+            String[] splits = cleanString.split(" ");
+            String prefix = makePrefix(splits);
+            user.setPrefix(prefix);
             user.setLastName(splits[splits.length - 1]);
         } else {
             user.setLastName(split[1]);
         }
+    }
+    private String makePrefix(String[] splits){
+        StringBuilder prefix = new StringBuilder();
+        for (int i = 0; i < splits.length - 1; i++) {
+            prefix.append(splits[i]);
+            if (i < splits.length - 2) {
+                prefix.append(" ");
+            }
+        }
+        return prefix.toString();
     }
 
     /**
@@ -224,8 +222,8 @@ public class DbInitializer {
     private Address makeAddress(String[] split) {
         Address address = new Address();
         StringBuilder street = new StringBuilder();
-        String st = split[2].replace("\"", "");
-        String[] splits = st.split(" ");
+        String cleanString = split[2].replace("\"", "");
+        String[] splits = cleanString.split(" ");
         for (int i = 0; i < splits.length - 1; i++) {
             street.append(splits[i]);
             if (i < splits.length - 2) {
@@ -248,12 +246,11 @@ public class DbInitializer {
         Iterable<Client> client = clientDao.findAll();
         for (Client c : client
         ) {
-            Random r = new Random();
-            int result = r.nextInt(3);
+            int result = random.nextInt(3);
             for (int i = 0; i < result; i++) {
                 PrivateAccount a = new PrivateAccount();
                 a.setIban(ibanStack.pop());
-                BigDecimal balance = new BigDecimal(r.nextInt(MAX_AMOUNT)+MIN_AMOUNT);
+                BigDecimal balance = new BigDecimal(random.nextInt(MAX_AMOUNT_BALANCE)+ MIN_AMOUNT_BALANCE);
                 a.setBalance(balance);
                 connectAccount(c, a);
             }
@@ -276,19 +273,17 @@ public class DbInitializer {
 
     public void fillTransactions(){
         long maxId = accountDao.count();
-        Random random = new Random();
         for (int i = 0; i < maxId ; i++) {
-            int credit = random.nextInt(Math.toIntExact(maxId))+1;
+            int credit = random.nextInt((int) maxId)+1;
             int debit = random.nextInt((int) maxId)+1;
             while (debit == credit){
                 debit = random.nextInt((int) maxId)+1;
             }
             Account cr = accountDao.findAccountById(credit);
             Account db = accountDao.findAccountById(debit);
-
             String[] arr={"ASKEBY", "ASARUM", "LANDSKRONA", "KLIPPAN", "HERNES", "FRIHETEN", "EKTORP"};
             int randomNumber=random.nextInt(arr.length);
-            String date = createRandomDate(2016,2018);
+            String date = createRandomDate(2016,2019);
             Transaction t = new Transaction(new BigDecimal(random.nextInt(10)+1),arr[randomNumber],date,cr,db);
             fundTransfer.storeTransaction(db,cr,t);
         }
@@ -296,7 +291,6 @@ public class DbInitializer {
     public void makeDoubleAccounts(){
         List<Client> list = clientDao.findClientsByAccountsNull();
         List<Account> accounts = (List<Account>) accountDao.findAll();
-        Random random = new Random();
         for (Client client :
                 list) {
             int index = random.nextInt(accounts.size());
@@ -311,9 +305,7 @@ public class DbInitializer {
         return String.valueOf(LocalDate.of(year, month, day));
     }
     private int createRandomIntBetween(int low, int high){
-        Random r = new Random();
-        int random = r.nextInt(high-low)+low;
-        return random;
+        return random.nextInt(high)+low;
     }
 }
 

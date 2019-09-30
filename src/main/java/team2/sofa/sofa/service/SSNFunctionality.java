@@ -52,13 +52,15 @@ public class SSNFunctionality {
      * @param count
      * @return
      */
-    public static Stack<String> bsnStack(int count){
-        Stack<String> ssnStack = new Stack<>();
+    public static Deque<String> bsnStack(int count){
+        Deque<String> ssnStack = new ArrayDeque<>();
         String bsn;
         for (int i = 0; i < count ; i++) {
             do {bsn = bsnGenerator();
             } while (!ssnCheck(bsn));
-            ssnStack.push(bsn);
+            if (!ssnStack.contains(bsn)){
+                ssnStack.push(bsn);
+            }
         }
         return ssnStack;
     }
