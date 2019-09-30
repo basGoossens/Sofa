@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <div th:insert="/general :: headerfiles"/>
+    <div th:insert="general :: headerfiles"/>
     <title>Client View</title>
 </head>
 <body>
 
-<div th:insert="/general :: header"/>
+<div th:insert="general :: header"/>
 
 <h1>Hallo, <span th:text="${sessionclient.firstName}"/></h1>
 <div th:if="${username}">

@@ -2,17 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Geld overmaken</title>
-    <div th:insert="/general :: headerfiles"/>
-    <div th:insert="/general :: date-time-script"/>
+    <div th:insert="general :: headerfiles"/>
+    <div th:insert="general :: date-time-script"/>
 </head>
 <body div onload="startTime()">
-<div th:insert="/general :: header"/>
+<div th:insert="general :: header"/>
 
 
 <div class="new-client-container">
     <div class="w3-container">
         <h1 style="text-align: left;">Geld overmaken</h1>
-        <div class="account-info-block" th:insert="/general :: account-info-block">
+        <div class="account-info-block" th:insert="general :: account-info-block">
         </div>
         <form name="transfer_money" action="#" th:action="@{transferMoneyHandler}" th:object="${transactionForm}"
               method="post">

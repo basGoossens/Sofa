@@ -30,13 +30,14 @@ public class LoginController {
     SectorAnalyzer sectorAnalyzer;
     @Autowired
     Clientview clientview;
+    @Autowired
+    ClientViewController clientViewController;
 
     @GetMapping(value = "login")
     public String indexHandler(Model model) {
         model.addAttribute("client", new Client());
         return "login";
     }
-
 
     //logoutHandler toegevoegd
     @GetMapping(value = "logout")
@@ -63,12 +64,7 @@ public class LoginController {
     public String loginClientHandler(Client client, Model model) {
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
-            Client loggedInClient = login.clientLogin(client, model);
-            model.addAttribute("sessionclient", loggedInClient);
-            login.checkAndLoadConnector(loggedInClient, model);
-            model.addAttribute("nrBusiness", login.countBusinessAccounts(loggedInClient));
-            model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
-            Hibernate.initialize(loggedInClient.getAccounts());
+            clientViewController.fillClientView(client, model);
             return "redirect:/loadClientView";
         } else {
             model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");
@@ -76,17 +72,7 @@ public class LoginController {
         }
     }
 
-    //deze moet nog verplaatst worden naar DashboardClientController
-    @PostMapping(value="backToClientView")
-    public String backToClientView(@RequestParam int id, Model model) {
-        Client loggedInClient = clientview.findClientById(id);
-        model.addAttribute("sessionclient", loggedInClient);
-        login.checkAndLoadConnector(loggedInClient, model);
-        model.addAttribute("nrBusiness", login.countBusinessAccounts(loggedInClient));
-        model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
-        Hibernate.initialize(loggedInClient.getAccounts());
-        return "redirect:/loadClientView";
-    }
+
 
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(Employee employee, Model model) {
