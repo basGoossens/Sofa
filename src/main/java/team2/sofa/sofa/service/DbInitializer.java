@@ -137,12 +137,21 @@ public class DbInitializer {
             client.setTelephoneNr(data[6]);
             client.setBirthday(data[7]);
             client.setGender(data[8]);
-            client.setUsername(data[9]);
-            client.setPassword(data[10]);
+            setUsername(client, data);
+            setPassword(client);
             client.setSsn(ssnStack.pop());
             clientDao.save(client);
         }
     }
+    private void setUsername(Client client, String[] data){
+        String username = client.getFirstName().substring(0,1) + client.getLastName();
+        if (clientDao.existsClientByUsername(username)){
+            client.setUsername(data[9]);}
+        else {client.setUsername(username);}
+    }
+    private void setPassword(Client client){
+        String passWord =  client.getLastName() + client.getFirstName().substring(0,1);
+        client.setPassword(passWord);}
 
     /**
      * maakt Employees en slaat deze op in DB
@@ -293,19 +302,28 @@ public class DbInitializer {
         List<Account> accounts = (List<Account>) accountDao.findAll();
         for (Client client :
                 list) {
-            int index = random.nextInt(accounts.size());
-            Account account = accounts.get(index);
+            Account account;
+            do {
+                int index = random.nextInt(accounts.size());
+                account = accounts.get(index);
+            }
+            while(account.getOwners().size() == 2);
             connectAccount(client, account);
         }
     }
     private String createRandomDate(int startYear, int endYear) {
-        int day = createRandomIntBetween(1, 28);
-        int month = createRandomIntBetween(1, 12);
-        int year = createRandomIntBetween(startYear, endYear);
+        int day;
+        int month;
+        int year;
+        do {
+            day = createRandomIntBetween(1, 28);
+            month = createRandomIntBetween(1, 12);
+            year = createRandomIntBetween(startYear, endYear);
+        } while (LocalDate.now().isBefore(LocalDate.of(year,month,day)));
         return String.valueOf(LocalDate.of(year, month, day));
     }
     private int createRandomIntBetween(int low, int high){
-        return random.nextInt(high)+low;
+        return random.nextInt((high - low) + 1) + low;
     }
 }
 
