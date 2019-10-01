@@ -18,12 +18,6 @@ public class Client extends User {
     @ManyToMany(mappedBy = "owners")
     private List<Account> accounts;
 
-//    //attributen om business en private te scheiden -  @Transient geeft aan dat deze niet worden gemapt door Hibernate.
-//    @Transient
-//    private List<PrivateAccount> privateAccounts;
-//    @Transient
-//    private List<BusinessAccount> businessAccounts;
-
     private int totalNumberOfTransactions;
 
     public Client() {
