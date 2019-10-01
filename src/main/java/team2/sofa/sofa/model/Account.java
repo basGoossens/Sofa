@@ -19,7 +19,7 @@ public class Account {
     private String iban;
     private BigDecimal balance;
     private String pin;
-    @ManyToMany (fetch = FetchType.LAZY)
+    @ManyToMany (fetch = FetchType.EAGER)
     private List<Client> owners;
 
     @ManyToMany (fetch = FetchType.LAZY)
