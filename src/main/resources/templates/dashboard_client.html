@@ -22,10 +22,12 @@
                     <input type=hidden th:field="${account.id}"/>
                     <input type="submit" value="betaalopdracht"/>
                 </form>
+                <div th:if="${account.owners.size()} < 2">
                 <form action="#" th:action="@{ConnectAccount}" th:object="${account}" method="post">
                     <input type="hidden" th:field="${account.id}" name="id" id="id"/>
                     <input type="submit" value="Voeg rekeninghouder toe"/>
                 </form>
+                </div>
                 <form action="#" th:action="@{backToClientView}" method="post">
                     <input type="hidden" th:field="${sessionclient.id}" name="id" />
                 <input type="submit" value="Terug naar dashboard"/></form>

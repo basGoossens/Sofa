@@ -1,5 +1,6 @@
 package team2.sofa.sofa.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Transient;
@@ -11,7 +12,7 @@ import java.util.List;
 @Entity
 public class Client extends User {
 
-
+    @Column(unique = true)
     private String username;
     private String password;
     @ManyToMany(mappedBy = "owners")
