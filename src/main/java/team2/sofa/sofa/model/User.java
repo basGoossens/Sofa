@@ -14,21 +14,15 @@ public abstract class User {
     @Id
     @GeneratedValue(generator = "USER_SEQ")
     private int id;
-    @NotBlank (message = "Voer a.u.b. een naam in")
     private String firstName;
     private String prefix;
-    @NotBlank (message = "Voer a.u.b. een achternaam in")
     private String lastName;
     @ManyToOne
     private Address address;
-    @NotBlank (message = "Voer een geldig BSN in")
-    @Size(max = 9, min = 9, message = "BSN moet 9 cijfers bevatten")
     private String ssn;
     private String email;
     private String telephoneNr;
-    @NotBlank (message = "Voer a.u.b. een geldige datum in")
     private String birthday;
-    @NotBlank (message = "kies een geslacht")
     private String gender;
 
     public User() {

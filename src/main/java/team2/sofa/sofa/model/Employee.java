@@ -1,5 +1,6 @@
 package team2.sofa.sofa.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 @Entity
 public class Employee extends User {
 
+    @Column(unique = true)
     private String username;
     private String password;
 
