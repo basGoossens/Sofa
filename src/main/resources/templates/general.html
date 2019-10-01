@@ -14,7 +14,7 @@
         function startTime() {
             var today = new Date();
             var d = today.getDate();
-            var mo = today.getMonth();
+            var mo = today.getMonth() + 1;
             var y = today.getFullYear();
             var h = today.getHours();
             var m = today.getMinutes();
@@ -35,7 +35,7 @@
         }
     </script>
 </head>
-<body onload="startTime()">
+<body window.onload="startTime()">
 
 <div class="nav" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
 
@@ -73,6 +73,7 @@
                     <tr>
                         <td>Datum</td>
                         <td>Tegenrekening</td>
+                        <td>Naam</td>
                         <td>Omschrijving</td>
                         <td>Bedrag</td>
                     </tr>
@@ -82,6 +83,7 @@
                             <td><span
                                     th:text="${transaction.debitAccount.iban == account.iban} ? ${transaction.creditAccount.iban} : ${transaction.debitAccount.iban}"/>
                             </td>
+                            <td><span th:text="${transaction.debitAccount.getNameOwner() == account.getNameOwner()} ? ${transaction.creditAccount.getNameOwner()} : ${transaction.debitAccount.getNameOwner()}"/></td>
                             <td><span th:text="${transaction.description}"/>
                             <td><span
                                     th:text="${transaction.debitAccount.iban == account.iban} ? '- &euro; ' + ${transaction.amount} : '&euro; ' + ${transaction.amount}"/>
