@@ -14,7 +14,7 @@
         function startTime() {
             var today = new Date();
             var d = today.getDate();
-            var mo = today.getMonth();
+            var mo = today.getMonth() + 1;
             var y = today.getFullYear();
             var h = today.getHours();
             var m = today.getMinutes();
@@ -35,7 +35,7 @@
         }
     </script>
 </head>
-<body onload="startTime()">
+<body window.onload="startTime()">
 
 <div class="nav" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
 
