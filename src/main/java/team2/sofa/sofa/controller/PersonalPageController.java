@@ -27,7 +27,7 @@ public class PersonalPageController {
     public String updateHandler(@RequestParam int id, Model model) {
         Client client = updateClient.findClient(id);
         model.addAttribute("client", client);
-        return "edit_client_personalpage";
+        return "edit_client";
     }
 
     @PostMapping(value = "changeAddressForm")
