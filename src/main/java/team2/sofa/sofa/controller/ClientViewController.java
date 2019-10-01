@@ -52,13 +52,17 @@ public class ClientViewController {
     public String AccountListHandler(Account account, Model model) {
         account = clientview.FindAccountById(account.getId());
         model.addAttribute("account", account);
-        Hibernate.initialize(account.getOwners());
         Hibernate.initialize(account.getTransactions());
+
+        //uitgecomment want 'owners' in account heeft nu fetchtype EAGER.
+//        Hibernate.initialize(account.getNameOwner());
+//        Hibernate.initialize(account.getOwners());
+        
         return "redirect:/loadDashboardClient";
     }
 
     @GetMapping(value = "loadDashboardClient")
-    public String loadDashboardClient(){
+    public String loadDashboardClient(Model model){
         return "dashboard_client";
     }
 
