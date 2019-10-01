@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
@@ -14,6 +15,7 @@ import team2.sofa.sofa.service.UpdateClient;
 import java.util.Map;
 
 @Controller
+@SessionAttributes({"sessionclient", "connector"})
 public class PersonalPageController {
 
     @Autowired
@@ -42,6 +44,7 @@ public class PersonalPageController {
         Address checkedAddress = updateClient.checkAddress(input);
         if (checkedAddress.getId() == 0){
             client = updateClient.changeAddress(client, checkedAddress);
+            login.checkAndLoadConnector(client,model);
             model.addAttribute("sessionclient", client);
             model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
             model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
@@ -59,6 +62,7 @@ public class PersonalPageController {
         String newUsername = input.get("username").toString();
         if (updateClient.usernameExists(newUsername)) {
             client = updateClient.processChanges(client, input);
+            login.checkAndLoadConnector(client,model);
             model.addAttribute("username", "uw gebruikersnaam is niet gewijzigd");
             model.addAttribute("sessionclient", client);
             model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
@@ -66,6 +70,8 @@ public class PersonalPageController {
             return "client_view";
         }
         client.setUsername(input.get("username").toString());
+        client = updateClient.processChanges(client, input);
+        login.checkAndLoadConnector(client,model);
         model.addAttribute("sessionclient", client);
         model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
         model.addAttribute("nrPrivate", login.countPrivateAccounts(client));

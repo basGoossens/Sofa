@@ -33,12 +33,10 @@ public class Transaction implements Comparable<Transaction>{
 
     public Transaction(BigDecimal amount, String description, @Nullable Account creditAccount, @Nullable Account debitAccount) {
         this (amount,description, String.valueOf(LocalDate.now()), creditAccount, debitAccount);
-        addToTotalTransactions();
     }
 
     public Transaction(){
         this(null,"", String.valueOf(LocalDate.now()),null,null);
-        addToTotalTransactions();
     }
 
     public int getId() {
