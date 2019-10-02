@@ -42,7 +42,7 @@ public class NewAccountChecker {
      */
     public String processApplication( Model model, Client client, Map map) {
         List <String> errorList = checkData(client);
-        if (AddressExistsChecker(client)) {
+        if (AddressExistsChecker(client.getAddress())) {
             Address a = AddressExists(client.getAddress());
             client.setAddress(a); }
         if (errorList.isEmpty()) {
@@ -85,7 +85,7 @@ public class NewAccountChecker {
         } if (ssn.length() != 9) { errorList.add("BSN heeft geen 9 cijfers."); }
            else if (!SSNFunctionality.ssnCheck(ssn)) {
                 errorList.add("Geen geldig BSN ingevoerd.");
-        } if (AddressExistsChecker(newClient)) {
+        } if (AddressExistsChecker(newClient.getAddress())) {
             Address a = AddressExists(newClient.getAddress());
             newClient.setAddress(a);
         }
@@ -152,22 +152,9 @@ public class NewAccountChecker {
     /**
      * helper methode om na te gaan of gekozen adres niet al bekend is.
      *
-     * @param newClient
+     * @param address
      * @return
      */
-    protected boolean AddressExistsChecker(Client newClient) {
-        String Zip = newClient.getAddress().getZipCode();
-        int number = newClient.getAddress().getHouseNumber();
-        boolean zipcheck = false;
-        boolean numbercheck = false;
-        if (addressDao.findAddressByZipCode(Zip) != null) {
-            zipcheck = addressDao.findAddressByZipCode(Zip).getZipCode().equals(Zip);
-        }
-        if (addressDao.findAddressByHouseNumber(number) != null) {
-            numbercheck = addressDao.findAddressByHouseNumber(number).getHouseNumber() == number;
-        }
-        return zipcheck && numbercheck;
-    }
     protected boolean AddressExistsChecker(Address address) {
         String zipCode = address.getZipCode();
         int number = address.getHouseNumber();
