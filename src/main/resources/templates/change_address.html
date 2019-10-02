@@ -18,19 +18,19 @@
             <table>
             <tr>
                 <td>Straatnaam:</td>
-                <td><input type="text" th:value="${address.street}" name="street"/></td>
+                <td><input type="text" th:value="${address.street}" name="street" required/></td>
             </tr>
             <tr>
                 <td>Huisnummer:</td>
-                <td><input type="text" th:value="${address.houseNumber}" name="houseNumber"/></td>
+                <td><input type="number" th:value="${address.houseNumber}" name="houseNumber" min="1" max="99144" required/></td>
             </tr>
             <tr>
                 <td>Postcode:</td>
-                <td><input type="text" th:value="${address.zipCode}" name="zipCode"/></td>
+                <td><input type="text" th:value="${address.zipCode}" name="zipCode" required pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[A-Za-z]{2}$"/></td>
             </tr>
             <tr>
                 <td>Stad:</td>
-                <td><input type="text" th:value="${address.city}" name="city"/></td>
+                <td><input type="text" th:value="${address.city}" name="city" required/></td>
             </tr>
             </table>
             <input type="hidden" th:value="${clientId}" name="clientId">
