@@ -10,6 +10,8 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Account {
 
+    public static final int OWNER_INDEX = 0;
+
     @Id
     @GeneratedValue (generator = "ACC_SEQ")
     private int id;
@@ -17,7 +19,7 @@ public class Account {
     private String iban;
     private BigDecimal balance;
     private String pin;
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     private List<Client> owners;
 
     @ManyToMany (fetch = FetchType.LAZY)
@@ -138,7 +140,7 @@ public class Account {
 
     public String getFullNameAccountOwnersExceptFirst() {
         StringBuilder name = new StringBuilder();
-        if (getIsBusinessAccount()) name.append(owners.get(0).getFullNameUser());
+        if (getIsBusinessAccount()) name.append(owners.get(OWNER_INDEX).getFullNameUser());
         if (owners.size() > 1)  {
             name.append(" / ");
             for (int i = 1; i < owners.size(); i++) {
@@ -153,7 +155,7 @@ public class Account {
 
     public String getNameOwner() {
         if (getIsBusinessAccount()) return ((BusinessAccount) this).getBusiness().getBusinessName();
-        return owners.get(0).getFullNameUser();
+        return owners.get(OWNER_INDEX).getFullNameUser();
     }
 
     public List<Transaction> getTransactionsbyDateAsc(){

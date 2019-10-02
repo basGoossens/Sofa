@@ -1,5 +1,6 @@
 package team2.sofa.sofa.controller;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +16,7 @@ import team2.sofa.sofa.service.Login;
 import java.math.BigDecimal;
 
 @Controller
-@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "newaccountid"})
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "newaccountid", "account"})
 public class ClientViewController {
 
     @Autowired
@@ -25,6 +26,21 @@ public class ClientViewController {
     @Autowired
     ClientDao clientDao;
 
+
+    /** methode om elementen voor client_view.html te vullen.
+     *
+     * @param client
+     * @param model
+     */
+    public void fillClientView(Client client, Model model){
+        Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
+        model.addAttribute("sessionclient", loggedInClient);
+        login.checkAndLoadConnector(loggedInClient, model);
+        model.addAttribute("nrBusiness", login.countBusinessAccounts(loggedInClient));
+        model.addAttribute("nrPrivate", login.countPrivateAccounts(loggedInClient));
+        Hibernate.initialize(loggedInClient.getAccounts());
+    }
+
     @GetMapping(value="loadClientView")
     public String loadClientView(Model model) {
         Account account = new Account();
@@ -33,9 +49,20 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "AccountListHandler")
-    public String clientView(Account account, Model model) {
+    public String AccountListHandler(Account account, Model model) {
         account = clientview.FindAccountById(account.getId());
         model.addAttribute("account", account);
+        Hibernate.initialize(account.getTransactions());
+
+        //uitgecomment want 'owners' in account heeft nu fetchtype EAGER.
+//        Hibernate.initialize(account.getNameOwner());
+//        Hibernate.initialize(account.getOwners());
+        
+        return "redirect:/loadDashboardClient";
+    }
+
+    @GetMapping(value = "loadDashboardClient")
+    public String loadDashboardClient(Model model){
         return "dashboard_client";
     }
 
