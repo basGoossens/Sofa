@@ -13,5 +13,4 @@ public interface BusinessAccountDao extends CrudRepository <BusinessAccount, Int
 
         BusinessAccount findBusinessAccountByIban(String iban);
 
-        boolean existsBusinessAccountByIban(String string);
 }

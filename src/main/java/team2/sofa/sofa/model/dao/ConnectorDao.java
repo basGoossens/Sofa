@@ -8,10 +8,6 @@ import java.util.List;
 public interface ConnectorDao extends CrudRepository<Connector, Integer> {
 
     boolean existsConnectorByUsername(String username);
-
-    Connector findConnectorByUsername(String username);
-
     List<Connector> findConnectorsByUsername(String username);
 
-    List<Connector> findAllById(int id);
 }

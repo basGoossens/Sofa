@@ -3,7 +3,6 @@ package team2.sofa.sofa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Pdq;
 import team2.sofa.sofa.model.dao.AccountDao;
 
 import java.util.Random;

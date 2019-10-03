@@ -10,7 +10,6 @@ import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.ConnectorDao;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

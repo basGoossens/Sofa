@@ -1,6 +1,5 @@
 package team2.sofa.sofa.service;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -11,10 +10,8 @@ import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.ConnectorDao;
 import team2.sofa.sofa.model.dao.EmployeeDao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+
 
 
 @Service

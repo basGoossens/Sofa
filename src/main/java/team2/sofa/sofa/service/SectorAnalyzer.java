@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team2.sofa.sofa.model.dao.AccountDao;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 

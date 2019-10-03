@@ -1,7 +1,5 @@
 package team2.sofa.sofa.model;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

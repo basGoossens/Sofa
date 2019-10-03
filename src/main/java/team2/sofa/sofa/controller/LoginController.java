@@ -1,19 +1,13 @@
 package team2.sofa.sofa.controller;
 
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.service.*;
 
-
-import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "sessionemployee"})
@@ -39,7 +33,6 @@ public class LoginController {
         return "login";
     }
 
-    //logoutHandler toegevoegd
     @GetMapping(value = "logout")
     public String logoutHandler(Model model) {
         model.addAttribute("sessionclient", "");

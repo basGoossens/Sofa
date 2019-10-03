@@ -6,14 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.*;
-import team2.sofa.sofa.model.dao.AccountDao;
-import team2.sofa.sofa.model.dao.BusinessDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.service.Clientview;
-import team2.sofa.sofa.service.IBANGenerator;
 import team2.sofa.sofa.service.Login;
 
-import java.math.BigDecimal;
 
 @Controller
 @SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "newaccountid", "account"})

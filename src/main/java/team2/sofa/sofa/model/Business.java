@@ -1,7 +1,6 @@
 package team2.sofa.sofa.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Business {

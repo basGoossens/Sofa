@@ -2,11 +2,8 @@ package team2.sofa.sofa.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Business;
 import team2.sofa.sofa.model.BusinessAccount;
 import team2.sofa.sofa.model.PrivateAccount;
-import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.BusinessAccountDao;
 import team2.sofa.sofa.model.dao.PrivateAccountDao;
 
