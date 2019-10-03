@@ -24,12 +24,18 @@
                 <table class="table">
                 <tr class="form-header">
                     <th>Rekeningnummer</th>
+                    <th>Op naam van</th>
                     <th>Saldo</th>
 
                 </tr>
                 <tr th:each="Account : ${sessionclient.accounts} ">
                     <div th:unless="${Account.isBusinessAccount}">
-                        <td><span th:text="${Account.iban}"/></td>
+                        <td><form action="#" th:action="@{AccountListHandler}" method="post">
+                            <input type="submit" th:value="${Account.iban}">
+                            <input type="hidden" th:value="${Account.id}" name="id">
+                        </form>
+                        </td>
+                        <td><span th:text="${Account.getFullNameAccountOwners()}"/></td>
                         <td><span th:text="${Account.balance}"/></td>
                     </div>
                 </tr>
@@ -52,7 +58,11 @@
                 </tr>
                 <tr th:each="Account : ${sessionclient.accounts}">
                     <div th:if="${Account.isBusinessAccount}">
-                        <td><span th:text="${Account.iban}"/></td>
+                        <td><form action="#" th:action="@{AccountListHandler}" method="post">
+                            <input type="submit" th:value="${Account.iban}">
+                            <input type="hidden" th:value="${Account.id}" name="id">
+                        </form>
+                        </td>
                         <td><span th:text="${Account.getNameOwner()}"/></td>
                         <td><span th:text="${Account.balance}"/></td>
                     </div>
