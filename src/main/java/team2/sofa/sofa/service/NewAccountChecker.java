@@ -37,16 +37,18 @@ public class NewAccountChecker {
     /**
      * verwerkt de input van het formulier en indien alles correct wordt de nieuwe klant opgeslagen in DB
      *
-     * @param client op basis van ingevulde velden in formulier nieuwe klant is client object gemaakt
+//     * @param client op basis van ingevulde velden in formulier nieuwe klant is client object gemaakt
      * @return een String die in de NewClientController wordt gebruikt als verwijzer naar de juiste handler/vervolgscherm
      */
-    public String processApplication( Model model, Client client, Map map) {
+    public String processApplication( Model model, Map<String,String> input) {
+        Address address = new Address(0, input.get("street"), Integer.valueOf(input.get("housenumber")), input.get("zipCode"), input.get("city"));
+        Client client = new Client(0, input.get("firstName"), input.get("prefix"), input.get("lastName"), address, input.get("ssn"), input.get("email"), input.get("telephoneNr"), input.get("birthday"), input.get("gender"), input.get("username"), input.get("password"), null);
         List <String> errorList = checkData(client);
         if (AddressExistsChecker(client.getAddress())) {
             Address a = AddressExists(client.getAddress());
             client.setAddress(a); }
         if (errorList.isEmpty()) {
-            if (accountTypeChecker(map)== false){
+            if (!input.get("sector").equals("geen")){
             makeNewPrivateAccount(makeNewAccount(client));
             model.addAttribute("client", client);
             return "login";}

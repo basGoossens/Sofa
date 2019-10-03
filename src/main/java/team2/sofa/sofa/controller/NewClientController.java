@@ -25,8 +25,8 @@ public class NewClientController {
 
 
     @PostMapping(value = "newAccountHandler")
-    public String newAccountHandler(@RequestParam Map<String, String> accountType, Client client, Model model) {
-            return newAccountChecker.processApplication(model, client, accountType);
+    public String newAccountHandler(@RequestParam Map<String, String> input, Model model) {
+            return newAccountChecker.processApplication(model, input);
         }
 
 

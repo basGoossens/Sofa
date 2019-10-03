@@ -77,7 +77,7 @@
                 </tr>
                 <tr>
                     <td>Woonplaats</td>
-                    <td><input type="text" name="zipCode" required
+                    <td><input type="text" name="city" required
                                oninvalid="this.setCustomValidity('Geef uw woonplaats op')"
                                oninput="setCustomValidity('')"/></td>
                 </tr>
@@ -122,9 +122,7 @@
                 </tr>
                 <tr id="bussinessname">
                     <td>Naam bedrijf:</td>
-                    <td><input id="hidden_name" type="text" name="bussinessName" required
-                               oninvalid="this.setCustomValidity('Geef uw bedrijfsnaam in')"
-                               oninput="setCustomValidity('')"></td>
+                    <td><input id="hidden_name" type="text" name="bussinessName"/>
                 </tr>
                 <tr id="bussinessSector">
                     <td>Sector:</td>
@@ -185,7 +183,9 @@
         // Use JS to do this in case the user doesn't have JS
         // enabled.
         hidden1.hide();
+        $("#hidden_name").val("ongebruikt");
         hidden2.hide();
+        $("#hidden_sector").val("geen");
 
         // Setup an event listener for when the state of the
         // checkbox changes.
@@ -210,8 +210,8 @@
                 //
                 // This would do the job:
                 //
-                $("#hidden_name").val("");
-                $("#hidden_sector").val("");
+                $("#hidden_name").val("ongebruikt");
+                $("#hidden_sector").val("geen");
             }
         });
     });

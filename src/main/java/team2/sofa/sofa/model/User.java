@@ -24,7 +24,7 @@ public abstract class User {
         super();
     }
 
-    public User(int id, String firstName, String prefix, String lastName, Address address, String SSN, String email,
+    public User(int id, String firstName, String prefix, String lastName, Address address, String ssn, String email,
                 String telephoneNr, String birthday, String gender) {
         this.id = id;
         this.firstName = firstName;
