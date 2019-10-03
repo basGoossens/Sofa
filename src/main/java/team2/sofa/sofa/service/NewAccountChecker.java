@@ -42,22 +42,24 @@ public class NewAccountChecker {
      */
     public String processApplication( Model model, Map<String,String> input) {
         Address address = new Address(0, input.get("street"), Integer.valueOf(input.get("housenumber")), input.get("zipCode"), input.get("city"));
-        Client client = new Client(0, input.get("firstName"), input.get("prefix"), input.get("lastName"), address, input.get("ssn"), input.get("email"), input.get("telephoneNr"), input.get("birthday"), input.get("gender"), input.get("username"), input.get("password"), null);
+        Client client = new Client(0, input.get("firstName"), input.get("prefix"), input.get("lastName"), address, input.get("ssn"), input.get("email"), input.get("telephoneNr"), input.get("birthday"), input.get("gender"));
+        client.setPassword(input.get("password"));
+        client.setUsername(input.get("username"));
         List <String> errorList = checkData(client);
         if (AddressExistsChecker(client.getAddress())) {
             Address a = AddressExists(client.getAddress());
             client.setAddress(a); }
         if (errorList.isEmpty()) {
-            if (!input.get("sector").equals("geen")){
+            if (input.get("bussinessName").equals("ongebruikt")){
             makeNewPrivateAccount(makeNewAccount(client));
             model.addAttribute("client", client);
             return "login";}
             else {
                 makeNewAccount(client);
-                Business business = new Business();
-                business.setOwner(client);
-                model.addAttribute("business", business);
-                return "new_business";
+                Business business = new Business(0, input.get("bussinessName"), BusinessSector.valueOf(input.get("sector")), client);
+                makeNewBusinessAccount(business, client);
+                model.addAttribute("client", client);
+                return "login";
             }
         } else {
             model.addAttribute("errorList", errorList);
