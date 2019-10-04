@@ -38,7 +38,7 @@ public class LoginController {
         model.addAttribute("sessionclient", "");
         model.addAttribute("connect", "");
         model.addAttribute("client", new Client());
-        return "login";
+        return "index";
     }
 
 
