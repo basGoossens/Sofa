@@ -14,35 +14,37 @@
                     th:text="${benificiary.firstName} + ' ' + ${benificiary.prefix} + ' ' + ${benificiary.lastName}"></span>
         </h7>
         <form action="#" th:action="@{confirmPayment}" th:object="${transaction}" method="post">
-        <table class="transfer-table">
+            <table class="transfer-table">
 
-            <tr><td>naam begunstigde</td>
-                <td><input readonly type="text" th:field="*{name}"></td>
-            </tr>
-            <tr>
-                <td>bedrag</td>
-                <td><input readonly type="text" th:field="*{amount}"></td>
-
-            </tr>
-            <tr>
-                <td> omschrijving></td>
-                <td><input readonly type="text" th:field="*{description}"></td>
                 <tr>
-            <td>Iban Begunstigde</td>
-            <td><input readonly type="text" th:field="*{creditAccount}"></td>
-        </tr>
-        </table>
+                    <td>naam begunstigde</td>
+                    <td><input readonly type="text" th:field="*{name}"></td>
+                </tr>
+                <tr>
+                    <td>bedrag</td>
+                    <td><input readonly type="text" th:field="*{amount}"></td>
+
+                </tr>
+                <tr>
+                    <td> omschrijving</td>
+                    <td><input readonly type="text" th:field="*{description}"></td>
+                <tr>
+                    <td>Iban Begunstigde</td>
+                    <td><input readonly type="text" th:field="*{creditAccount}"></td>
+                </tr>
+            </table>
             <div style="position:relative; top:20px; right: 200px;">
-            <input type="hidden" th:field="*{debetAccount}">
-            <p>voer uw Pincode in</p><input type="text" th:field="*{pin}">
-            <input type="submit" value="bevestig Betaling">
+                <input type="hidden" th:field="*{debetAccount}">
+                <p>voer uw Pincode in</p><input type="text" th:field="*{pin}">
+                <input type="submit" value="bevestig Betaling">
             </div>
         </form>
 
 
     </div>
-</div>
 
-<div th:insert="general :: footer"/>
+    <div th:insert="general :: footer"/>
+
+</div>
 </body>
 </html>

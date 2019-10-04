@@ -28,7 +28,7 @@
                 <tr th:each="Account : ${sessionclient.accounts} ">
                     <div th:unless="${Account.isBusinessAccount}">
                         <td>
-                            <form action="#" th:action="@{AccountListHandler}" method="post">
+                            <form action="#" th:action="@{accountListHandler}" method="post">
                                 <input type="submit" th:value="${Account.iban}">
                                 <input type="hidden" th:value="${Account.id}" name="id">
                             </form>
@@ -57,7 +57,7 @@
                 <tr th:each="Account : ${sessionclient.accounts}">
                     <div th:if="${Account.isBusinessAccount}">
                         <td>
-                            <form action="#" th:action="@{AccountListHandler}" method="post">
+                            <form action="#" th:action="@{accountListHandler}" method="post">
                                 <input type="submit" th:value="${Account.iban}">
                                 <input type="hidden" th:value="${Account.id}" name="id">
                             </form>
