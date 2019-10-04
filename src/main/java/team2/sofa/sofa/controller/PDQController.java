@@ -30,9 +30,11 @@ public class PDQController {
     @PostMapping("/paymentmachine/payment/")
     public String TransactionPostController(@RequestBody PaymentData paymentData){
         String returnJson;
-        Account creditAccount = businessAccountDao.findBusinessAccountByIban(paymentData.getCreditAccount());
+        Account creditAccount = accountDao.findAccountByIban(paymentData.getCreditAccount());
         Account debitAccount = accountDao.findAccountByIban(paymentData.getDebitAccount());
-        if (fundTransfer.insufficientBalance(paymentData.getAmount(), debitAccount)){
+        if (creditAccount == null || debitAccount == null){
+            returnJson = "Failed";
+        } else if (fundTransfer.insufficientBalance(paymentData.getAmount(), debitAccount)){
             returnJson = "Failed";
         } else {
             try {
