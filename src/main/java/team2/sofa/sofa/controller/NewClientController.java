@@ -28,11 +28,4 @@ public class NewClientController {
     public String newAccountHandler(@RequestParam Map<String, String> input, Model model) {
             return newAccountChecker.processApplication(model, input);
         }
-
-
-    @PostMapping(value = "NewBusiness2")
-    public String newBusinessHandler(Business business, Model model, Client client) {
-        return newAccountChecker.makeNewBusinessAccount(business, client);
-    }
-
 }

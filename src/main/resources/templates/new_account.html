@@ -37,6 +37,10 @@
         <form name="new_client" class="new_client" action="#" th:action="@{newAccountHandler}" method="post">
             <table>
                 <tr>
+                    <td><p>Vink aan indien u een zakelijke rekening wilt openen</p></td>
+                    <td><input type="checkbox" id="bussiness" name="business"/></td>
+                </tr>
+                <tr>
                     <td>
                         <div>Voornaam</div>
                     </td>
@@ -113,11 +117,6 @@
                                oninvalid="this.setCustomValidity('Geef uw geslacht op')"
                                oninput="setCustomValidity('')"/>Man
                         <input type="radio" value="Female" name="gender">Vrouw
-                    </td>
-                </tr>
-                <tr>
-                    <td>Soort rekening</td>
-                    <td><input type="checkbox" id="bussiness" name="business"/>Zakelijke rekening openen
                     </td>
                 </tr>
                 <tr id="bussinessname">
