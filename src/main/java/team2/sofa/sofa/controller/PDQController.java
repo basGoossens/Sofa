@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.PaymentData;
-import team2.sofa.sofa.model.Pdq;
-import team2.sofa.sofa.model.Transaction;
+import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.BusinessAccountDao;
 import team2.sofa.sofa.model.dao.PdqDao;
@@ -56,13 +53,20 @@ public class PDQController {
     }
 
     @PostMapping("/paymentmachine/coupling/")
-    public String CouplingPostController(@RequestBody String string){
+    public String CouplingPostController(@RequestBody PaymentMachineConnectionData paymentMachineConnectionData){
         String returnJson = "";
-        String fiveDigitcode = (String) string.subSequence(0,5);
-        String clientIban = (String) string.subSequence(5, 17);
+        //String deserializedString = serializationService.deserializePaymentMachineConnectionData();
+        System.out.println(paymentMachineConnectionData.getAccount() + " " + paymentMachineConnectionData.getFiveDigitCode());
+        //String fiveDigitcode = (String) string.subSequence(0,5);
+        //String clientIban = (String) string.subSequence(5, 17);
         try {
-            Pdq pdq = pdqDao.findPdqByFiveDigitcode(fiveDigitcode);
-            if (pdq.getFiveDigitcode()==fiveDigitcode || pdq.getCoupledAccount().getIban() == clientIban){
+            Pdq pdq = pdqDao.findPdqByFiveDigitcode(paymentMachineConnectionData.getFiveDigitCode());
+            System.out.println(paymentMachineConnectionData.getFiveDigitCode());
+            System.out.println(pdq.getFiveDigitcode());
+            System.out.println(paymentMachineConnectionData.getAccount());
+            System.out.println(pdq.getCoupledAccount().getIban());
+            if (pdq.getFiveDigitcode().equals(paymentMachineConnectionData.getFiveDigitCode()) ||
+                    pdq.getCoupledAccount().getIban().equals(paymentMachineConnectionData.getAccount())){
                 returnJson = pdq.getEightDigitcode();
             } else {
                 returnJson = "Failed";
