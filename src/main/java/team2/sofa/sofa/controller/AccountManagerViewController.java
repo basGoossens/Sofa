@@ -21,7 +21,7 @@ public class AccountManagerViewController {
     PdqDao pdqDao;
 
 
-    @PostMapping(value = "ConnectPDQ")
+    @PostMapping(value = "connectPDQ")
     public String requestPDQ(@RequestParam String iban, Model model) {
         Account account = rp.getAccount(iban);
         String code = rp.generateFiveDigit();

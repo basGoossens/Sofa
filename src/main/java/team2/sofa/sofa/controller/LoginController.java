@@ -43,14 +43,9 @@ public class LoginController {
 
 
     @GetMapping(value = "login_employee")
-    public String goTologinEmployeeHandler(Model model) {
+    public String goToLoginEmployeeHandler(Model model) {
         model.addAttribute("employee", new Employee());
         return "login_employee";
-    }
-
-    @RequestMapping(value = "logoutClientHandler")
-    public String logOutClientHandler() {
-        return "login";
     }
 
     @PostMapping(value = "loginClientHandler")
@@ -64,7 +59,6 @@ public class LoginController {
             return "login";
         }
     }
-
 
 
     @PostMapping(value = "loginEmployeeHandler")

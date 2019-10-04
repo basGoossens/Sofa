@@ -66,7 +66,7 @@
 
     <div class="selectaccount">
         <h8>Selecteer een rekening</h8>
-        <form action="#" th:action="@{AccountListHandler}" method="post">
+        <form action="#" th:action="@{accountListHandler}" method="post">
             <input type="submit" value="Ga naar rekening">
             <select th:value="${id}" name="id">
                 <option th:each="privateAccount : ${sessionclient.accounts}"
@@ -75,11 +75,11 @@
                 </option>
             </select>
         </form>
-        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
+        <form action="#" th:action="@{addNewAccountHandler}" th:object="${client}" method="post">
             <input type="hidden" name="id" id="id" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe particuliere rekening"/>
         </form>
-        <form action="#" th:action="@{AddNewBusinessAccountHandler}" th:object="${client}" method="post">
+        <form action="#" th:action="@{addNewBusinessAccountHandler}" th:object="${client}" method="post">
             <input type="hidden" name="id" id="idbusiness" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe zakelijke rekening"/>
         </form>
@@ -94,7 +94,7 @@
             <input type="submit" value="Adreswijziging doorgeven"/>
         </form>
         <div th:if="${connect.size()} > 0">
-        <form action="#" th:action="@{NewConnection}" method="post">
+        <form action="#" th:action="@{newConnection}" method="post">
             <input type="hidden" th:value="${connect.get(0).id}" name="id">
             <input type="submit" value="Koppel een nieuwe rekening">
         </form>

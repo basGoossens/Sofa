@@ -50,8 +50,8 @@ public class ConnectController {
      * @param model
      * @return
      */
-    @PostMapping(value = "ConnectForm")
-    public String connectHandeler(@RequestParam Map<String, Object> body, Model model) {
+    @PostMapping(value = "connectForm")
+    public String connectHandler(@RequestParam Map<String, Object> body, Model model) {
         if (cs.checkUserName(body)) {
             //check op eigen naam en op voorkomen van username in db
             Account account = cs.saveCoupling(body);
@@ -74,7 +74,7 @@ public class ConnectController {
      * @param model
      * @return
      */
-    @PostMapping(value = "NewConnection")
+    @PostMapping(value = "newConnection")
     public String matchAccounts(@RequestParam int id, Model model) {
         Connector connector = cs.getConnection(id);
         model.addAttribute("connection", connector);
@@ -88,7 +88,7 @@ public class ConnectController {
      * @param model
      * @return
      */
-    @PostMapping(value = "ConnectValidate")
+    @PostMapping(value = "connectValidate")
     public String checkMatch(@RequestParam Map<String, Object> body, Model model) {
         //Onderstaande methode stopt alle instanties waarbij de username voorkomt in een list
         //en checkt op IBAN en security code

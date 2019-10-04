@@ -18,22 +18,22 @@ public class ClientViewForEmployeeController {
     Clientview clientview;
 
     //gebruikt in employee_view_mkb & employee_view_particulieren
-    @GetMapping(value = "AccountOverviewHandler")
+    @GetMapping(value = "accountOverviewHandler")
     public String AccountOverviewHandler(@RequestParam(name = "id") int id, Model model) {
         Account chosenAccount = clientview.FindAccountById(id);
         model.addAttribute("account", chosenAccount);
         return "dashboard_employee";
     }
 
-    @GetMapping(value = "PrivateAccountListHandlerForEmployee")
-    public String PrivateAccountListHandlerForEmployee(@RequestParam(name = "id") int id, Model model) {
+    @GetMapping(value = "privateAccountListHandlerForEmployee")
+    public String privateAccountListHandlerForEmployee(@RequestParam(name = "id") int id, Model model) {
         Account chosenAccount = clientview.FindPrivateOrBusinessAccountById(id, false);
         model.addAttribute("account", chosenAccount);
         return "dashboard_employee";
     }
 
-    @GetMapping(value = "BusinessAccountListHandlerForEmployee")
-    public String BusinessAccountListHandlerForEmployee(@RequestParam(name = "id") int id, Model model) {
+    @GetMapping(value = "businessAccountListHandlerForEmployee")
+    public String businessAccountListHandlerForEmployee(@RequestParam(name = "id") int id, Model model) {
         Account chosenAccount = clientview.FindPrivateOrBusinessAccountById(id, true);
         model.addAttribute("account", chosenAccount);
         return "dashboard_employee";

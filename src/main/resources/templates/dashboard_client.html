@@ -18,12 +18,12 @@
                 <div class th:insert="general :: account-info-block"/>
                 <div class th:insert="general :: transactions-table"/>
 
-                <form action="#" th:action="@{TransferHandler}" method="post">
+                <form action="#" th:action="@{transferHandler}" method="post">
                     <input type=hidden th:field="${account.id}"/>
                     <input type="submit" value="betaalopdracht"/>
                 </form>
                 <div th:if="${account.owners.size()} < 2">
-                <form action="#" th:action="@{ConnectAccount}" th:object="${account}" method="post">
+                <form action="#" th:action="@{connectAccount}" th:object="${account}" method="post">
                     <input type="hidden" th:field="${account.id}" name="id" id="id"/>
                     <input type="submit" value="Voeg rekeninghouder toe"/>
                 </form>

@@ -30,7 +30,7 @@ public class NewClientController {
         }
 
 
-    @PostMapping(value = "NewBusiness2")
+    @PostMapping(value = "newBusiness2")
     public String newBusinessHandler(Business business, Model model, Client client) {
         return newAccountChecker.makeNewBusinessAccount(business, client);
     }

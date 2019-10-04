@@ -8,7 +8,7 @@
 <div th:insert="general :: header"/>
 <div th:if="${account}">
 <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${account.iban}">rekening</span></h1>
-<form action="#" th:action="@{ConnectForm}" th:object="${account}" method="post">
+<form action="#" th:action="@{connectForm}" th:object="${account}" method="post">
 <table>
     <tr>
         <th>gebruikersnaam</th>
@@ -29,7 +29,7 @@
 </div>
 <div th:if="${connection}">
     <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${connection.iban}">rekening</span></h1>
-    <form action="#" th:action="@{ConnectValidate}" method="post">
+    <form action="#" th:action="@{connectValidate}" method="post">
         <table>
             <tr>
                 <td>iban</td>

@@ -14,7 +14,7 @@
     <div class="top-ten-highest-tables">
         ​
         ​
-        <form action="#" th:action="@{AccountOverviewHandler}" method="post"
+        <form action="#" th:action="@{accountOverviewHandler}" method="post"
               onsubmit="return validateForm();">
             <!--de tien rekeningen met het hoogste saldo, voor hoofd particulieren en hoofd mkb!-->
             <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
@@ -29,7 +29,7 @@
 
                     <tr th:each="PrivateAccount : ${tenHighestBalance}">
                         <td>
-                            <a th:href="@{AccountOverviewHandler(id=${PrivateAccount.id})}"><span
+                            <a th:href="@{accountOverviewHandler(id=${PrivateAccount.id})}"><span
                                     th:text="${PrivateAccount.iban}"/></a></td>
                         <td><span th:text="${PrivateAccount.owners.get(0).getLastName()}"/></td>
                         <td><span th:text="${PrivateAccount.balance}"/></td>

@@ -29,8 +29,8 @@ public class EmployeeViewController {
     SectorAnalyzer sectorAnalyzer;
 
 
-    @GetMapping(value = "TenMostActiveHandler")
-    public String TenMostActiveHandler(@RequestParam(name = "id") int id, Model model) {
+    @GetMapping(value = "tenMostActiveHandler")
+    public String tenMostActiveHandler(@RequestParam(name = "id") int id, Model model) {
         return topTenMostActiveClient.mostActiveClientBuilder(id, model);
     }
 

@@ -44,31 +44,21 @@ public class ClientViewController {
         return "client_view";
     }
 
-    @PostMapping(value = "AccountListHandler")
-    public String AccountListHandler(Account account, Model model) {
+    @PostMapping(value = "accountListHandler")
+    public String accountListHandler(Account account, Model model) {
         account = clientview.FindAccountById(account.getId());
         model.addAttribute("account", account);
         Hibernate.initialize(account.getTransactions());
-
-        //uitgecomment want 'owners' in account heeft nu fetchtype EAGER.
-//        Hibernate.initialize(account.getNameOwner());
-//        Hibernate.initialize(account.getOwners());
-        
         return "redirect:/loadDashboardClient";
     }
 
-    @GetMapping(value = "loadDashboardClient")
-    public String loadDashboardClient(Model model){
-        return "dashboard_client";
-    }
-
-    @PostMapping(value = "AddNewAccountHandler")
+    @PostMapping(value = "addNewAccountHandler")
     public String addNewAccount(@RequestParam int id, Model model){
         clientview.createNewPrivate(id, model);
         return "redirect:/loadClientView";
     }
 
-    @PostMapping(value = "AddNewBusinessAccountHandler")
+    @PostMapping(value = "addNewBusinessAccountHandler")
     public String addNewBusinessAccountHandler(@RequestParam int id, Model model){
         Client client = clientview.findClientById(id);
         Business business = new Business();
@@ -77,7 +67,7 @@ public class ClientViewController {
         return "add_business_account";
     }
 
-    @PostMapping(value = "NewBusiness")
+    @PostMapping(value = "newBusiness")
     public String newBAccount(Business business, Model model){
         clientview.procesNewBusinessAccount(business);
         Client c = business.getOwner();

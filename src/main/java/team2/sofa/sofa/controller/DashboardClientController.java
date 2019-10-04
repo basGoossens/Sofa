@@ -3,6 +3,7 @@ package team2.sofa.sofa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -30,20 +31,22 @@ public class DashboardClientController {
     @Autowired
     Clientview clientview;
 
-    @PostMapping(value = "TransferHandler")
+    @PostMapping(value = "transferHandler")
     public String transfer(@RequestParam int id, Model model) {
         model = fundTransfer.readyTransaction(id, model);
         return "money_transfer";
     }
 
-    @PostMapping(value = "backToOverview")
-    public String backToOverview(Account account, Model model) {
-        return login.backFromDashboard(account, model);
-    }
+
 
     @PostMapping(value="backToClientView")
     public String backToClientView(@RequestParam int id, Model model) {
         clientViewController.fillClientView(clientview.findClientById(id), model);
         return "redirect:/loadClientView";
+    }
+
+    @GetMapping(value = "loadDashboardClient")
+    public String loadDashboardClient(Model model){
+        return "dashboard_client";
     }
 }

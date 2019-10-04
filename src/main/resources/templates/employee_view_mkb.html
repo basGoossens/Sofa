@@ -14,7 +14,7 @@
     <div class="top-ten-highest-tables">
 
         ​
-        <form action="#" th:action="@{AccountOverviewHandler}" method="post"
+        <form action="#" th:action="@{accountOverviewHandler}" method="post"
               onsubmit="return validateForm();">
 
             <div th:unless="${#lists.isEmpty(tenHighestBalance)}">
@@ -29,7 +29,7 @@
 
                     <tr th:each="BusinessAccount : ${tenHighestBalance}">
                         <td>
-                            <a th:href="@{AccountOverviewHandler(id=${BusinessAccount.id})}"><span
+                            <a th:href="@{accountOverviewHandler(id=${BusinessAccount.id})}"><span
                                     th:text="${BusinessAccount.Iban}"/></a></td>
                         <td><span th:text="${BusinessAccount.owners.get(0).getLastName()}"/></td>
                         <td><span th:text="${BusinessAccount.balance}"/></td>
@@ -49,7 +49,7 @@
                     </tr>
                     <tr th:each="Client : ${tenMostActive}">
                         <td><span th:text="${Client.getId()}"/></td>
-                        <td><a th:href="@{TenMostActiveHandler(id=${Client.getId()})}"><span
+                        <td><a th:href="@{tenMostActiveHandler(id=${Client.getId()})}"><span
                                 th:text="${Client.getLastName()}"/></a></td>
                         <td><span th:text="${Client.getTotalNumberOfTransactions()}"/></td>
 
