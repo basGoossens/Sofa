@@ -73,7 +73,7 @@
     </div>
     <div class="w3-container">
         <h8>Voeg gemakkelijk een extra rekening toe</h8>
-        <form action="#" th:action="@{AddNewAccountHandler}" th:object="${client}" method="post">
+        <form action="#" th:action="@{addNewAccountHandler}" th:object="${client}" method="post">
             <input type="hidden" name="id" id="id" th:value="${sessionclient.id}">
             <input type="submit" value="Open nieuwe particuliere rekening"/>
         </form>

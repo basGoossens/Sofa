@@ -1,11 +1,10 @@
 package team2.sofa.sofa.controller;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.service.Login;
@@ -14,7 +13,7 @@ import team2.sofa.sofa.service.UpdateClient;
 import java.util.Map;
 
 @Controller
-@SessionAttributes({"sessionclient", "connector"})
+@SessionAttributes({"sessionclient", "connector", "address","clientId"})
 public class PersonalPageController {
 
     @Autowired
@@ -25,7 +24,11 @@ public class PersonalPageController {
     @PostMapping(value = "updateHandler")
     public String updateHandler(@RequestParam int id, Model model) {
         Client client = updateClient.findClient(id);
-        model.addAttribute("client", client);
+        model.addAttribute("sessionclient", client);
+        return "redirect:wijzigGegevens";
+    }
+    @GetMapping(value = "wijzigGegevens")
+    public String change(Model model){
         return "edit_client";
     }
 
@@ -34,6 +37,10 @@ public class PersonalPageController {
         Address address = updateClient.findAddress(addressId);
         model.addAttribute("address", address);
         model.addAttribute("clientId", clientId);
+        return "redirect:/verhuizing";
+    }
+    @GetMapping(value = "verhuizing")
+    public String verhuizing(Model model){
         return "change_address";
     }
 
@@ -47,7 +54,7 @@ public class PersonalPageController {
             model.addAttribute("sessionclient", client);
             model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
             model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
-            return "client_view";
+            return "redirect:/loadClientView";
         }
         model.addAttribute("address", checkedAddress);
         model.addAttribute("clientId", clientId);
@@ -56,24 +63,24 @@ public class PersonalPageController {
     }
 
     @PostMapping(value = "updateClient")
-    public String processUpdate(@RequestParam Map<String, Object> input, Model model) {
-        Client client = updateClient.findClient(Integer.valueOf(input.get("id").toString()));
-        String newUsername = input.get("username").toString();
-        if (updateClient.usernameExists(newUsername)) {
+    public String processUpdate(@RequestParam Map<String, String> input, Model model, @ModelAttribute("sessionclient") Client oldclient) {
+        Client client = updateClient.findClient(Integer.valueOf(input.get("id")));
+        String newUsername = input.get("user");
+        if (newUsername.equals(oldclient.getUsername())) {
             client = updateClient.processChanges(client, input);
-            login.checkAndLoadConnector(client,model);
-            model.addAttribute("username", "uw gebruikersnaam is niet gewijzigd");
             model.addAttribute("sessionclient", client);
-            model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
-            model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
-            return "client_view";
+            Hibernate.initialize(client.getAccounts());
+            return "redirect:/loadClientView";
+        } else {
+            if (updateClient.usernameExists(newUsername)) {
+                model.addAttribute("used", "gebruikersnaam is al in gebruik");
+                return "edit_client";
+            }
+            client.setUsername(input.get("user"));
+            client = updateClient.processChanges(client, input);
+            model.addAttribute("sessionclient", client);
+            Hibernate.initialize(client.getAccounts());
+            return "redirect:/loadClientView";
         }
-        client.setUsername(input.get("username").toString());
-        client = updateClient.processChanges(client, input);
-        login.checkAndLoadConnector(client,model);
-        model.addAttribute("sessionclient", client);
-        model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
-        model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
-        return "client_view";
     }
 }

@@ -38,13 +38,13 @@ public class UpdateClient {
         return clientDao.existsClientByUsername(newUsername);
     }
 
-    public Client processChanges(Client client, Map<String, Object> input) {
-        client.setFirstName(input.get("firstName").toString());
-        client.setPrefix(input.get("prefix").toString());
-        client.setLastName(input.get("lastName").toString());
-        client.setEmail(input.get("email").toString());
-        client.setTelephoneNr(input.get("telephoneNr").toString());
-        client.setPassword(input.get("password").toString());
+    public Client processChanges(Client client, Map<String, String> input) {
+        client.setFirstName(input.get("first"));
+        client.setPrefix(input.get("prefix"));
+        client.setLastName(input.get("last"));
+        client.setEmail(input.get("email"));
+        client.setTelephoneNr(input.get("telephone"));
+        client.setPassword(input.get("pass"));
         clientDao.save(client);
         return client;
     }
