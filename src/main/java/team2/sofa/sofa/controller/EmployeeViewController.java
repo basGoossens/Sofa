@@ -35,13 +35,11 @@ public class EmployeeViewController {
     }
 
     @GetMapping(value= "loadEmployeeViewPrivate")
-    public String loadEmployeeViewPrivate(Model model)
-        {
+    public String loadEmployeeViewPrivate(Model model) {
             List<PrivateAccount> topTenHighest;
             topTenHighest = topTenHighestBalanceFinder.getTopTenHighestBalance();
             model.addAttribute("tenHighestBalance", topTenHighest);
-return "employee_view_particulieren";
-
+            return "employee_view_particulieren";
     }
 
     @GetMapping(value= "loadEmployeeViewBusiness")
@@ -56,6 +54,12 @@ return "employee_view_particulieren";
         model.addAttribute("tenHighestBalance", topTenHighest);
         model.addAttribute("balancePerSector", balancePerSector);
         return "employee_view_mkb";
+    }
+
+    @GetMapping(value= "loadEmployeeViewAccountManager")
+    public String loadEmployeeViewAccountManager(Model model) {
+        return "account_manager_view";
+
     }
 
 }

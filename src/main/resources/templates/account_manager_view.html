@@ -6,6 +6,8 @@
 </head>
 <body>
 <div th:insert="general :: header"/>
+
+<h1 style="text-align: left;">Welkom <span th:text="${sessionemployee.firstName}"/></h1>
 ​
 <div>
     <h1>Pinautomaat aanvragen: </h1>
@@ -16,6 +18,9 @@
             </tr>
             <tr>
                 <td><input type="text" placeholder="Voer Iban in" name="iban"></td>
+                <div th:if="${error}">
+                <td th:text="${error}"></td>
+                </div>
             </tr>
         </table>
         <input type="submit" value="Verzenden">

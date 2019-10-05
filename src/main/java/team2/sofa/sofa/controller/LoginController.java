@@ -75,7 +75,7 @@ public class LoginController {
                 return "redirect:/loadEmployeeViewPrivate";
 
             } if (fullemployee.getRole().equals(EmployeeRole.ACCOUNTMANAGER)){
-                return "account_manager_view";
+                return "redirect:/loadEmployeeViewAccountManager";
             }
 
             else {

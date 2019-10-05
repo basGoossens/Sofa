@@ -7,19 +7,22 @@
 <body>
 <div th:insert="general :: header"/>
 
-        <h1>Vijf cijferige koppelcode</h1>
-        <div>
-            <div> Code graag aan winkelier geven</div>
-            <tabel>
-                <tr>
-                    <td> Vijf cijferige koppelcode</td>
-                    <td><span th:text="${fiveDigits}"/></td>
-                </tr>
-            </tabel>
-        </div>
-    </div>
+<h1>Vijf cijferige koppelcode voor <span th:text="${bussinessAccount.iban}">iban</span></h1>
+<div>
+    <div> Code graag aan winkelier geven</div>
+    <tabel>
+        <tr>
+            <td> Vijf cijferige koppelcode</td>
+            <td><span th:text="${fiveDigits}"/></td>
+        </tr>
+    </tabel>
+</div>
+<form action="#" th:action="@{loadEmployeeViewAccountManager}">
+    <input type="submit" value="Nog een automaat koppelen">
+</form>
 
 
-    ​
+
+​
 </body>
 </html>

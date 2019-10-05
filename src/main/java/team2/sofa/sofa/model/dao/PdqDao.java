@@ -5,6 +5,8 @@ import team2.sofa.sofa.model.Pdq;
 
 public interface PdqDao extends CrudRepository<Pdq, Integer> {
 
+    boolean existsPdqByFiveDigitcode(String fiveDigitCode);
+
 
 
 }
