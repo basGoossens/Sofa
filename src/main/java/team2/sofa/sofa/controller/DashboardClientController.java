@@ -33,8 +33,9 @@ public class DashboardClientController {
 
     @PostMapping(value = "transferHandler")
     public String transfer(@RequestParam int id, Model model) {
-        model = fundTransfer.readyTransaction(id, model);
-        return "money_transfer";
+        Account account = clientview.FindAccountById(id);
+        model.addAttribute("account", account);
+        return "redirect:/startTransfer";
     }
 
 

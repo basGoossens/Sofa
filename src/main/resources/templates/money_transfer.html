@@ -18,11 +18,11 @@
               method="post">
             <table class="transfer-table" width="100%">
                 <tr>
-                    <td>Achternaam:</td>
+                    <td>Achternaam ontvanger:</td>
                     <td><input type="text" th:field="*{name}" required
                                oninvalid="this.setCustomValidity('Geef achternaam begunstigde')"
                                oninput="setCustomValidity('')"/></td>
-                    <div th:unless="${mismatch == null}">
+                    <div th:if="${mismatch}">
                         <td th:text="${mismatch }"></td>
                     </div>
                 </tr>
@@ -32,7 +32,7 @@
                                oninvalid="this.setCustomValidity('vul een positief bedrag in')"
                                oninput="setCustomValidity('')"/>
                     </td>
-                    <div th:unless="${saldo == null}">
+                    <div th:if="${saldo}">
                         <td th:text="${saldo}"></td>
                     </div>
                 </tr>
@@ -43,14 +43,14 @@
                                oninput="setCustomValidity('')"/></td>
                 </tr>
                 <tr>
-                    <td>Tegenrekening:</td>
+                    <td>IBAN van Ontvanger:</td>
                     <td><input type="text" th:field="*{creditAccount}" placeholder="NL00SOFA0123456789" required
                                oninvalid="this.setCustomValidity('Geef IBAN op van begunstigde')"
                                oninput="setCustomValidity('')"/></td>
-                    <div th:unless="${fout == null}">
+                    <div th:if="${fout}">
                         <td th:text="${fout}"></td>
                     </div>
-                    <div th:unless="${foei == null}">
+                    <div th:if="${foei}">
                         <td th:text="${foei}"></td>
                     </div>
                 </tr>

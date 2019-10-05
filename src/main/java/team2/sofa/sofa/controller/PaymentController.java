@@ -3,17 +3,29 @@ package team2.sofa.sofa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.TransactionForm;
 import team2.sofa.sofa.service.FundTransfer;
 
+import java.util.Map;
+
 @Controller
-@SessionAttributes("sessionclient")
+@SessionAttributes({"sessionclient", "account", "benificiary", "transaction"})
 public class PaymentController {
 
     @Autowired
     FundTransfer fundTransfer;
+
+    @GetMapping(value = "startTransfer")
+    public String intializeTransfer(@ModelAttribute Account account, Model model){
+        model = fundTransfer.readyTransaction(account, model);
+        return "money_transfer";
+    }
+    @GetMapping(value = "confirmTransfer")
+    public String confirmPayment(Model model){
+        return "confirm_payment.html";
+    }
 
     @PostMapping(value = "transferMoneyHandler")
     public String transferMoneyHandler(TransactionForm transactionForm, Model model) {
@@ -42,14 +54,14 @@ public class PaymentController {
             return "money_transfer";
         }
         model = fundTransfer.prepareConfirmation(transactionForm, model);
-        return "confirm_payment";
+        return "redirect:/confirmTransfer";
     }
 
     @PostMapping(value = "confirmPayment")
     public String handleTransfer(TransactionForm transactionForm, Model model) {
         fundTransfer.procesTransaction(transactionForm);
         model = fundTransfer.readyDashboard(transactionForm, model);
-        return "dashboard_client";
+        return "redirect:/loadDashboardClient";
     }
 
 }

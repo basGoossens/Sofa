@@ -45,8 +45,8 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "accountListHandler")
-    public String accountListHandler(Account account, Model model) {
-        account = clientview.FindAccountById(account.getId());
+    public String accountListHandler(@RequestParam int id, Model model) {
+        Account account = clientview.FindAccountById(id);
         model.addAttribute("account", account);
         Hibernate.initialize(account.getTransactions());
         return "redirect:/loadDashboardClient";

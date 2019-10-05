@@ -3,6 +3,7 @@ package team2.sofa.sofa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Transaction;
@@ -33,16 +34,15 @@ public class    FundTransfer {
     /**
      * wordt gebruikt om form in Money_transfer voor te bereiden
      *
-     * @param id
+//     * @param id
      * @param model
      * @return
      */
-    public Model readyTransaction(int id, Model model) {
+    public Model readyTransaction(@ModelAttribute Account account, Model model) {
         TransactionForm t = new TransactionForm();
-        Account a = accountDao.findAccountById(id);
-        t.setDebetAccount(a.getIban());
+        t.setDebetAccount(account.getIban());
         model.addAttribute("transactionForm", t);
-        model.addAttribute("account", a);
+        model.addAttribute("account", account);
         return model;
     }
     public Model returnToTransaction(TransactionForm transactionForm, Model model) {
