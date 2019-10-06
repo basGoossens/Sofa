@@ -16,7 +16,9 @@
             </tr>
             <tr>
                 <td><input type="text" placeholder="voer gebruikersnaam in" name="newuser" required="required"></td>
-                <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode" required="required">
+                <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode" pattern="^[0-9]{5}"
+                           oninvalid="this.setCustomValidity('Voer een 5 cijferige code in')"
+                           oninput="setCustomValidity('')"required="required">
                 </td>
                 <input type="hidden" th:value="${acc.iban}" name="bankaccount">
             </tr>
@@ -38,7 +40,10 @@
             </tr>
             <tr>
                 <td><input type="text" placeholder="iban" th:value="${con.iban}" name="banknr"></td>
-                <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode"></td>
+                <td><input type="text" placeholder="voer beveiligingscode in"
+                           pattern="^[0-9]{5}" name="accesscode"
+                           oninvalid="this.setCustomValidity('Voer een 5 cijferige code in')"
+                           oninput="setCustomValidity('')"/></td>
                 <input type="hidden" th:value="${con.id}" name="idconnect">
             </tr>
             <tr th:if="${wrong}">
