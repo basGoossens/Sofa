@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.service.ConnectingService;
 import team2.sofa.sofa.service.Login;
 import team2.sofa.sofa.service.UpdateClient;
 
@@ -20,6 +21,8 @@ public class PersonalPageController {
     UpdateClient updateClient;
     @Autowired
     Login login;
+    @Autowired
+    ConnectingService cs;
 
     @PostMapping(value = "updateHandler")
     public String updateHandler(@RequestParam int id, Model model) {
@@ -76,8 +79,10 @@ public class PersonalPageController {
                 model.addAttribute("used", "gebruikersnaam is al in gebruik");
                 return "edit_client";
             }
+            cs.changeUsername(oldclient.getUsername(), input.get("user"));
             client.setUsername(input.get("user"));
             client = updateClient.processChanges(client, input);
+            login.checkAndLoadConnector(client,model);
             model.addAttribute("sessionclient", client);
             Hibernate.initialize(client.getAccounts());
             return "redirect:/loadClientView";

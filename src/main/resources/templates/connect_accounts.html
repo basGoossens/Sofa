@@ -6,29 +6,30 @@
 </head>
 <body>
 <div th:insert="general :: header"/>
-<div th:if="${account}">
-<h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${account.iban}">rekening</span></h1>
-<form action="#" th:action="@{connectForm}" th:object="${account}" method="post">
-<table>
-    <tr>
-        <th>gebruikersnaam</th>
-        <th>beveiligingscode</th>
-    </tr>
-    <tr>
-       <td><input type="text" placeholder="voer gebruikersnaam in" name="newuser" required="required"></td>
-        <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode" required="required"></td>
-        <input type="hidden" th:value="${account.iban}" name="bankaccount">
-    </tr>
-    <tr th:if="${wrong}">
-        <td></td>
-        <td th:text="${wrong}" style="color:red">foutmelding </td>
-    </tr>
-</table>
-    <input type="submit" value="Verzenden">
-</form>
+<div th:if="${acc}">
+    <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${acc.iban}">rekening</span></h1>
+    <form action="#" th:action="@{connectForm}" method="post">
+        <table>
+            <tr>
+                <th>gebruikersnaam</th>
+                <th>beveiligingscode</th>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="voer gebruikersnaam in" name="newuser" required="required"></td>
+                <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode" required="required">
+                </td>
+                <input type="hidden" th:value="${acc.iban}" name="bankaccount">
+            </tr>
+            <tr th:if="${wrong}">
+                <td></td>
+                <td th:text="${wrong}" style="color:red">foutmelding</td>
+            </tr>
+        </table>
+        <input type="submit" value="Verzenden">
+    </form>
 </div>
-<div th:if="${connection}">
-    <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${connection.iban}">rekening</span></h1>
+<div th:if="${con}">
+    <h1>Koppel nieuwe rekeninghouder aan rekening: <span th:text="${con.iban}">rekening</span></h1>
     <form action="#" th:action="@{connectValidate}" method="post">
         <table>
             <tr>
@@ -36,9 +37,9 @@
                 <td>beveiligingscode</td>
             </tr>
             <tr>
-                <td><input type="text" placeholder="iban" th:value="${connection.iban}" name="banknr"></td>
+                <td><input type="text" placeholder="iban" th:value="${con.iban}" name="banknr"></td>
                 <td><input type="text" placeholder="voer beveiligingscode in" name="accesscode"></td>
-                <input type="hidden" th:value="${connection.id}" name="idconnect">
+                <input type="hidden" th:value="${con.id}" name="idconnect">
             </tr>
             <tr th:if="${wrong}">
                 <td></td>

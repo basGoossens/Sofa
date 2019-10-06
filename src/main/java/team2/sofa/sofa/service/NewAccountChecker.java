@@ -53,13 +53,13 @@ public class NewAccountChecker {
             if (input.get("bussinessName").equals("ongebruikt")){
             makeNewPrivateAccount(makeNewAccount(client));
             model.addAttribute("client", client);
-            return "login";}
+            return "redirect:/login";}
             else {
                 makeNewAccount(client);
                 Business business = new Business(0, input.get("bussinessName"), BusinessSector.valueOf(input.get("sector")), client);
                 makeNewBusinessAccount(business, client);
                 model.addAttribute("client", client);
-                return "login";
+                return "redirect:/login";
             }
         } else {
             model.addAttribute("errorList", errorList);
@@ -176,11 +176,5 @@ public class NewAccountChecker {
         Address tempAddress;
         tempAddress = addressDao.findAddressByZipCodeAndHouseNumber(newAddress.getZipCode(), newAddress.getHouseNumber());
         return tempAddress;
-    }
-
-    public boolean accountTypeChecker(Map <String,String> map) {
-        if (map.get("accounttype").toString().equals("business")){
-        return true;}
-        else {return false;}
     }
 }

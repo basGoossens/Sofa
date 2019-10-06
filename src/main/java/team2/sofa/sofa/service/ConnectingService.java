@@ -50,15 +50,22 @@ public class ConnectingService {
         return model;
     }
 
-    public boolean checkUserName(Map<String, Object> body){
+    public boolean checkUserName(Map<String, String> body){
         //check of user bestaat
-        if (clientDao.findClientByUsername(body.get("newuser").toString()) == null) return false;
+        if (clientDao.findClientByUsername(body.get("newuser")) == null) return false;
 
         //check op eigen usernaam
-        List<Client> owners = accountDao.findAccountByIban(body.get("bankaccount").toString()).getOwners();
+        List<Client> owners = accountDao.findAccountByIban(body.get("bankaccount")).getOwners();
         for (Client client: owners){
             if (client.getUsername().equals(body.get("newuser"))) return false;
         }
         return true;
+    }
+    public void changeUsername(String oldUsername, String newUsername){
+        List<Connector> list = connectorDao.findConnectorsByUsername(oldUsername);
+        for (Connector connection : list) {
+            connection.setUsername(newUsername);
+            connectorDao.save(connection);
+        }
     }
 }

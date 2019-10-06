@@ -39,8 +39,6 @@ public class ClientViewController {
 
     @GetMapping(value="loadClientView")
     public String loadClientView(Model model) {
-        Account account = new Account();
-        model.addAttribute("account", account);
         return "client_view";
     }
 

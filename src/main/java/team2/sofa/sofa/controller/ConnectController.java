@@ -1,14 +1,16 @@
 package team2.sofa.sofa.controller;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Account;
+import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Connector;
 import team2.sofa.sofa.model.dao.AccountDao;
+import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.ConnectorDao;
 import team2.sofa.sofa.service.ConnectingService;
 import team2.sofa.sofa.service.Login;
@@ -27,19 +29,31 @@ public class ConnectController {
     ConnectorDao connectorDao;
     @Autowired
     Login login;
+    @Autowired
+    ClientDao clientDao;
+
+    @GetMapping(value = "koppelRekeninghouder")
+    public String connect(@ModelAttribute("connection") Connector connection, @ModelAttribute("connecting") Account account, Model model){
+        if(connection.getId()!=0) {
+            model.addAttribute("con", connection);
+        }
+        if(account.getId()!=0){
+            model.addAttribute("acc", account);
+        }
+        return "connect_accounts";
+    }
 
     /**
      * mapping vanuit clientdash board naar connect_accounts
      * vanuit inlog van degene die een nieuwe rekeninghouder wil toevoegen aan rekening waarop is ingelogd.
      * @param id id van het account dat is geselecteerd door de ingelogd gebruiker om een extra rekeninghouder toe te voegen
-     * @param model
      * @return verwijzing naar pagina waarin username en beveiligingscode kan worden ingevoerd.
      */
-    @PostMapping(value = "ConnectAccount")
-    public String connectAccounts(@RequestParam int id, Model model) {
+    @PostMapping(value = "connectAccount")
+    public String connectAccounts(@RequestParam int id, RedirectAttributes redirectAttributes) {
         Account account = cs.getAccount(id);
-        model.addAttribute("account", account);
-        return "connect_accounts";
+        redirectAttributes.addAttribute("connecting", account);
+        return "redirect:/koppelRekeninghouder";
     }
 
     /**
@@ -51,14 +65,15 @@ public class ConnectController {
      * @return
      */
     @PostMapping(value = "connectForm")
-    public String connectHandler(@RequestParam Map<String, Object> body, Model model) {
+    public String connectHandler(@RequestParam Map<String, String> body, Model model) {
         if (cs.checkUserName(body)) {
             //check op eigen naam en op voorkomen van username in db
             Account account = cs.saveCoupling(body);
             model.addAttribute("account", account);
-            return "dashboard_client";
+            Hibernate.initialize(account.getTransactions());
+            return "redirect:/loadDashboardClient";
         } else {
-            Account account = accountDao.findAccountByIban(body.get("bankaccount").toString());
+            Account account = accountDao.findAccountByIban(body.get("bankaccount"));
             model.addAttribute("account", account);
             model.addAttribute("wrong", "Gebruikernaam is niet juist");
         return "connect_accounts";
@@ -71,14 +86,14 @@ public class ConnectController {
      * het connector opbject wordt ingeladen en meegegeven aan het volgende scherm
      * waarin de nieuwe rekeninghouder de ontvangen beveiligingscode kan invoeren
      * @param id van het connector object in de DB
-     * @param model
+     * @param redirectAttributes wordt gebruikt om object door te zenden via redirect
      * @return
      */
     @PostMapping(value = "newConnection")
-    public String matchAccounts(@RequestParam int id, Model model) {
+    public String matchAccounts(@RequestParam int id, RedirectAttributes redirectAttributes) {
         Connector connector = cs.getConnection(id);
-        model.addAttribute("connection", connector);
-        return "connect_accounts";
+        redirectAttributes.addFlashAttribute("connection", connector);
+        return "redirect:/koppelRekeninghouder";
     }
 
     /**
@@ -89,17 +104,20 @@ public class ConnectController {
      * @return
      */
     @PostMapping(value = "connectValidate")
-    public String checkMatch(@RequestParam Map<String, Object> body, Model model) {
+    public String checkMatch(@RequestParam Map<String, String> body, Model model) {
         //Onderstaande methode stopt alle instanties waarbij de username voorkomt in een list
         //en checkt op IBAN en security code
-        int id = Integer.valueOf(body.get("idconnect").toString());
+        int id = Integer.valueOf(body.get("idconnect"));
         Connector c = connectorDao.findById(id).get();
-        if (c.getSecurityCode().equals(body.get("accesscode").toString())
-                && c.getIban().equals(body.get("banknr").toString())) {
+        if (c.getSecurityCode().equals(body.get("accesscode"))
+                && c.getIban().equals(body.get("banknr"))) {
                 //call service method to update client, account en connector
                 model = cs.processCoupling(c, model);
+                Client client = clientDao.findClientByUsername(c.getUsername());
                 model.addAttribute("connect", connectorDao.findConnectorsByUsername(c.getUsername()));
-                return "client_view";
+                model.addAttribute("sessionclient", client);
+                Hibernate.initialize(client.getAccounts());
+                return "redirect:/loadClientView";
         }
         model.addAttribute("connection", c);
         model.addAttribute("wrong", "accescode is niet juist");
