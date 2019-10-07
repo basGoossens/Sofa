@@ -13,7 +13,7 @@ import team2.sofa.sofa.service.Login;
 
 
 @Controller
-@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "newaccountid", "account"})
+@SessionAttributes({"sessionclient", "connect", "nrBusiness", "nrPrivate", "newaccountid", "account", "business"})
 public class ClientViewController {
 
     @Autowired
@@ -58,16 +58,15 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "addNewBusinessAccountHandler")
-    public String addNewBusinessAccountHandler(@RequestParam int id, RedirectAttributes redirectAttributes){
+    public String addNewBusinessAccountHandler(@RequestParam int id, Model model){
         Client client = clientview.findClientById(id);
         Business business = new Business();
         business.setOwner(client);
-        redirectAttributes.addFlashAttribute("business", business);
+        model.addAttribute("business", business);
         return "redirect:/nieuweZakelijkeRekening";
     }
     @GetMapping(value = "nieuweZakelijkeRekening")
-    public String addNewBussiness(@ModelAttribute("business") Business business, Model model){
-        model.addAttribute(business);
+    public String addNewBussiness(){
         return "add_business_account";
     }
 
