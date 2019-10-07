@@ -1,12 +1,11 @@
 package team2.sofa.sofa.controller;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ConnectorDao;
@@ -47,7 +46,16 @@ public class DashboardClientController {
     }
 
     @GetMapping(value = "rekeningdetails")
-    public String loadDashboardClient(Model model){
+    @Transactional
+    public String loadDashboardClient(@ModelAttribute("acc") Account account,
+                                      @ModelAttribute("account") Account sessionaccount,
+                                      Model model){
+        if (account.getId()!=0){
+        model.addAttribute("account", account);}
+        if (account.getId() != sessionaccount.getId() && sessionaccount.getId()!=0){
+            model.addAttribute("account", sessionaccount);
+            Hibernate.initialize(sessionaccount.getTransactions());
+        }
         return "dashboard_client";
     }
 }

@@ -44,9 +44,10 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "accountListHandler")
-    public String accountListHandler(@RequestParam int id, Model model) {
+    public String accountListHandler(@RequestParam int id, RedirectAttributes redirectAttributes,Model model) {
         Account account = clientview.FindAccountById(id);
-        model.addAttribute("account", account);
+        model.addAttribute("account", new Account());
+        redirectAttributes.addFlashAttribute("acc", account);
         Hibernate.initialize(account.getTransactions());
         return "redirect:/rekeningdetails";
     }

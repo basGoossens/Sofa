@@ -65,16 +65,18 @@ public class ConnectController {
      * @return
      */
     @PostMapping(value = "connectForm")
-    public String connectHandler(@RequestParam Map<String, String> body, Model model) {
+    public String connectHandler(@RequestParam Map<String, String> body,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
         if (cs.checkUserName(body)) {
             //check op eigen naam en op voorkomen van username in db
             Account account = cs.saveCoupling(body);
-            model.addAttribute("account", account);
+            redirectAttributes.addFlashAttribute("acc", account);
             Hibernate.initialize(account.getTransactions());
             return "redirect:/rekeningdetails";
         } else {
             Account account = accountDao.findAccountByIban(body.get("bankaccount"));
-            model.addAttribute("account", account);
+            model.addAttribute("acc", account);
             model.addAttribute("wrong", "Gebruikernaam is niet juist");
         return "connect_accounts";
         }
@@ -119,7 +121,7 @@ public class ConnectController {
                 Hibernate.initialize(client.getAccounts());
                 return "redirect:/rekeningenoverzicht";
         }
-        model.addAttribute("connection", c);
+        model.addAttribute("con", c);
         model.addAttribute("wrong", "accescode is niet juist");
         return "connect_accounts";
     }

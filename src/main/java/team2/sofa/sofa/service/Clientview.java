@@ -76,7 +76,7 @@ public class Clientview {
     public Account makeAccount(Client client) {
         IBANGenerator ibanGenerator = new IBANGenerator();
         String iban = ibanGenerator.ibanGenerator();
-        Account a = new PrivateAccount(iban, new BigDecimal(0));
+        Account a = new PrivateAccount(iban, new BigDecimal(0.00));
         a.addClient(client);
         return a;
     }
@@ -90,7 +90,7 @@ public class Clientview {
         a.addClient(c);
         a.setIban(iban);
         a.setBusiness(business);
-        a.setBalance(new BigDecimal(0));
+        a.setBalance(new BigDecimal(0.00));
         c.addAccount(a);
         clientDao.save(c);
         accountDao.save(a);

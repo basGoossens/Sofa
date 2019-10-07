@@ -1,9 +1,11 @@
 package team2.sofa.sofa.controller;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.TransactionForm;
 import team2.sofa.sofa.service.FundTransfer;
@@ -58,9 +60,11 @@ public class PaymentController {
     }
 
     @PostMapping(value = "confirmPayment")
-    public String handleTransfer(TransactionForm transactionForm, Model model) {
+    public String handleTransfer(TransactionForm transactionForm, RedirectAttributes redirectAttributes) {
         fundTransfer.procesTransaction(transactionForm);
-        model = fundTransfer.readyDashboard(transactionForm, model);
+        Account account = fundTransfer.readyDashboard(transactionForm);
+        redirectAttributes.addFlashAttribute("acc", account);
+        Hibernate.initialize(account.getTransactions());
         return "redirect:/rekeningdetails";
     }
 
