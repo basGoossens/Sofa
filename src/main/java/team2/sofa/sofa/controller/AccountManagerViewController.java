@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Pdq;
-import team2.sofa.sofa.model.dao.PdqDao;
 import team2.sofa.sofa.service.RequestPDQ;
 
 
@@ -20,9 +18,6 @@ public class AccountManagerViewController {
 
     @Autowired
     RequestPDQ rp;
-
-    @Autowired
-    PdqDao pdqDao;
 
 
     @PostMapping(value = "connectPDQ")
@@ -46,15 +41,6 @@ public class AccountManagerViewController {
 
     @GetMapping(value= "connecting-code")
     public String goToConnectingCode(Model model){
-        return "receive_connecting_code";
-    }
-
-    @PostMapping(value = "ConnectEightPDQ")
-    public String requestEightPDQ(@RequestParam String iban, Model model) {
-        Account account = rp.getAccount(iban);
-        String code = rp.generateEightDigit();
-        model.addAttribute("eightDigit", code);
-        model.addAttribute("account", account);
         return "receive_connecting_code";
     }
 }

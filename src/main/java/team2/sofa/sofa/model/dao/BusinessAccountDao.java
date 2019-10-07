@@ -9,8 +9,5 @@ public interface BusinessAccountDao extends CrudRepository <BusinessAccount, Int
 
         List<BusinessAccount> findTop10ByBusinessIsNotNullOrderByBalanceDesc();
 
-        BusinessAccount findAccountById(int id);
-
-        BusinessAccount findBusinessAccountByIban(String iban);
 
 }
