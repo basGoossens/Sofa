@@ -53,6 +53,7 @@ public class DashboardClientController {
         if (account.getId()!=0){
         model.addAttribute("account", account);}
         if (account.getId() != sessionaccount.getId() && sessionaccount.getId()!=0){
+            sessionaccount = clientview.FindAccountById(sessionaccount.getId());
             model.addAttribute("account", sessionaccount);
             Hibernate.initialize(sessionaccount.getTransactions());
         }
