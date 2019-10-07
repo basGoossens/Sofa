@@ -71,7 +71,7 @@ public class ConnectController {
             Account account = cs.saveCoupling(body);
             model.addAttribute("account", account);
             Hibernate.initialize(account.getTransactions());
-            return "redirect:/loadDashboardClient";
+            return "redirect:/rekeningdetails";
         } else {
             Account account = accountDao.findAccountByIban(body.get("bankaccount"));
             model.addAttribute("account", account);

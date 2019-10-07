@@ -61,7 +61,7 @@ public class PaymentController {
     public String handleTransfer(TransactionForm transactionForm, Model model) {
         fundTransfer.procesTransaction(transactionForm);
         model = fundTransfer.readyDashboard(transactionForm, model);
-        return "redirect:/loadDashboardClient";
+        return "redirect:/rekeningdetails";
     }
 
 }

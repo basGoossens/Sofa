@@ -48,7 +48,7 @@ public class ClientViewController {
         Account account = clientview.FindAccountById(id);
         model.addAttribute("account", account);
         Hibernate.initialize(account.getTransactions());
-        return "redirect:/loadDashboardClient";
+        return "redirect:/rekeningdetails";
     }
 
     @PostMapping(value = "addNewAccountHandler")

@@ -46,7 +46,7 @@ public class DashboardClientController {
         return "redirect:/rekeningenoverzicht";
     }
 
-    @GetMapping(value = "loadDashboardClient")
+    @GetMapping(value = "rekeningdetails")
     public String loadDashboardClient(Model model){
         return "dashboard_client";
     }
