@@ -53,7 +53,7 @@ public class LoginController {
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
             clientViewController.fillClientView(client, model);
-            return "redirect:/loadClientView";
+            return "redirect:/rekeningenoverzicht";
         } else {
             model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");
             return "login";

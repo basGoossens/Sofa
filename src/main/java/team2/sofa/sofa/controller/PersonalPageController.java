@@ -28,6 +28,7 @@ public class PersonalPageController {
     public String updateHandler(@RequestParam int id, Model model) {
         Client client = updateClient.findClient(id);
         model.addAttribute("sessionclient", client);
+        Hibernate.initialize(client.getAccounts());
         return "redirect:wijzigGegevens";
     }
     @GetMapping(value = "wijzigGegevens")
@@ -57,7 +58,7 @@ public class PersonalPageController {
             model.addAttribute("sessionclient", client);
             model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
             model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
-            return "redirect:/loadClientView";
+            return "redirect:/rekeningenoverzicht";
         }
         model.addAttribute("address", checkedAddress);
         model.addAttribute("clientId", clientId);
@@ -73,7 +74,7 @@ public class PersonalPageController {
             client = updateClient.processChanges(client, input);
             model.addAttribute("sessionclient", client);
             Hibernate.initialize(client.getAccounts());
-            return "redirect:/loadClientView";
+            return "redirect:/rekeningenoverzicht";
         } else {
             if (updateClient.usernameExists(newUsername)) {
                 model.addAttribute("used", "gebruikersnaam is al in gebruik");
@@ -85,7 +86,7 @@ public class PersonalPageController {
             login.checkAndLoadConnector(client,model);
             model.addAttribute("sessionclient", client);
             Hibernate.initialize(client.getAccounts());
-            return "redirect:/loadClientView";
+            return "redirect:/rekeningenoverzicht";
         }
     }
 }

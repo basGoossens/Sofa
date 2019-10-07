@@ -1,6 +1,25 @@
 package team2.sofa.sofa.model;
 
 public enum BusinessSector {
-    AGRARISCH, BOUW, FINANCIEEL, ZORG, INDUSTRIE, OVERHEID_EN_ONDERWIJS, VASTGOED, RETAIL, TECH_EN_TELECOM, TRANSPORT,
-    ZAKELIJKE_DIENSTVERLENING
+    AGRARISCH("Agrarisch"),
+    BOUW("Bouw"),
+    FINANCIEEL("Financiele dienstverlening"),
+    ZORG("Zorg"),
+    INDUSTRIE("Industie"),
+    OVERHEID_EN_ONDERWIJS("Overheid & Onderwijs"),
+    VASTGOED("Vastgoed"),
+    RETAIL("Retail"),
+    TECH_EN_TELECOM("Tech & Telecom"),
+    TRANSPORT("Transport sector"),
+    ZAKELIJKE_DIENSTVERLENING("Zakelijke Dienstverlening");
+
+    private final String displayValue;
+
+    private BusinessSector(String displayValue) {
+        this.displayValue = displayValue;
+    }
+
+    public String getDisplayValue() {
+        return displayValue;
+    }
 }

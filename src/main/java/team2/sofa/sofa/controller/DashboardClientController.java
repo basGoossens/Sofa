@@ -43,7 +43,7 @@ public class DashboardClientController {
     @PostMapping(value="backToClientView")
     public String backToClientView(@RequestParam int id, Model model) {
         clientViewController.fillClientView(clientview.findClientById(id), model);
-        return "redirect:/loadClientView";
+        return "redirect:/rekeningenoverzicht";
     }
 
     @GetMapping(value = "loadDashboardClient")

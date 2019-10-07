@@ -37,7 +37,7 @@ public class ClientViewController {
         Hibernate.initialize(loggedInClient.getAccounts());
     }
 
-    @GetMapping(value="loadClientView")
+    @GetMapping(value="rekeningenoverzicht")
     public String loadClientView(Model model) {
         return "client_view";
     }
@@ -53,7 +53,7 @@ public class ClientViewController {
     @PostMapping(value = "addNewAccountHandler")
     public String addNewAccount(@RequestParam int id, Model model){
         clientview.createNewPrivate(id, model);
-        return "redirect:/loadClientView";
+        return "redirect:/rekeningenoverzicht";
     }
 
     @PostMapping(value = "addNewBusinessAccountHandler")
@@ -72,7 +72,7 @@ public class ClientViewController {
         model.addAttribute("sessionclient", c);
         model.addAttribute("nrBusiness", login.countBusinessAccounts(c));
         model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
-        return "redirect:/loadClientView";
+        return "redirect:/rekeningenoverzicht";
     }
 
 

@@ -22,7 +22,7 @@
                     <td>Sector:</td>
                     <td><select th:field="*{sector}">
                         <option th:each="sector : ${T(team2.sofa.sofa.model.BusinessSector).values()}"
-                                th:value="${sector}" th:text="${sector}"></option>
+                                th:value="${sector}" th:text="${sector.displayValue}"></option>
                     </select></td>
                 </tr>
             </table>

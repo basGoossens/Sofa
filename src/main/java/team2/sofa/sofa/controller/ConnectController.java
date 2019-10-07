@@ -117,7 +117,7 @@ public class ConnectController {
                 model.addAttribute("connect", connectorDao.findConnectorsByUsername(c.getUsername()));
                 model.addAttribute("sessionclient", client);
                 Hibernate.initialize(client.getAccounts());
-                return "redirect:/loadClientView";
+                return "redirect:/rekeningenoverzicht";
         }
         model.addAttribute("connection", c);
         model.addAttribute("wrong", "accescode is niet juist");
