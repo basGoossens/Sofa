@@ -47,7 +47,6 @@ public class PdqInteractionService {
     public String doPdqCoupling(PaymentMachineConnectionData paymentMachineConnectionData) throws Exception {
         try {
             Pdq pdq = pdqDao.findPdqByFiveDigitcode(paymentMachineConnectionData.getFiveDigitCode());
-            System.out.println(pdq.getFiveDigitcode());
             if (pdq.getFiveDigitcode().equals(paymentMachineConnectionData.getFiveDigitCode()) ||
                     pdq.getCoupledAccount().getIban().equals(paymentMachineConnectionData.getAccount())){
                 return pdq.getEightDigitcode();
