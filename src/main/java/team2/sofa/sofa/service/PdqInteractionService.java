@@ -11,7 +11,6 @@ import team2.sofa.sofa.model.dao.TransactionDao;
 @Service
 public class PdqInteractionService {
 
-
     @Autowired
     AccountDao accountDao;
 
@@ -26,18 +25,6 @@ public class PdqInteractionService {
 
     @Autowired
     FundTransfer fundTransfer;
-
-/*    public PaymentData deserializePaymentData(String json) {
-        Gson gson = new Gson();
-        PaymentData paymentData = gson.fromJson(json, PaymentData.class);
-        return paymentData;
-    }
-
-    public PaymentMachineConnectionData deserializePaymentMachineConnectionData(String json) {
-        Gson gson = new Gson();
-        PaymentMachineConnectionData pmcd = gson.fromJson(json, PaymentMachineConnectionData.class);
-        return pmcd;
-    }*/
 
     public Integer doPdqTransaction(PaymentData paymentData) throws Exception {
         Account creditAccount = accountDao.findAccountByIban(paymentData.getCreditAccount());
@@ -60,6 +47,7 @@ public class PdqInteractionService {
     public String doPdqCoupling(PaymentMachineConnectionData paymentMachineConnectionData) throws Exception {
         try {
             Pdq pdq = pdqDao.findPdqByFiveDigitcode(paymentMachineConnectionData.getFiveDigitCode());
+            System.out.println(pdq.getFiveDigitcode());
             if (pdq.getFiveDigitcode().equals(paymentMachineConnectionData.getFiveDigitCode()) ||
                     pdq.getCoupledAccount().getIban().equals(paymentMachineConnectionData.getAccount())){
                 return pdq.getEightDigitcode();
