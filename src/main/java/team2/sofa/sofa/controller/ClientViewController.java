@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.service.Clientview;
@@ -57,11 +58,16 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "addNewBusinessAccountHandler")
-    public String addNewBusinessAccountHandler(@RequestParam int id, Model model){
+    public String addNewBusinessAccountHandler(@RequestParam int id, RedirectAttributes redirectAttributes){
         Client client = clientview.findClientById(id);
         Business business = new Business();
         business.setOwner(client);
-        model.addAttribute("business", business);
+        redirectAttributes.addFlashAttribute("business", business);
+        return "redirect:/nieuweZakelijkeRekening";
+    }
+    @GetMapping(value = "nieuweZakelijkeRekening")
+    public String addNewBussiness(@ModelAttribute("business") Business business, Model model){
+        model.addAttribute(business);
         return "add_business_account";
     }
 
