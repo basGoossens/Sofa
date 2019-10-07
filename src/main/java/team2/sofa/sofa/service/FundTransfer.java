@@ -67,13 +67,11 @@ public class    FundTransfer {
      * helper methode om juiste data in te laden in model voor dashboard na uitvoeren van betaling
      *
      * @param transactionForm
-     * @param model
      * @return
      */
-    public Model readyDashboard(TransactionForm transactionForm, Model model) {
+    public Account readyDashboard(TransactionForm transactionForm) {
         Account a = accountDao.findAccountByIban(transactionForm.getDebetAccount());
-        model.addAttribute("account", a);
-        return model;
+        return a;
     }
 
     /**

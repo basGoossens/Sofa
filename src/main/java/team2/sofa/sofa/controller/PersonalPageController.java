@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Address;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.service.ConnectingService;
@@ -32,7 +33,9 @@ public class PersonalPageController {
         return "redirect:wijzigGegevens";
     }
     @GetMapping(value = "wijzigGegevens")
-    public String change(Model model){
+    public String change(@ModelAttribute("used") String fout, Model model){
+        if (!fout.equals("")){
+            model.addAttribute("error", fout);}
         return "edit_client";
     }
 
@@ -67,7 +70,10 @@ public class PersonalPageController {
     }
 
     @PostMapping(value = "updateClient")
-    public String processUpdate(@RequestParam Map<String, String> input, Model model, @ModelAttribute("sessionclient") Client oldclient) {
+    public String processUpdate(@RequestParam Map<String, String> input,
+                                Model model,
+                                @ModelAttribute("sessionclient") Client oldclient,
+                                RedirectAttributes redirectAttributes) {
         Client client = updateClient.findClient(Integer.valueOf(input.get("id")));
         String newUsername = input.get("user");
         if (newUsername.equals(oldclient.getUsername())) {
@@ -77,8 +83,8 @@ public class PersonalPageController {
             return "redirect:/rekeningenoverzicht";
         } else {
             if (updateClient.usernameExists(newUsername)) {
-                model.addAttribute("used", "gebruikersnaam is al in gebruik");
-                return "edit_client";
+                redirectAttributes.addFlashAttribute("used", "gebruikersnaam is al in gebruik");
+                return "redirect:/wijzigGegevens";
             }
             cs.changeUsername(oldclient.getUsername(), input.get("user"));
             client.setUsername(input.get("user"));

@@ -12,14 +12,7 @@ import java.math.BigDecimal;
 public class Clientview {
 
     @Autowired
-    PrivateAccountDao privateAccountDao;
-
-    @Autowired
     TransactionDao transactionDao;
-
-    @Autowired
-    BusinessAccountDao businessAccountDao;
-
     @Autowired
     AccountDao accountDao;
     @Autowired
@@ -37,6 +30,9 @@ public class Clientview {
         return clientDao.findClientById(id);
     }
 
+    public Client findClientByUsername(String userName) {
+        return clientDao.findClientByUsername(userName);
+    }
 
     public Account FindAccountById(int id) {
         Account chosenAccount = accountDao.findAccountById(id);
@@ -47,18 +43,12 @@ public class Clientview {
     public Account FindPrivateOrBusinessAccountById(int id, boolean isBusiness) {
         Account chosenAccount = new Account();
         if (isBusiness) {
-            chosenAccount = businessAccountDao.findAccountById(id);
+            chosenAccount = accountDao.findAccountById(id);
         }
         if (!isBusiness) {
-            chosenAccount = privateAccountDao.findAccountById(id);
+            chosenAccount = accountDao.findAccountById(id);
         }
         return chosenAccount;
-    }
-
-    public String accountOverview(int id, Model model) {
-        Account chosenAccount = accountDao.findAccountById(id);
-        model.addAttribute("account", chosenAccount);
-        return "dashboard_employee";
     }
 
     public void createNewPrivate(int id, Model model) {
@@ -72,11 +62,10 @@ public class Clientview {
         model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
     }
 
-
     public Account makeAccount(Client client) {
         IBANGenerator ibanGenerator = new IBANGenerator();
         String iban = ibanGenerator.ibanGenerator();
-        Account a = new PrivateAccount(iban, new BigDecimal(0));
+        Account a = new PrivateAccount(iban, new BigDecimal(0.00));
         a.addClient(client);
         return a;
     }
@@ -90,13 +79,12 @@ public class Clientview {
         a.addClient(c);
         a.setIban(iban);
         a.setBusiness(business);
-        a.setBalance(new BigDecimal(0));
+        a.setBalance(new BigDecimal(0.00));
         c.addAccount(a);
         clientDao.save(c);
         accountDao.save(a);
         return a;
     }
-
 }
 
 

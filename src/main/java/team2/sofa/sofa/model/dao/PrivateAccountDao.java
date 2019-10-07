@@ -8,8 +8,4 @@ import java.util.List;
 public interface PrivateAccountDao extends CrudRepository<PrivateAccount, Integer> {
 
     List<PrivateAccount> findTop10ByOrderByBalanceDesc();
-
-    PrivateAccount findAccountById(int id);
-
-    PrivateAccount findAccountByIban(String iban);
 }

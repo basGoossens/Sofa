@@ -9,11 +9,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Connector;
-import team2.sofa.sofa.model.dao.AccountDao;
-import team2.sofa.sofa.model.dao.ClientDao;
-import team2.sofa.sofa.model.dao.ConnectorDao;
+import team2.sofa.sofa.service.Clientview;
 import team2.sofa.sofa.service.ConnectingService;
-import team2.sofa.sofa.service.Login;
 
 import java.util.Map;
 
@@ -24,20 +21,14 @@ public class ConnectController {
     @Autowired
     ConnectingService cs;
     @Autowired
-    AccountDao accountDao;
-    @Autowired
-    ConnectorDao connectorDao;
-    @Autowired
-    Login login;
-    @Autowired
-    ClientDao clientDao;
+    Clientview clientview;
 
     @GetMapping(value = "koppelRekeninghouder")
-    public String connect(@ModelAttribute("connection") Connector connection, @ModelAttribute("connecting") Account account, Model model){
-        if(connection.getId()!=0) {
+    public String connect(@ModelAttribute("connection") Connector connection, @ModelAttribute("connecting") Account account, Model model) {
+        if (connection.getId() != 0) {
             model.addAttribute("con", connection);
         }
-        if(account.getId()!=0){
+        if (account.getId() != 0) {
             model.addAttribute("acc", account);
         }
         return "connect_accounts";
@@ -46,6 +37,7 @@ public class ConnectController {
     /**
      * mapping vanuit clientdash board naar connect_accounts
      * vanuit inlog van degene die een nieuwe rekeninghouder wil toevoegen aan rekening waarop is ingelogd.
+     *
      * @param id id van het account dat is geselecteerd door de ingelogd gebruiker om een extra rekeninghouder toe te voegen
      * @return verwijzing naar pagina waarin username en beveiligingscode kan worden ingevoerd.
      */
@@ -60,23 +52,26 @@ public class ConnectController {
      * handler voor verwerken van input die is gegeven door orignele rekeninghouder.
      * de ingevoerde gegevens (IBAN rekening, beveiligingscode en username extra rekeninghouder)
      * worden opgeslagen in de tabel 'connector'
-     * @param body een map waarin de gegevens zitten die door de gebruiker zijn ingevoerd
+     *
+     * @param body  een map waarin de gegevens zitten die door de gebruiker zijn ingevoerd
      * @param model
      * @return
      */
     @PostMapping(value = "connectForm")
-    public String connectHandler(@RequestParam Map<String, String> body, Model model) {
+    public String connectHandler(@RequestParam Map<String, String> body,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
         if (cs.checkUserName(body)) {
             //check op eigen naam en op voorkomen van username in db
             Account account = cs.saveCoupling(body);
-            model.addAttribute("account", account);
+            redirectAttributes.addFlashAttribute("acc", account);
             Hibernate.initialize(account.getTransactions());
             return "redirect:/rekeningdetails";
         } else {
-            Account account = accountDao.findAccountByIban(body.get("bankaccount"));
-            model.addAttribute("account", account);
+            Account account = cs.getAccountbyIBAN(body.get("bankaccount"));
+            model.addAttribute("acc", account);
             model.addAttribute("wrong", "Gebruikernaam is niet juist");
-        return "connect_accounts";
+            return "connect_accounts";
         }
     }
 
@@ -85,7 +80,8 @@ public class ConnectController {
      * indien dit zo is. verschijnt de knop "voeg rekenig toe" in client-view.
      * het connector opbject wordt ingeladen en meegegeven aan het volgende scherm
      * waarin de nieuwe rekeninghouder de ontvangen beveiligingscode kan invoeren
-     * @param id van het connector object in de DB
+     *
+     * @param id                 van het connector object in de DB
      * @param redirectAttributes wordt gebruikt om object door te zenden via redirect
      * @return
      */
@@ -99,7 +95,8 @@ public class ConnectController {
     /**
      * nadat de toekomstig mede rekeninghouder het IBAN en juiste beveiligingscode heeft ingevoerd.
      * wordt de ingelogde gebruiker gekoppeld als mede eigenaar van de rekening.
-     * @param body ingevoerde gegevens in het formulier
+     *
+     * @param body  ingevoerde gegevens in het formulier
      * @param model
      * @return
      */
@@ -108,20 +105,19 @@ public class ConnectController {
         //Onderstaande methode stopt alle instanties waarbij de username voorkomt in een list
         //en checkt op IBAN en security code
         int id = Integer.valueOf(body.get("idconnect"));
-        Connector c = connectorDao.findById(id).get();
+        Connector c = cs.getConnection(id);
         if (c.getSecurityCode().equals(body.get("accesscode"))
                 && c.getIban().equals(body.get("banknr"))) {
-                //call service method to update client, account en connector
-                model = cs.processCoupling(c, model);
-                Client client = clientDao.findClientByUsername(c.getUsername());
-                model.addAttribute("connect", connectorDao.findConnectorsByUsername(c.getUsername()));
-                model.addAttribute("sessionclient", client);
-                Hibernate.initialize(client.getAccounts());
-                return "redirect:/rekeningenoverzicht";
+            //call service method to update client, account en connector
+            model = cs.processCoupling(c, model);
+            Client client = clientview.findClientByUsername(c.getUsername());
+            model.addAttribute("connect", cs.getConnectionUsername(c.getUsername()));
+            model.addAttribute("sessionclient", client);
+            Hibernate.initialize(client.getAccounts());
+            return "redirect:/rekeningenoverzicht";
         }
-        model.addAttribute("connection", c);
+        model.addAttribute("con", c);
         model.addAttribute("wrong", "accescode is niet juist");
         return "connect_accounts";
     }
-
 }

@@ -32,25 +32,9 @@ public class Login {
     SectorAnalyzer sectorAnalyzer;
     @Autowired
     ConnectorDao connectorDao;
-
-
-
+    
     public Login() {
         super();
-    }
-
-    public String backFromDashboard(Account account, Model model){
-        Account a = accountDao.findAccountById(account.getId());
-        Client c = a.getOwners().get(0);
-        model.addAttribute("client", c);
-        model.addAttribute("account", a);
-        return "client_view";
-    }
-
-    public Client clientLogin(Client client, Model model) {
-        Client loggedInClient = clientDao.findClientByUsername(client.getUsername());
-        model.addAttribute("sessionclient", loggedInClient);
-        return loggedInClient;
     }
 
     public void checkAndLoadConnector(Client loggedInClient, Model model){

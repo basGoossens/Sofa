@@ -26,9 +26,11 @@ public class ConnectingService {
     public Connector getConnection(int id){
         return connectorDao.findById(id).get();
     }
+    public List<Connector> getConnectionUsername(String username){return connectorDao.findConnectorsByUsername(username);}
     public Account getAccount(int id) {
         return accountDao.findAccountById(id);
     }
+    public Account getAccountbyIBAN(String iban){return accountDao.findAccountByIban(iban);}
     public Account saveCoupling(Map body){
         String iban = body.get("bankaccount").toString();
         String user = body.get("newuser").toString();

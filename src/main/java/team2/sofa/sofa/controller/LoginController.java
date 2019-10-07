@@ -4,9 +4,14 @@ package team2.sofa.sofa.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import team2.sofa.sofa.model.*;
-import team2.sofa.sofa.service.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import team2.sofa.sofa.model.Client;
+import team2.sofa.sofa.model.Employee;
+import team2.sofa.sofa.model.EmployeeRole;
+import team2.sofa.sofa.service.Login;
+import team2.sofa.sofa.service.PasswordValidator;
 
 
 @Controller
@@ -16,14 +21,6 @@ public class LoginController {
     Login login;
     @Autowired
     PasswordValidator passwordValidator;
-    @Autowired
-    TopTenHighestBalanceFinder topTenHighestBalanceFinder;
-    @Autowired
-    TopTenMostActiveClient topTenMostActiveClient;
-    @Autowired
-    SectorAnalyzer sectorAnalyzer;
-    @Autowired
-    Clientview clientview;
     @Autowired
     ClientViewController clientViewController;
 
@@ -40,7 +37,6 @@ public class LoginController {
         model.addAttribute("client", new Client());
         return "index";
     }
-
 
     @GetMapping(value = "login_medewerker")
     public String goToLoginEmployeeHandler(Model model) {
@@ -60,7 +56,6 @@ public class LoginController {
         }
     }
 
-
     @PostMapping(value = "loginEmployeeHandler")
     public String loginEmployeeHandler(Employee employee, Model model) {
 
@@ -70,18 +65,14 @@ public class LoginController {
         boolean loginOK = passwordValidator.validateEmployeePassword(currentEmployee);
         if (loginOK) {
             Employee fullemployee = login.employeeLogin(currentEmployee, model);
-
             if (fullemployee.getRole().equals(EmployeeRole.HOOFD_PARTICULIEREN)) {
                 return "redirect:/loadEmployeeViewPrivate";
-
-            } if (fullemployee.getRole().equals(EmployeeRole.ACCOUNTMANAGER)){
-                return "redirect:/loadEmployeeViewAccountManager";
             }
-
-            else {
+            if (fullemployee.getRole().equals(EmployeeRole.ACCOUNTMANAGER)) {
+                return "redirect:/loadEmployeeViewAccountManager";
+            } else {
                 return "redirect:/loadEmployeeViewBusiness";
             }
-
         } else {
             model.addAttribute("Fout", "Gebruikersnaam en/of wachtword zijn niet juist");
             return "login_employee";

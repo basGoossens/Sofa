@@ -41,6 +41,9 @@
                 <tr>
                     <td>Gebruikersnaam:</td>
                     <td><input type="text" th:value="${sessionclient.username}" name="user" required/></td>
+                    <div th:if="${error}">
+                        <td th:text="${error}">al in gebruik</td>
+                    </div>
                 </tr>
                 <tr>
                     <td>Wachtwoord</td>
