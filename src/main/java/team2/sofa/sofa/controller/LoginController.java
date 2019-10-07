@@ -42,7 +42,7 @@ public class LoginController {
     }
 
 
-    @GetMapping(value = "login_employee")
+    @GetMapping(value = "login_medewerker")
     public String goToLoginEmployeeHandler(Model model) {
         model.addAttribute("employee", new Employee());
         return "login_employee";

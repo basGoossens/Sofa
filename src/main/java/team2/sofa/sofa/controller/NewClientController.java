@@ -16,7 +16,7 @@ public class NewClientController {
     @Autowired
     NewAccountChecker newAccountChecker;
 
-    @GetMapping(value = "new_account")
+    @GetMapping(value = "nieuweklant")
     public String newClientHandler(Model model) {
         Client client = new Client();
         model.addAttribute("client", client);

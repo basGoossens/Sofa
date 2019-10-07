@@ -12,13 +12,13 @@
     <ul>
         <li><a href="index" class="link">Home</a></li>
         <li><a href="login" class="link">Login</a></li>
-        <li><a href="new_account" class="link">Nieuwe klant</a></li>
-        <li><a href="login_employee" class="link">Werknemers</a></li>
+        <li><a href="nieuweklant" class="link">Nieuwe klant</a></li>
+        <li><a href="login_medewerker" class="link">Werknemers</a></li>
     </ul>
 </div>
 
 <div class="text-container">
-<h2>Sofa login pagina voor werknemers</h2>
+    <h2>Sofa login pagina voor werknemers</h2>
     <div th:unless="${Fout == null}">
         <p th:text="${Fout}">foutmelding</p>
     </div>
@@ -33,7 +33,7 @@
                     <td><input type="text" th:field="*{username}" required
                                oninvalid="this.setCustomValidity('Geef gebruikersnaam in')"
                                oninput="setCustomValidity('')"/>
-                    </tr>
+                </tr>
                 <tr>
                     <td>Wachtwoord</td>
                     <td><input type="password" th:field="*{password}" required
@@ -46,12 +46,16 @@
                 </tr>
             </table>
         </form>
-</div>
-<footer class="footer">
-    <div class="new-client-container">
-        <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
-            Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat Niehot </footer>
-</div>
+    </div>
+    <footer class="footer">
+        <div class="new-client-container">
+            <div class="form-container">Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT
+                Work.
+                Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok & Aat
+                Niehot
+            </div>
+        </div>
+    </footer>
 </div>
 </body>
 </html>
