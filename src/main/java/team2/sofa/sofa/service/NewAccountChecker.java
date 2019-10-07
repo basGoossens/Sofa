@@ -110,7 +110,7 @@ public class NewAccountChecker {
 
     private void makeNewPrivateAccount(Client client) {
         IBANGenerator newIBAN = new IBANGenerator();
-        Account newAccount = new PrivateAccount(newIBAN.getIBAN(), new BigDecimal(0));
+        Account newAccount = new PrivateAccount(newIBAN.getIBAN(), new BigDecimal(0.00));
         newAccount.addClient(client);
         client.addAccount(newAccount);
         clientDao.save(client);
@@ -121,7 +121,7 @@ public class NewAccountChecker {
         businessDao.save(business);
         IBANGenerator newIBAN = new IBANGenerator();
         String tempIBAN= newIBAN.ibanGenerator();
-        BusinessAccount newBusinessAccount = new BusinessAccount(tempIBAN, new BigDecimal(0));
+        BusinessAccount newBusinessAccount = new BusinessAccount(tempIBAN, new BigDecimal(0.00));
         newBusinessAccount.setBusiness(business);
         newBusinessAccount.addClient(business.getOwner());
         Client tempClient = clientDao.findClientById(business.getOwner().getId());
