@@ -7,6 +7,8 @@ public interface PdqDao extends CrudRepository<Pdq, Integer> {
 
     boolean existsPdqByFiveDigitcode(String fiveDigitCode);
 
+    Pdq findPdqByFiveDigitcode(String fiveDigitCode);
+
 
 
 }

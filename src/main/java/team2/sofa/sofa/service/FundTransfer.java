@@ -97,7 +97,7 @@ public class    FundTransfer {
      * @param credit
      * @param transaction
      */
-    public void storeTransaction(Account debit, Account credit, Transaction transaction) {
+    public int storeTransaction(Account debit, Account credit, Transaction transaction) {
         debit.addTransaction(transaction);
         credit.addTransaction(transaction);
         debit.lowerBalance(transaction.getAmount());
@@ -105,6 +105,7 @@ public class    FundTransfer {
         transactionDao.save(transaction);
         accountDao.save(debit);
         accountDao.save(credit);
+        return transaction.getId();
     }
 
     /**
