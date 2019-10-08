@@ -56,7 +56,7 @@ public class    FundTransfer {
 
     public Model prepareConfirmation(TransactionForm transactionForm, Model model){
         Account account = accountDao.findAccountByIban(transactionForm.getDebetAccount());
-        Client benificiary = accountDao.findAccountByIban(transactionForm.getCreditAccount()).getOwners().get(0);
+        Account benificiary = accountDao.findAccountByIban(transactionForm.getCreditAccount());
         model.addAttribute("benificiary", benificiary);
         model.addAttribute("account", account);
         model.addAttribute("transaction", transactionForm);

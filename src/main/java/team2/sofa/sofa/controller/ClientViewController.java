@@ -4,10 +4,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Account;
 import team2.sofa.sofa.model.Business;
@@ -28,11 +25,11 @@ public class ClientViewController {
     /**
      * methode om elementen voor client_view.html te vullen.
      *
-     * @param client
+     * @param username
      * @param model
      */
-    public void fillClientView(Client client, Model model) {
-        Client loggedInClient = clientview.findClientByUsername(client.getUsername());
+    public void fillClientView(String username, Model model) {
+        Client loggedInClient = clientview.findClientByUsername(username);
         model.addAttribute("sessionclient", loggedInClient);
         login.checkAndLoadConnector(loggedInClient, model);
         model.addAttribute("nrBusiness", login.countBusinessAccounts(loggedInClient));
@@ -41,7 +38,14 @@ public class ClientViewController {
     }
 
     @GetMapping(value = "rekeningenoverzicht")
-    public String loadClientView(Model model) {
+    public String loadClientView(@ModelAttribute("clientUsername") String username,
+                                 @ModelAttribute("sessionclient") Client client,
+                                 Model model) {
+        if (!username.equals("")) {
+            fillClientView(username, model);
+            return "client_view";
+        }
+        fillClientView(client.getUsername(), model);
         return "client_view";
     }
 
@@ -55,8 +59,10 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "addNewAccountHandler")
-    public String addNewAccount(@RequestParam int id, Model model) {
-        clientview.createNewPrivate(id, model);
+    public String addNewAccount(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        clientview.createNewPrivate(id);
+        Client c = clientview.findClientById(id);
+        redirectAttributes.addFlashAttribute("clientUsername", c.getUsername());
         return "redirect:/rekeningenoverzicht";
     }
 
@@ -75,12 +81,10 @@ public class ClientViewController {
     }
 
     @PostMapping(value = "newBusiness")
-    public String newBAccount(Business business, Model model) {
+    public String newBAccount(Business business, RedirectAttributes redirectAttributes) {
         clientview.procesNewBusinessAccount(business);
         Client c = business.getOwner();
-        model.addAttribute("sessionclient", c);
-        model.addAttribute("nrBusiness", login.countBusinessAccounts(c));
-        model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
+        redirectAttributes.addFlashAttribute("clientUsername", c.getUsername());
         return "redirect:/rekeningenoverzicht";
     }
 }

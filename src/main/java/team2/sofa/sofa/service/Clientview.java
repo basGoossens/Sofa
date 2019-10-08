@@ -57,15 +57,12 @@ public class Clientview {
         return chosenAccount;
     }
 
-    public void createNewPrivate(int id, Model model) {
+    public void createNewPrivate(int id) {
         Client c = clientDao.findClientById(id);
         Account a = makeAccount(c);
         c.addAccount(a);
         clientDao.save(c);
         accountDao.save(a);
-        model.addAttribute("sessionclient", c);
-        model.addAttribute("nrBusiness", login.countBusinessAccounts(c));
-        model.addAttribute("nrPrivate", login.countPrivateAccounts(c));
     }
 
     public Account makeAccount(Client client) {
