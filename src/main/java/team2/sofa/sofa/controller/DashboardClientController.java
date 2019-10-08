@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import team2.sofa.sofa.model.Account;
+import team2.sofa.sofa.model.Connector;
 import team2.sofa.sofa.service.Clientview;
 
 @Controller
@@ -39,9 +40,12 @@ public class DashboardClientController {
                                       Model model) {
         if (account.getId() != 0) {
             model.addAttribute("account", account);
+            model.addAttribute("coupling", clientview.connectingIban(account.getIban()));
+
         }
         if (account.getId() != sessionaccount.getId() && sessionaccount.getId() != 0) {
             sessionaccount = clientview.FindAccountById(sessionaccount.getId());
+            model.addAttribute("coupling", clientview.connectingIban(sessionaccount.getIban()));
             model.addAttribute("account", sessionaccount);
         }
         return "dashboard_client";
