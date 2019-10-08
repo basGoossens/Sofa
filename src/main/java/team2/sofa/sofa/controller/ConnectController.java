@@ -70,7 +70,7 @@ public class ConnectController {
         } else {
             Account account = cs.getAccountbyIBAN(body.get("bankaccount"));
             model.addAttribute("acc", account);
-            model.addAttribute("wrong", "Gebruikernaam is niet juist");
+            model.addAttribute("wrong", "De gebruikernaam is niet juist");
             return "connect_accounts";
         }
     }
@@ -117,7 +117,7 @@ public class ConnectController {
             return "redirect:/rekeningenoverzicht";
         }
         model.addAttribute("con", c);
-        model.addAttribute("wrong", "accescode is niet juist");
+        model.addAttribute("wrong", "de koppelcode is niet juist");
         return "connect_accounts";
     }
 }

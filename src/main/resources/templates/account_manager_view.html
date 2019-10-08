@@ -7,7 +7,7 @@
 <body>
 <div th:insert="general :: header"/>
 
-<h1 style="text-align: left;">Welkom <span th:text="${sessionemployee.firstName}"/></h1>
+<h1 style="text-align: left;">Welkom <span th:text="${sessionemployee.getFullNameUser()}"/></h1>
 ​
 <div>
     <h1>Pinautomaat aanvragen: </h1>

@@ -50,9 +50,9 @@
 
             <table class="table">
                 <tr class="form-header">
-                    <th>rekeningnummer</th>
-                    <th>bedrijfsnaam</th>
-                    <th>saldo</th>
+                    <th>Rekeningnummer</th>
+                    <th>Bedrijfsnaam</th>
+                    <th>Saldo</th>
                 </tr>
                 <tr th:each="Account : ${sessionclient.accounts}">
                     <div th:if="${Account.isBusinessAccount}">

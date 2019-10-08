@@ -21,6 +21,8 @@ public class Clientview {
     BusinessDao businessDao;
     @Autowired
     Login login;
+    @Autowired
+    ConnectorDao connectorDao;
 
     public Clientview() {
         super();
@@ -37,6 +39,10 @@ public class Clientview {
     public Account FindAccountById(int id) {
         Account chosenAccount = accountDao.findAccountById(id);
         return chosenAccount;
+    }
+
+    public boolean connectingIban(String iban){
+        return connectorDao.existsConnectorByIban(iban);
     }
 
     //evt exception inbouwen voor als we nog andersoortige rekeningen krijgen.
