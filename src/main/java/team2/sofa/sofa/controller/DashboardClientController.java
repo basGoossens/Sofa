@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Account;
+import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Connector;
 import team2.sofa.sofa.service.Clientview;
 
@@ -28,8 +30,8 @@ public class DashboardClientController {
 
 
     @PostMapping(value = "backToClientView")
-    public String backToClientView(@RequestParam int id, Model model) {
-        clientViewController.fillClientView(clientview.findClientById(id), model);
+    public String backToClientView(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("clientUsername", clientview.findClientById(id).getUsername());
         return "redirect:/rekeningenoverzicht";
     }
 

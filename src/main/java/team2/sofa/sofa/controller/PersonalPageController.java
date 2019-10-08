@@ -52,15 +52,15 @@ public class PersonalPageController {
     }
 
     @PostMapping(value = "changeAddress")
-    public String processAddress(@RequestParam Map<String, String> input, @RequestParam int clientId, Model model) {
+    public String processAddress(@RequestParam Map<String, String> input,
+                                 @RequestParam int clientId,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
         Client client = updateClient.findClient(clientId);
         Address checkedAddress = updateClient.checkAddress(input);
         if (checkedAddress.getId() == 0){
             client = updateClient.changeAddress(client, checkedAddress);
-            login.checkAndLoadConnector(client,model);
-            model.addAttribute("sessionclient", client);
-            model.addAttribute("nrBusiness", login.countBusinessAccounts(client));
-            model.addAttribute("nrPrivate", login.countPrivateAccounts(client));
+            redirectAttributes.addFlashAttribute("clientUsername", client.getUsername());
             return "redirect:/rekeningenoverzicht";
         }
         model.addAttribute("address", checkedAddress);
@@ -78,8 +78,7 @@ public class PersonalPageController {
         String newUsername = input.get("user");
         if (newUsername.equals(oldclient.getUsername())) {
             client = updateClient.processChanges(client, input);
-            model.addAttribute("sessionclient", client);
-            Hibernate.initialize(client.getAccounts());
+            redirectAttributes.addFlashAttribute("clientUsername", client.getUsername());
             return "redirect:/rekeningenoverzicht";
         } else {
             if (updateClient.usernameExists(newUsername)) {
@@ -89,9 +88,7 @@ public class PersonalPageController {
             cs.changeUsername(oldclient.getUsername(), input.get("user"));
             client.setUsername(input.get("user"));
             client = updateClient.processChanges(client, input);
-            login.checkAndLoadConnector(client,model);
-            model.addAttribute("sessionclient", client);
-            Hibernate.initialize(client.getAccounts());
+            redirectAttributes.addFlashAttribute("clientUsername", client.getUsername());
             return "redirect:/rekeningenoverzicht";
         }
     }
