@@ -2,7 +2,11 @@
 .slideshow-container {
   max-width: 1000px;
   position: relative;
-  margin: auto;
+  margin: 10px auto;
+}
+
+img .image {
+  width:100%
 }
 
 .mySlides {
