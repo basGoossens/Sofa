@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team2.sofa.sofa.model.Client;
 import team2.sofa.sofa.model.Employee;
 import team2.sofa.sofa.model.EmployeeRole;
@@ -45,10 +46,11 @@ public class LoginController {
     }
 
     @PostMapping(value = "loginClientHandler")
-    public String loginClientHandler(Client client, Model model) {
+    public String loginClientHandler(Client client, Model model, RedirectAttributes redirectAttributes) {
         boolean loginOk = passwordValidator.validateClientPassword(client);
         if (loginOk) {
-            clientViewController.fillClientView(client, model);
+            model.addAttribute("sessionclient", new Client());
+            redirectAttributes.addFlashAttribute("clientUsername", client.getUsername());
             return "redirect:/rekeningenoverzicht";
         } else {
             model.addAttribute("fout", "Gebruikersnaam en/of wachtwoord zijn niet juist");

@@ -39,7 +39,7 @@ public class ConnectingService {
         connectorDao.save(connector);
         return accountDao.findAccountByIban(iban);
     }
-    public Model processCoupling(Connector connector, Model model){
+    public void processCoupling(Connector connector){
         Account account = accountDao.findAccountByIban(connector.getIban());
         Client client = clientDao.findClientByUsername(connector.getUsername());
         account.addClient(client);
@@ -47,9 +47,6 @@ public class ConnectingService {
         clientDao.save(client);
         accountDao.save(account);
         connectorDao.delete(connector);
-        model.addAttribute("client", client);
-        model.addAttribute("account", new Account());
-        return model;
     }
 
     public boolean checkUserName(Map<String, String> body){

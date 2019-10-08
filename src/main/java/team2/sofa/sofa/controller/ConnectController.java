@@ -70,7 +70,7 @@ public class ConnectController {
         } else {
             Account account = cs.getAccountbyIBAN(body.get("bankaccount"));
             model.addAttribute("acc", account);
-            model.addAttribute("wrong", "Gebruikernaam is niet juist");
+            model.addAttribute("wrong", "De gebruikernaam is niet juist");
             return "connect_accounts";
         }
     }
@@ -101,7 +101,7 @@ public class ConnectController {
      * @return
      */
     @PostMapping(value = "connectValidate")
-    public String checkMatch(@RequestParam Map<String, String> body, Model model) {
+    public String checkMatch(@RequestParam Map<String, String> body, Model model, RedirectAttributes redirectAttributes) {
         //Onderstaande methode stopt alle instanties waarbij de username voorkomt in een list
         //en checkt op IBAN en security code
         int id = Integer.valueOf(body.get("idconnect"));
@@ -109,15 +109,12 @@ public class ConnectController {
         if (c.getSecurityCode().equals(body.get("accesscode"))
                 && c.getIban().equals(body.get("banknr"))) {
             //call service method to update client, account en connector
-            model = cs.processCoupling(c, model);
-            Client client = clientview.findClientByUsername(c.getUsername());
-            model.addAttribute("connect", cs.getConnectionUsername(c.getUsername()));
-            model.addAttribute("sessionclient", client);
-            Hibernate.initialize(client.getAccounts());
+            cs.processCoupling(c);
+            redirectAttributes.addFlashAttribute("clientUsername", c.getUsername());
             return "redirect:/rekeningenoverzicht";
         }
         model.addAttribute("con", c);
-        model.addAttribute("wrong", "accescode is niet juist");
+        model.addAttribute("wrong", "de koppelcode is niet juist");
         return "connect_accounts";
     }
 }
