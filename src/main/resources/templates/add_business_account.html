@@ -6,12 +6,14 @@
 </head>
 <body>
 <div th:insert="general :: header"/>
+<div class="text-container">
+    <h1>Open een zakelijke rekening</h1>
+    <p>Hallo <span th:text="${business.owner.firstName} + ' ' + ${business.owner.prefix} + ' ' + ${business.owner.lastName}">naam</span> voor welk bedrijf wil je een zakelijke rekening openen</p>
+    <p>vul in onderstaand formulier de benodigde gegevens in om een nieuwe zakelijke rekening te openen</p>
+</div>
 
 <div class="new-client-container">
-    <div class="w3-container">
-        <h1 style="text-align: left">Open een zakelijke rekening</h1>
-        <p>Hallo <span th:text="${business.owner.firstName} + ' ' + ${business.owner.prefix} + ' ' + ${business.owner.lastName}">naam</span> voor welk bedrijf wil je een zakelijke rekening openen</p>
-        <p>vul in onderstaand formulier de benodigde gegevens in om een nieuwe zakelijke rekening te openen</p>
+    <div class="form-container">
         <form action="#" th:action="@{newBusiness}" th:object="${business}" method="post">
             <table class="new-business-account-table">
                 <tr>
@@ -28,12 +30,9 @@
             </table>
             <input type="hidden" name="owner" id="owner" th:value="*{owner.id}"/>
 
-            <input type="submit" value="Open rekening" style="position:relative; top:20px; right: 280px;"/>
-        
+            <input type="submit" value="Open rekening"/>
         </form>
-
     </div>
 </div>
-
 </body>
 </html>
