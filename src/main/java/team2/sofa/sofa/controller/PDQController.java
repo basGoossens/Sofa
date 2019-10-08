@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import team2.sofa.sofa.model.PaymentData;
 import team2.sofa.sofa.model.PaymentMachineConnectionData;
-import team2.sofa.sofa.service.FundTransfer;
-import team2.sofa.sofa.service.PdqInteractionService;
+import team2.sofa.sofa.service.*;
 
 @RestController
 public class PDQController {
@@ -18,16 +17,16 @@ public class PDQController {
     @Autowired
     FundTransfer fundTransfer;
 
+
     @PostMapping("/paymentmachine/payment/")
-    public String TransactionPostController(@RequestBody PaymentData paymentData){
-        String returnJson;
+    public PdqResponseRecord TransactionPostController(@RequestBody PaymentData paymentData){
         try {
             int transactionId = pdqInteractionService.doPdqTransaction(paymentData);
-            returnJson ="Approved" + transactionId;
+            return new PdqResponseOkRecord(paymentData.getAmount(), paymentData.getDebitAccount(),
+                    paymentData.getCreditAccount(), paymentData.getDate(), transactionId);
         } catch (Exception e){
-            returnJson = "Failed " + e.getMessage();
+            return new PdqResponseFailRecord(e.getMessage());
         }
-        return returnJson;
     }
 
     @PostMapping("/paymentmachine/coupling/")
