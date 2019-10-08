@@ -4,90 +4,97 @@
     <meta charset="UTF-8">
     <title>Sofa Home</title>
     <link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/default.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{default-loggedout.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{caroussel.css}">
+
 
 </head>
-
 <body>
-<div class="content-wrap">
-<div class="body-wrapper">
-<div class="nav">
-    <ul>
-        <li><a href="index" class="link">Home</a></li>
-        <li><a href="login" class="link">Login</a></li>
-        <li><a href="nieuweklant" class="link">Nieuwe klant</a></li>
-        <li><a href="login_medewerker" class="link">Werknemers</a></li>
-    </ul>
-</div>
+<!-- nav general-frontend -->
+<div class="body-div">
+    <div class="content-wrap">
+        <div class="nav">
+            <ul>
+                <li><a href="index" class="link">Home</a></li>
+                <li><a href="login" class="link">Login</a></li>
+                <li><a href="new_account" class="link">Nieuwe klant</a></li>
+                <li><a href="login_employee" class="link">Werknemers</a></li>
+            </ul>
+        </div>
 
-<div class="slideshow-container">
+        <div class="slideshow-container">
 
-    <!-- Full-width images with number and caption text -->
-    <div class="mySlides fade">
-        <div class="numbertext">1 / 2</div>
-        <img th:src="@{images/OldsofaCaroussel1.jpg}" style="width:100%">
-        <div class="text">Uw geld zit lekker bij Sofa</div>
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 2</div>
+                <img src="OldsofaCaroussel1.jpg" style="width:100%">
+                <div class="text">Uw geld zit lekker bij Sofa</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 2</div>
+                <img src="DogSofaCaroussel2.jpg" style="width:100%">
+                <div class="text">Sofa, zo goed</div>
+            </div>
+
+
+            <!-- The dots/circles -->
+            <div style="text-align:center">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+            </div>
+        </div>
+
+        <h1>Welkom bij Sofa</h1>
+
+        <div class="text-container">
+            <div class="w3-container"> Welkom op de website van Sofa. Een bank die het graag anders doet dan anderen.
+                Wij graaien harder en beter dan de rest. Uw geld is in geen geval veilig bij ons.
+            </div>
+            <div class="w3-container"> Helaas staat onze website nog in de steigers, maar zeer binnenkort zullen we
+                volledig operationeel zijn en nemen wij graag uw geld aan.
+            </div>
+        </div>
+
+        <div class="footer-div">
+            <footer class="footer">
+                <div class="footer-container">
+                    <div class="new-client-container">Sofa bank is een project van studenten van de HvA,
+                        omscholingstraject Make IT Work.
+                        Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos , Rene van der Stok
+                        & Aat Niehot
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
-
-    <div class="mySlides fade">
-        <div class="numbertext">2 / 2</div>
-        <img th:src="@{/images/DogSofaCaroussel2.jpg}" style="width:100%">
-        <div class="text">Sofa, zo goed</div>
-    </div>
-
-
-    <!-- The dots/circles -->
-    <div style="text-align:center">
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-    </div>
 </div>
+    <script>
+        var slideIndex = 0;
+        showSlides();
 
-<h1>Welkom bij Sofa</h1>
-
-<div class="text-container">
-    <div class="w3-container"> Welkom op de website van Sofa. Een bank die het graag anders doet dan anderen. Wij
-        graaien harder en beter dan de rest. Uw geld is in geen geval veilig bij ons.
-    </div>
-    <div class="w3-container"> Helaas staat onze website nog in de steigers, maar zeer binnenkort zullen we volledig
-        operationeel zijn en nemen wij graag uw geld aan.
-    </div>
-</div>
-</div>
-
-<div class="footer-container">
-    <footer class="footer">
-    Sofa bank is een project van studenten van de HvA, omscholingstraject Make IT Work.
-    Copyright Bas Goossens, Joost Kager, Kirsten Jalvingh, Danielle van den Bos, Rene van der Stok & Aat Niehot
-    </footer>
-</div>
-</div>
-
-
-
-<script>
-    var slideIndex = 0;
-    showSlides();
-
-    function showSlides() {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("dot");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 6000); // Change image every 6 seconds
         }
-        slideIndex++;
-        if (slideIndex > slides.length) {
-            slideIndex = 1
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-        setTimeout(showSlides, 6000); // Change image every 6 seconds
-    }
-</script>
+    </script>
+
+    <br>
+
+
 </body>
 </html>
