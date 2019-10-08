@@ -11,8 +11,8 @@
     <form action="#" th:action="@{connectForm}" method="post">
         <table>
             <tr>
-                <th>gebruikersnaam</th>
-                <th>beveiligingscode</th>
+                <th>Gebruikersnaam</th>
+                <th>Koppelcode</th>
             </tr>
             <tr>
                 <td><input type="text" placeholder="voer gebruikersnaam in" name="newuser" required="required"></td>
@@ -35,8 +35,8 @@
     <form action="#" th:action="@{connectValidate}" method="post">
         <table>
             <tr>
-                <td>iban</td>
-                <td>beveiligingscode</td>
+                <td>IBAN</td>
+                <td>Koppelcode</td>
             </tr>
             <tr>
                 <td><input type="text" placeholder="iban" th:value="${con.iban}" name="banknr"></td>
@@ -51,7 +51,7 @@
                 <td th:text="${wrong}" style="color:red">foutmelding</td>
             </tr>
         </table>
-        <input type="submit" value="Verzenden">
+        <input type="submit" value="Koppel rekening">
     </form>
 
 </div>

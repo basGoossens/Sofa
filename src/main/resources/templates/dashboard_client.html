@@ -20,7 +20,7 @@
 
                 <form action="#" th:action="@{transferHandler}" method="post">
                     <input type=hidden th:field="${account.id}"/>
-                    <input type="submit" value="betaalopdracht"/>
+                    <input type="submit" value="Maak een overboeking"/>
                 </form>
                 <div th:if="${account.owners.size()} < 2">
                 <form action="#" th:action="@{connectAccount}" th:object="${account}" method="post">
@@ -30,7 +30,7 @@
                 </div>
                 <form action="#" th:action="@{backToClientView}" method="post">
                     <input type="hidden" th:field="${sessionclient.id}" name="id" />
-                <input type="submit" value="Terug naar dashboard"/></form>
+                <input type="submit" value="Terug naar overzicht"/></form>
             </div>
         </div>
     </div>
