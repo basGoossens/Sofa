@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import team2.sofa.sofa.model.Account;
-import team2.sofa.sofa.model.Client;
-import team2.sofa.sofa.model.Transaction;
-import team2.sofa.sofa.model.TransactionForm;
+import team2.sofa.sofa.model.*;
 import team2.sofa.sofa.model.dao.AccountDao;
 import team2.sofa.sofa.model.dao.ClientDao;
 import team2.sofa.sofa.model.dao.TransactionDao;
@@ -56,8 +53,6 @@ public class    FundTransfer {
 
     public Model prepareConfirmation(TransactionForm transactionForm, Model model){
         Account account = accountDao.findAccountByIban(transactionForm.getDebetAccount());
-        Account benificiary = accountDao.findAccountByIban(transactionForm.getCreditAccount());
-        model.addAttribute("benificiary", benificiary);
         model.addAttribute("account", account);
         model.addAttribute("transaction", transactionForm);
         return model;
@@ -144,6 +139,11 @@ public class    FundTransfer {
 
     public boolean nameCheckIban(String lastName, String creditIban) {
         Account creditAccount = accountDao.findAccountByIban(creditIban);
+        if (creditAccount.isBusinessAccount()){
+            if (creditAccount.getNameOwner().equals(lastName)){
+                return true;
+            }
+        }
         List<Client> owners = creditAccount.getOwners();
         for (Client owner : owners) {
             if (owner.getLastName().equals(lastName)) {
