@@ -54,11 +54,14 @@ public class PersonalPageController {
     @PostMapping(value = "changeAddress")
     public String processAddress(@RequestParam Map<String, String> input,
                                  @RequestParam int clientId,
+                                 @ModelAttribute("address") Address address,
                                  Model model,
                                  RedirectAttributes redirectAttributes) {
         Client client = updateClient.findClient(clientId);
         Address checkedAddress = updateClient.checkAddress(input);
-        if (checkedAddress.getId() == 0){
+        //indien het een nieuw adress is dat nog niet voorkomt of
+        //indien adres niet is aangepast na weergave onderstaande error
+        if (checkedAddress.getId() == 0 || address.getId()== checkedAddress.getId()){
             client = updateClient.changeAddress(client, checkedAddress);
             redirectAttributes.addFlashAttribute("clientUsername", client.getUsername());
             return "redirect:/rekeningenoverzicht";
