@@ -6,16 +6,12 @@
 </head>
 <body>
 <div th:insert="general :: header"/>
-<div class="text-container">
-    <h1 style="text-align: left">Bevestig transactie</h1>
-    <h7 style="text-align: left">Betaling aan
-        <span
-                th:text="${benificiary.getNameOwner()}"></span>
-    </h7>
-</div>
 
 <div class="new-client-container">
     <div class="w3-container">
+
+        <h1 style="text-align: left">Bevestig transactie</h1>
+
         <form action="#" th:action="@{confirmPayment}" th:object="${transaction}" method="post">
             <table class="transfer-table">
 

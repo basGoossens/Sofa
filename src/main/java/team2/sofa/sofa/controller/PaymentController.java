@@ -13,7 +13,7 @@ import team2.sofa.sofa.service.FundTransfer;
 import java.util.Map;
 
 @Controller
-@SessionAttributes({"sessionclient", "account", "benificiary", "transaction"})
+@SessionAttributes({"sessionclient", "account", "transaction"})
 public class PaymentController {
 
     @Autowired
@@ -44,7 +44,7 @@ public class PaymentController {
             return "money_transfer";
         }
         if (!fundTransfer.nameCheckIban(transactionForm.getName(), transactionForm.getCreditAccount())) {
-            String fout = "Achternaam en IBAN komen niet overeen";
+            String fout = "Achternaam / Bedrijfsnaam en IBAN komen niet overeen";
             model.addAttribute("mismatch", fout);
             model = fundTransfer.returnToTransaction(transactionForm, model);
             return "money_transfer";
